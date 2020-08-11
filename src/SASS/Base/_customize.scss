@@ -1,0 +1,16 @@
+.myContainer {
+  margin: 0 auto;
+  max-width: 940px;
+  width: 100%;
+  // padding: 0 10px;
+}
+@include RESPONSIVE("768px") {
+  .myContainer {
+    width: calc(100% - 30px);
+  }
+}
+@include RESPONSIVE("992px") {
+  .myContainer {
+    width: calc(100% - 20px);
+  }
+}

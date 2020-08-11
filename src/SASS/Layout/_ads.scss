@@ -1,0 +1,51 @@
+.ads {
+  background: url("../../images/background.jpg");
+  padding: $sp-60 0;
+  .ads__item {
+    // @include displayFlex(center, center, column);
+    text-align: center;
+    //left side
+    .ads__title {
+      margin-bottom: $sp-10;
+      font-weight: 600;
+      @include styleText($color-white-0, 1.8 * $sp-em);
+    }
+    .ads__subtitle {
+      margin: 10px;
+      @include styleText($color-white-0, $sp-em);
+    }
+    .text__underbutton {
+      @extend .ads__subtitle;
+      a {
+        color: $color-white-0;
+        text-decoration: underline;
+      }
+    }
+    //right side
+    img {
+      width: 100%;
+      margin: auto;
+      padding: 0 28%;
+    }
+  }
+}
+@include RESPONSIVE("992px") {
+  .ads {
+    padding: $sp-120 0 $sp-60 + 20;
+    .ads__item {
+      align-self: center;
+      text-align: left;
+      .ads__title {
+        font-size: $fs-32;
+        font-weight: 700;
+      }
+      .ads__subtitle {
+        margin: 0;
+        font-size: $fs-16;
+      }
+      .text__underbutton {
+        padding-top: $sp-10;
+      }
+    }
+  }
+}

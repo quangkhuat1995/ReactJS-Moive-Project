@@ -1,0 +1,114 @@
+.theater {
+  &__logos {
+    flex-basis: 92px; //90px +2px cua border
+    min-height: 735px; //90 * so luong rap (8) =  720 +15px cho dep
+    border: 1px solid #ebebec;
+  }
+
+  .nav-link {
+    padding: 20px;
+    width: 100%;
+    border: none;
+    position: relative;
+    opacity: 0.5;
+    transition: all 0.25s;
+    &.active,
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+
+    &::after {
+      content: "";
+      @include positionAbsolute(false, 50%, 2px, false);
+      transform: translateX(-50%);
+      background-color: #ebebec;
+      height: 2px;
+      width: calc(100% - 40px);
+    }
+  }
+  &__image {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+  &__details {
+    flex-basis: 30%;
+    min-width: 30%;
+    height: 735px;
+    border: 1px solid #ebebec;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+    overflow: hidden;
+    @extend %customScrollBar;
+    &:hover {
+      overflow-y: auto;
+    }
+
+    &--item {
+      // @extend .nav-link;
+      // opacity: 1 !important;
+      // padding: 0 !important;
+      cursor: pointer;
+      display: flex;
+
+      //.wrapInfo
+    }
+
+    .nav-tabs {
+      border: none;
+    }
+  }
+  &__movies {
+    flex-grow: 1;
+    height: 735px;
+    width: calc(100% - 92px - 30%);
+    border: 1px solid #ebebec;
+    // overflow-x: hidden;
+    // overflow: hidden;
+    overflow-y: auto;
+    @extend %customScrollBar;
+
+    &--item {
+      display: flex;
+      flex-direction: column;
+      @extend .nav-link;
+      width: unset !important;
+      cursor: pointer;
+      opacity: 1 !important;
+
+      &--info {
+        // @extend .nav-link;
+        // width: unset !important;
+        // cursor: pointer;
+        display: flex;
+        // opacity: 1 !important;
+      }
+      .timeList {
+        cursor: default !important;
+      }
+    }
+  }
+}
+
+.wrapInfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-left: $sp-10;
+  & > span:nth-child(1) {
+    display: block;
+    font-weight: 700;
+    @extend %colorTheater;
+  }
+  & > span:nth-child(2) {
+    @include styleText($color-light-0, $fs-12);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .showing__age {
+    @extend %showAge;
+  }
+}

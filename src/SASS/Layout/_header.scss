@@ -1,0 +1,120 @@
+/**
+* Header co 4 phan con brand, mid, button, #loginNav
+*/
+
+.header {
+  .navbar {
+    padding: 0;
+  }
+}
+// 2 phan dau brand va mid
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba($color: #fff, $alpha: 0.95);
+  z-index: 999;
+  transition: all 0.2s;
+  &:hover {
+    background: rgba($color: #fff, $alpha: 1);
+  }
+  .navbar-brand {
+    img {
+      width: 50px;
+    }
+  }
+  .header__mid {
+    display: none;
+    margin-left: $sp-20;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    .header__mid--link {
+      margin-right: 20px;
+      font-weight: 600;
+      &:hover {
+        color: $color-red-primary;
+      }
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+}
+//2 phan sau button va loginNav
+.header {
+  .navbar-toggler {
+    background: url("../../images/burger.png") no-repeat center center/contain;
+    width: 25px;
+    height: 25px;
+  }
+  #loginNav {
+    .nav-item {
+      line-height: 30px;
+      // background-color: $color-white-0;
+      .nav-link {
+        @include styleText($color-black-1, $fs-18);
+        padding: 20px;
+        img {
+          display: inline;
+          margin-right: $sp-5;
+        }
+        .btnLogin {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+      }
+      &.nav-item--location {
+        .btnLocation {
+          display: none;
+        }
+      }
+    }
+  }
+}
+@include RESPONSIVE("768px") {
+  .header {
+    .header__mid {
+      display: block;
+      // z-index: -1;
+    }
+    #loginNav {
+      .nav-item {
+        .nav-link {
+          padding: 0;
+          @include styleText($color-light-1, $fs-14 - 1);
+        }
+        &.hideOnDesk {
+          display: none;
+        }
+        &.nav-item--location {
+          padding-left: $sp-10;
+          margin-left: $sp-10;
+          border-left: 1px solid $color-light-1;
+          .btnLocation {
+            display: inline-block;
+            opacity: 0.7;
+          }
+          .btnLocation:nth-child(2) {
+            margin-left: $sp-10;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .header {
+    .header__mid {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

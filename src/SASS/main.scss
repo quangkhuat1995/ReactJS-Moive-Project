@@ -1,0 +1,49 @@
+/**
+* Helper
+*/
+@import "./Helper/variables";
+@import "./Helper/mixin";
+@import "./Helper/extend";
+// @import "./Helper/function";
+
+/**
+* Base
+*/
+@import "./Base/reset";
+@import "./Base/customize";
+
+/**
+* Vendor
+*/
+@import "./Vendor/slick";
+@import "./Vendor/boostrap";
+// @import "./../asset/css/LoginModal.css";
+/**
+* Layout
+*/
+@import "./Layout/header";
+@import "./Layout/carousel";
+@import "./Layout/search";
+@import "./Layout/showtime";
+@import "./Layout/newsblock";
+@import "./Layout/ads";
+@import "./Layout/footer";
+@import "./Layout/modalLogin";
+@import "./Layout/theater";
+
+/**
+* PAGES
+*/
+@import "./PAGES/booking";
+@import "./PAGES/detail";
+/**
+* Component
+*/
+@import "./Component/button";
+@import "./Component/tabs";
+@import "./Component/playContainer";
+@import "./Component/movieThumbnail";
+@import "./Component/main-title-detail";
+@import "./Component/preload";
+@import "./Component/formInput";
+@import "./Component/modal";

@@ -1,25 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { HomeRoutes, AdminRoutes } from "./routes";
+import PageNotFound from "./containers/HOME/PageNotFound";
+
+import HomeTemplate from "./templates/HomeTemplate";
+import AdminTemplate from "./templates/AdminTemplate";
+import Auth from "./containers/ADMIN/Auth";
 function App() {
+  const renderRoutesHome = (routes) => {
+    return routes.map((route, index) => {
+      return (
+        <HomeTemplate
+          key={index}
+          exact={route.exact}
+          path={route.path}
+          Component={route.component}
+        />
+      );
+    });
+  };
+
+  const renderRoutesAdmin = (routes) => {
+    return routes.map((route, index) => {
+      return (
+        <AdminTemplate
+          key={index}
+          exact={route.exact}
+          path={route.path}
+          Component={route.component}
+        />
+      );
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        {renderRoutesHome(HomeRoutes)}
+        {renderRoutesAdmin(AdminRoutes)}
+
+        <Route path="/auth" component={Auth} />
+        <Route path="" component={PageNotFound} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
