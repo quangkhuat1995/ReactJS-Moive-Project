@@ -536,6 +536,10 @@ p {
   display: none;
 }
 
+#showing .movieThumbnail .showing__point {
+  display: flex;
+}
+
 #coming .movieThumbnail .playBtn__overlay,
 #coming .movieThumbnail .showing__point {
   display: none;
@@ -859,10 +863,6 @@ p {
   border: 1px solid #ebebec;
 }
 
-.theater .nav-tabs {
-  border: none;
-}
-
 .theater .nav-link, .theater .theater__movies--item {
   padding: 20px;
   width: 100%;
@@ -908,6 +908,10 @@ p {
 .theater__details--item {
   cursor: pointer;
   display: flex;
+}
+
+.theater__details .nav-tabs {
+  border: none;
 }
 
 .theater__movies {
@@ -2148,8 +2152,15 @@ p {
   pointer-events: none;
 }
 
+.hero .img__bg {
+  height: 40vh;
+  object-fit: cover;
+  object-position: center center;
+}
+
 @media screen and (min-width: 768px) {
   .hero .img__bg {
+    height: 80vh;
     filter: blur(8px);
     transform: scaleY(0.91);
   }
@@ -2225,6 +2236,18 @@ p {
 
 .hero-detail .publish__date, .hero-detail .movieThumbnail .showing__point, .movieThumbnail .hero-detail .showing__point {
   display: none;
+}
+
+.hero-detail--pointGroup .star {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.hero-detail--pointGroup .star img {
+  width: 20px;
+  margin: 0 2px;
 }
 
 .mobile-main-title {
@@ -2522,6 +2545,10 @@ p {
 
 .main-title-detail .title .showing__age {
   font-size: 16px;
+}
+
+.main-title-detail .title .showing__age .green {
+  background: #108f3e;
 }
 
 .main-title-detail p {

@@ -23,8 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # custom
-.xmind
+*.xmind
 bookingPage
 detailPage
 myindex.js
-.code-workspace
+*.code-workspace

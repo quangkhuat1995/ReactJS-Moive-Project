@@ -16,23 +16,26 @@ export default class TabShowOrComing extends Component {
     //  Outputs : [ [1,2,3] , [4,5,6] ,[7,8] ]
   };
 
-  renderPanelContainer = (arr) => {
-    if (arr && arr.length > 0) {
-      return <PanelContainer movies={arr} />;
-    }
-  };
+  // renderPanelContainer = (arr) => {
+  //   if (arr && arr.length > 0) {
+  //     return <PanelContainer key={arr[]} movies={arr} />;
+  //   }
+  // };
 
   render() {
     const { movies } = this.props;
-
-    const [page_1, page_2, page_3] = this.chunkArray(movies, 8);
+    // const [page_1, page_2, page_3] = this.chunkArray(movies, 8);
+    const chunkedArrs = this.chunkArray(movies, 8);
 
     return (
       <Slider>
         {/* many panel containers */}
-        {this.renderPanelContainer(page_1)}
+        {chunkedArrs.map((arr, index) => (
+          <PanelContainer key={index} movies={arr} />
+        ))}
+        {/* {this.renderPanelContainer(page_1)}
         {this.renderPanelContainer(page_3)}
-        {this.renderPanelContainer(page_2)}
+        {this.renderPanelContainer(page_2)} */}
       </Slider>
     );
   }

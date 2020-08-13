@@ -95,8 +95,12 @@
     .publish__date {
       display: none;
     }
+    .showing__point {
+      display: flex;
+    }
   }
 }
+
 #coming {
   .movieThumbnail {
     .playBtn__overlay,

@@ -12,7 +12,7 @@ const HomeRoutes = [
   },
   {
     exact: true,
-    path: "/phim/:maPhim", //sua cho nay
+    path: "/phim/:slug", //slug: maPhim-biDanh . 1322-ted-part-2
     component: DetailPage,
   },
   {

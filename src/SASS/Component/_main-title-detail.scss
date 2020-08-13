@@ -8,6 +8,9 @@
       @extend %showAge;
       font-size: $fs-16;
       // padding: 0.125rem 0;
+      &.green {
+        background: $color-green-primary;
+      }
     }
   }
   p {

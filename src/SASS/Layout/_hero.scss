@@ -84,5 +84,15 @@
     .publish__date {
       display: none;
     }
+    &--pointGroup {
+      .star {
+        @include displayFlex(space-around, center);
+        margin: 10px 0 0;
+        img {
+          width: 20px;
+          margin: 0 2px;
+        }
+      }
+    }
   }
 }
