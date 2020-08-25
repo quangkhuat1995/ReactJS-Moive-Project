@@ -1,47 +1,35 @@
-import React, { Component } from "react";
-// import SingleComingItem from "../../../Components/ShowTime/SingleComingItem";
-// import PanelContainer from "../../../Components/ShowTime/PanelContainer";
-// import TabShowing from "../../../Components/ShowTime/TabShowing";
+import React, { useEffect } from "react";
 import ShowTime from "../../../Components/ShowTime";
 import News from "../../../Components/News";
 import TheaterList from "../../../Components/TheaterList";
-import Footer from "../../../Components/Footer";
+// import Footer from "../../../Components/Footer";
 import Loading from "./../../../Components/Loading";
 import { connect } from "react-redux";
 import { actFetchListMoive } from "./modules/action";
 import ModalPopup from "../../../Components/ModalPopup";
+import Search from "../../../Components/Search";
 
-class HomePage extends Component {
-  componentDidMount() {
-    this.props.fetchListMovie();
-  }
-  render() {
-    const { listMovie, loading } = this.props;
-    if (loading) return <Loading />;
-    return (
-      <>
-        this is HomePage
-        <ShowTime listMovie={listMovie} />
-        <TheaterList />
-        <News />
-        <Footer />
-        <ModalPopup />
-      </>
-    );
-  }
+function HomePage(props) {
+  const { fetchListMovie, listMovie, loading } = props;
+  // console.log(props);
+  useEffect(() => {
+    fetchListMovie();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (loading) return <Loading />;
+  return (
+    <>
+      this is HomePage
+      <Search />
+      <ShowTime listMovie={listMovie} />
+      <TheaterList />
+      <News />
+      <ModalPopup />
+    </>
+  );
 }
-// const mapStateToProps = (state) => {
-//   return {
-//     detailMovie: state.detailMovieReducer.detailMovie,
-//   };
-// };
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     getDetailMovie: () => {
-//       dispatch(actFetchDetailMovie());
-//     },
-//   };
-// };
+
 const mapStateToProps = (state) => {
   return {
     listMovie: state.listMovieReducer.listMovie,

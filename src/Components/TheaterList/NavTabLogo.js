@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 // import { requests } from "./../../requests";
 // import { callAPI } from "../../callAPI";
 import NavLink from "./NavLink";
+import { connect } from "react-redux";
 
-export default class NavTab extends Component {
-  renderLogo = () => {
-    const { listHeThongRap } = this.props;
+function NavTabLogo(props) {
+  const renderLogo = () => {
+    const { listHeThongRap } = props;
     return listHeThongRap.map((item, index) => {
       return (
         <NavLink
@@ -23,11 +24,18 @@ export default class NavTab extends Component {
       );
     });
   };
-  render() {
-    return (
-      <div className={`nav nav-tabs theater__logos flex-column`}>
-        {this.renderLogo()}
-      </div>
-    );
-  }
+
+  return (
+    <div className={`nav nav-tabs theater__logos flex-column`}>
+      {renderLogo()}
+    </div>
+  );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    listHeThongRap: state.listHeThongRapReducer.listHeThongRap,
+  };
+};
+
+export default connect(mapStateToProps, null)(NavTabLogo);

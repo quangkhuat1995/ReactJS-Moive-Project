@@ -17,7 +17,7 @@ const HomeRoutes = [
   },
   {
     exact: true,
-    path: "/checkout", //sua cho nay
+    path: "/booking/:maLichChieu", //sua cho nay
     component: BookingPage,
   },
 ];

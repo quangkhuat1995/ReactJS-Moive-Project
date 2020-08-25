@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 
 export default class DetailMovieItem extends Component {
   renderBtnTime = () => {
-    const { movie } = this.props;
-    if (movie.lstLichChieuTheoPhim && movie.lstLichChieuTheoPhim.length > 0) {
-      return movie.lstLichChieuTheoPhim.map((item, index) => {
+    let { lstLichChieuTheoPhim } = this.props.movie;
+    if (lstLichChieuTheoPhim && lstLichChieuTheoPhim.length > 0) {
+      // cat phim co lich chieu qua dai.
+      /** SAU NAY SORT LAI THEO NGAY HIEN TAI */
+      if (lstLichChieuTheoPhim.length > 10) {
+        lstLichChieuTheoPhim = lstLichChieuTheoPhim.splice(0, 10);
+      }
+      return lstLichChieuTheoPhim.map((item, index) => {
         return (
           <Link
             key={item.maLichChieu}
-            to={`/lich-chieu/${item.maLichChieu}`}
+            to={`/booking/${item.maLichChieu}`}
             className="btn btn-time"
           >
             {new Date(item.ngayChieuGioChieu).toLocaleTimeString()}
@@ -19,13 +24,13 @@ export default class DetailMovieItem extends Component {
     }
   };
   render() {
-    const { movie, ma } = this.props;
+    const { movie, maCumRap } = this.props;
     return (
       <div className="theater__movies--item">
         <div
           className="theater__movies--item--info"
           data-toggle="collapse"
-          data-target={`#${ma}_${movie.maPhim}`}
+          data-target={`#${maCumRap}_${movie.maPhim}`}
         >
           <img
             className="theater__image"
@@ -41,7 +46,7 @@ export default class DetailMovieItem extends Component {
         </div>
         <div
           className="row pt-3 collapse show timeList"
-          id={`${ma}_${movie.maPhim}`}
+          id={`${maCumRap}_${movie.maPhim}`}
         >
           {this.renderBtnTime()}
         </div>

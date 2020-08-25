@@ -1,76 +1,60 @@
-import React, { Component } from "react";
-import { callAPI } from "../../callAPI";
-import { requests } from "../../requests";
+import React from "react";
 import TabPanel from "./TabPanel";
 import DetailMovieItem from "./DetailMovieItem";
+import { connect } from "react-redux";
 
-export default class TabContentMovies extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      listCumRapDetail: [],
-    };
-  }
-
-  layMaHeThongRap = () => {
-    const { listHeThongRap } = this.props;
-    return listHeThongRap.map((item) => item.maHeThongRap);
-  };
-  // /QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP09&maHeThongRap=bhdstar
-  componentDidUpdate(preProps, preState) {
-    let dsMaHeThongRap = this.layMaHeThongRap();
-
-    if (this.props.listHeThongRap.length !== preProps.listHeThongRap.length) {
-      let cumRap = [];
-      dsMaHeThongRap.forEach((ma) => {
-        callAPI(
-          `${requests().LayThongTinLichChieuHeThongRap}&maHeThongRap=${ma}`,
-          "GET"
-        )
-          .then((result) => {
-            // console.log(result.data[0].lstCumRap);
-
-            // cumRap.push(result.data[0].lstCumRap);
-            cumRap = [...cumRap, ...result.data[0].lstCumRap];
-            // console.log(cumRap);
-
-            this.setState({
-              listCumRapDetail: cumRap,
-            });
-          })
-
-          .catch((err) => console.log(err));
-      });
+function TabContentMovies(props) {
+  const getLstCumRap = (array) => {
+    if (array && array.length > 0) {
+      return array.reduce((acc, item) => acc.concat(item.lstCumRap), []);
     }
-  }
-  renderMovieDetail = (dsPhim, maCumRap) => {
-    if (dsPhim && dsPhim.length > 0) {
-      return dsPhim.map((phim, index) => {
-        return <DetailMovieItem key={phim.maPhim} movie={phim} ma={maCumRap} />;
+  };
+
+  const renderMovieDetail = (cumRap) => {
+    if (cumRap.danhSachPhim && cumRap.danhSachPhim.length > 0) {
+      return cumRap.danhSachPhim.map((movie, index) => {
+        return (
+          <DetailMovieItem
+            key={movie.maPhim}
+            movie={movie}
+            maCumRap={cumRap.maCumRap}
+          />
+        );
       });
     }
   };
-  renderTabPanel = () => {
-    const { listCumRapDetail } = this.state;
+
+  //api tra ve string sai nen phai lam cai nay
+  // "maCumRap": "glx-nguyen-du\r\n",
+  const checkId = (idString) => {
+    return idString.replace(/[\r\n]/g, "");
+  };
+
+  const renderTabPanel = () => {
+    const { listHeThongLichChieu } = props;
+    const listCumRapDetail = getLstCumRap(listHeThongLichChieu);
     if (listCumRapDetail && listCumRapDetail.length > 0) {
       return listCumRapDetail.map((item, index) => {
         const settings = {
           className: `tab-pane fade ${index === 0 ? "show active" : ""}`,
-          id: item.maCumRap,
+          id: checkId(item.maCumRap),
         };
         return (
-          <TabPanel key={item.maCumRap} settings={settings} detail={item}>
-            {this.renderMovieDetail(item.danhSachPhim, item.maCumRap)}
+          <TabPanel key={item.maCumRap} settings={settings}>
+            {renderMovieDetail(item)}
           </TabPanel>
         );
       });
     }
   };
 
-  render() {
-    return (
-      <div className="tab-content theater__movies">{this.renderTabPanel()}</div>
-    );
-  }
+  return <div className="tab-content theater__movies">{renderTabPanel()}</div>;
 }
+
+const mapStateToProps = (state) => {
+  return {
+    listHeThongLichChieu: state.listHeThongRapReducer.listHeThongLichChieu,
+  };
+};
+
+export default connect(mapStateToProps, null)(TabContentMovies);

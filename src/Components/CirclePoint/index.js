@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import star1 from "./../../images/star1.png";
-import star2 from "./../../images/star2.png";
 import WithDetailMovieStyle from "../../HOC/withDetailMovieStyle";
 
 class CirclePoint extends Component {

@@ -1,16 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 // import { requests } from "./../../requests";
 // import { callAPI } from "../../callAPI";
 import SingleMovieItem from "./SingleMovieItem";
 
-export default class PanelContainer extends Component {
-  renderSingleMovie = () => {
-    const { movies } = this.props;
+export default function PanelContainer(props) {
+  const renderSingleMovie = () => {
+    const { movies } = props;
     return movies.map((movie) => {
       return <SingleMovieItem key={movie.maPhim} movie={movie} />;
     });
   };
-  render() {
-    return <div className="panel__container">{this.renderSingleMovie()}</div>;
-  }
+
+  return <div className="panel__container">{renderSingleMovie()}</div>;
 }

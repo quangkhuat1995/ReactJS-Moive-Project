@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class TabPanel extends Component {
-  render() {
-    return <div {...this.props.settings}>{this.props.children}</div>;
-  }
+export default function TabPanel(props) {
+  return <div {...props.settings}>{props.children}</div>;
 }

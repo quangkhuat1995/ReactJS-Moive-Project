@@ -11,5 +11,6 @@ export const requests = (
     layThongTinHeThongRap: `/QuanLyRap/LayThongTinHeThongRap`,
     layThongTinCumRapTheoHeThong: `/QuanLyRap/LayThongTinCumRapTheoHeThong`,
     LayThongTinLichChieuHeThongRap: `/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP09`,
+    LayDanhSachPhongVe: `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=`,
   };
 };

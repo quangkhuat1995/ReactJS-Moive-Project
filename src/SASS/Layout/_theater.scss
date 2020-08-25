@@ -40,7 +40,7 @@
     // overflow-x: hidden;
     // overflow-y: auto;
     overflow: hidden;
-    @extend %customScrollBar;
+    @include styleScrollBar();
     &:hover {
       overflow-y: auto;
     }
@@ -67,8 +67,7 @@
     // overflow-x: hidden;
     // overflow: hidden;
     overflow-y: auto;
-    @extend %customScrollBar;
-
+    @include styleScrollBar();
     &--item {
       display: flex;
       flex-direction: column;

@@ -2,14 +2,15 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import Footer from "../Components/Footer";
+import UserNavbar from "../Components/UserNavbar";
 
 function HomeLayout(props) {
   return (
-    <div>
-      <div>nav bar cua trang user</div>
+    <>
+      <UserNavbar />
       {props.children}
       <Footer />
-    </div>
+    </>
   );
 }
 export default function HomeTemplate({ Component, ...props }) {

@@ -11,3 +11,9 @@
     }
   }
 }
+body.modal-open {
+  padding-right: 0px !important;
+  .modal {
+    padding-right: 0px !important;
+  }
+}

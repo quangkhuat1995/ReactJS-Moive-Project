@@ -2,27 +2,16 @@
   //@include childGrid(1, 4, 2, 3);
   // width: 95%;
   // margin-left: auto;
-  margin: 80px 0;
   padding: 30px 0;
   background-color: $color-white-0;
-  @include positionAbsolute(0, 0);
+  // @include positionAbsolute(0, 0);
   overflow: auto;
-  z-index: 99;
-  @include RESPONSIVE("768px") {
-    // grid-area: seat;
-    grid-row: 2/3;
-    grid-column: 1/2;
-    margin: 0;
-    margin-left: auto;
-    width: 95%;
-    position: relative;
-    overflow: scroll;
-    z-index: 98;
+  min-width: 265px;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
+  //   &::-webkit-scrollbar {
+  //     display: none;
+  //   }
+  // }
   .seat__section--top {
     width: 90%;
     margin: 0 auto;
@@ -71,12 +60,17 @@
       }
     }
     .listseat {
+      display: grid;
+      place-items: center;
       margin: auto;
-      width: fit-content;
+      width: 90%;
       .seatrow {
         @include displayFlex(flex-start, center);
         pointer-events: none;
+        position: relative;
         .seat-unclickable {
+          @include positionAbsolute(50%, -10%);
+          transform: translateY(-50%);
           @include styleText($color-black-1, $fs-18);
           display: inline-block;
           width: 20px; //30px desk
@@ -121,6 +115,7 @@
           }
           label {
             @extend .seat-unclickable;
+            transform: none;
             pointer-events: all;
             margin-bottom: 0;
             margin-right: 5px;
@@ -128,7 +123,7 @@
             border: 1px solid #ccc;
             position: relative;
             cursor: pointer;
-            &.vip {
+            &.Vip {
               background: $color-vip;
             }
             &.couple {
@@ -154,6 +149,11 @@
               }
               & ~ label .seatnum {
                 visibility: visible;
+              }
+            }
+            &:disabled {
+              & ~ label {
+                background-color: $color-taken;
               }
             }
           }
