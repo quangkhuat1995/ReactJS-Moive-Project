@@ -51,7 +51,7 @@ export default class Footer extends PureComponent {
                 <a href="#!">
                   <img
                     className="imgZion"
-                    src="./images/coop20.jpg"
+                    src="/images/coop20.jpg"
                     alt="zion"
                   />
                 </a>
@@ -82,7 +82,7 @@ export default class Footer extends PureComponent {
                 <a href="#!">
                   <img
                     className="imgBCT"
-                    src="./images/bocongthuong.png"
+                    src="/images/bocongthuong.png"
                     alt="bocongthuong"
                   />
                 </a>

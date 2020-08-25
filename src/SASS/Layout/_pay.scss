@@ -4,7 +4,7 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   position: relative;
   // width:100%;
-  height: 100vh;
+  height: 115vh;
   .pay-wrapper {
     position: absolute;
     top: 0;
@@ -137,11 +137,22 @@
     }
   }
   .confirm__item {
-    padding: $sp-20 $sp-15;
-    cursor: pointer;
-    text-align: center;
-    @include styleText($color-white-0, $fs-18);
-    background: $color-choosing;
-    margin: 0 -$sp-15;
+    // margin: 0 -$sp-15;
+    @include positionAbsolute(false, 0, 0);
+    width: 100%;
+    .btn-confirm {
+      text-align: center;
+      @include styleText($color-white-0, $fs-18);
+      background: $color-choosing;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      width: 100%;
+      height: 100%;
+      display: block;
+      padding: 20px 15px;
+      color: #fff;
+      background: #44c020;
+    }
   }
 }

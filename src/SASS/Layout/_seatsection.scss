@@ -73,8 +73,8 @@
           transform: translateY(-50%);
           @include styleText($color-black-1, $fs-18);
           display: inline-block;
-          width: 20px; //30px desk
-          height: 20px;
+          width: 3vh; //30px desk
+          height: 3vh;
           line-height: 20px;
           border-radius: $border-radius;
           margin-right: 60px;
@@ -87,32 +87,19 @@
             }
           }
           @include RESPONSIVE("768px") {
+            width: 4vh;
+            height: 4vh;
+            line-height: 30px;
+          }
+          @include RESPONSIVE("992px") {
             width: 30px;
             height: 30px;
-            line-height: 30px;
           }
         }
         .seat-clickable {
           position: relative;
           margin-top: 5px;
-          &:nth-child(even) {
-            label {
-              &.couple {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                margin-right: 0px;
-                margin-left: 5px;
-              }
-            }
-          }
-          &:nth-child(odd) {
-            label {
-              &.couple {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-              }
-            }
-          }
+
           label {
             @extend .seat-unclickable;
             transform: none;
@@ -123,6 +110,9 @@
             border: 1px solid #ccc;
             position: relative;
             cursor: pointer;
+            // &:last-of-type {
+            //   margin-right: 0;
+            // }
             &.Vip {
               background: $color-vip;
             }
