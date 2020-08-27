@@ -5,22 +5,11 @@ import DetailTheaterItem from "./DetailTheaterItem";
 import { connect } from "react-redux";
 
 function TabContentTheater(props) {
-  // useEffect(() => {
-  //   // QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=bhdstar
-
-  //   callAPI(requests().LayThongTinLichChieuHeThongRap, "GET")
-  //     .then((result) => {
-  //       setListHeThong(result.data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   //render thong tin tung cum rap
   const renderNavLink = (singleHeThongRap) => {
     // console.log(singleHeThongRap.lstCumRap);
     const listCumRap = singleHeThongRap.lstCumRap;
     // console.log(listCumRap);
-
     if (listCumRap && listCumRap.length > 0) {
       return listCumRap.map((item, index) => {
         return (
@@ -37,14 +26,6 @@ function TabContentTheater(props) {
   };
 
   const renderTabPanel = () => {
-    // const { listHeThongRap } = props;
-    //sort lai listCumRap de tranh api bi tra ve cham, khong dung thu tu, sort tho chu cai dau tien
-    // if (listCumRap && listCumRap.length > 0) {
-    //   listCumRap.sort((a, b) => {
-    //     return a[0].maCumRap.localeCompare(b[0].maCumRap);
-    //   });
-    //   // console.log(listCumRap);
-    // }
     const { listHeThongLichChieu } = props;
     return listHeThongLichChieu.map((item, index) => {
       const settings = {

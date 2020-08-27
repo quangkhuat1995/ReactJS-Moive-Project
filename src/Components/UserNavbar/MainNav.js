@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import LoggedUI from "./LoggedUI";
 import UnLoggedUI from "./UnLoggedUI";
 // import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
-  const { customClass, isOpen } = props;
+  const { customClass, isOpen, handleClose } = props;
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
@@ -31,7 +32,7 @@ function MainNav(props) {
 
   return (
     <ul
-      onClick={() => props.handleClose(isOpen)}
+      onClick={handleClose ? () => handleClose(isOpen) : null}
       className={`${customClass} ${isOpen ? "active" : ""}`}
     >
       {isLoggedIn ? <LoggedUI handleLogOut={handleLogOut} /> : <UnLoggedUI />}
@@ -61,5 +62,10 @@ function MainNav(props) {
 
 MainNav.defaultProps = {
   customClass: "nav-list",
+};
+MainNav.propTypes = {
+  isOpen: PropTypes.bool,
+  customClass: PropTypes.string,
+  handleClose: PropTypes.func,
 };
 export default MainNav;

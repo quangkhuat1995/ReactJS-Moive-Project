@@ -7,8 +7,7 @@ import {
   LAY_THONG_TIN_LICH_CHIEU_FAILED,
 } from "./constant";
 
-import { callAPI } from "../../../callAPI";
-import { requests } from "../../../requests";
+import theatersApi from "../../../api/theatersApi";
 
 const actListHeThongRapRequest = () => {
   return {
@@ -49,24 +48,29 @@ const actThongTinLichChieuFailed = (error) => {
   };
 };
 const actFetchThongTinLichChieu = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(actThongTinLichChieuRequest());
-    callAPI(requests().LayThongTinLichChieuHeThongRap, "GET")
-      .then((result) => dispatch(actThongTinLichChieuSuccess(result.data)))
-      .catch((error) => {
-        dispatch(actThongTinLichChieuFailed(error));
-      });
+
+    try {
+      const resData = await theatersApi.getThongTinLichChieuHeThongRap();
+      dispatch(actThongTinLichChieuSuccess(resData));
+      // console.log(resData);
+    } catch (error) {
+      dispatch(actThongTinLichChieuFailed(error));
+    }
   };
 };
 
 const actFetchListHeThongRap = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(actListHeThongRapRequest());
-    callAPI(requests().layThongTinHeThongRap, "GET")
-      .then((result) => {
-        dispatch(actListHeThongRapSuccess(result.data));
-      })
-      .catch((error) => dispatch(actListHeThongRapFailed(error)));
+    try {
+      const resData = await theatersApi.getThongTinHeThongRap();
+      dispatch(actListHeThongRapSuccess(resData));
+      // console.log(resData);
+    } catch (error) {
+      dispatch(actListHeThongRapFailed(error));
+    }
   };
 };
 

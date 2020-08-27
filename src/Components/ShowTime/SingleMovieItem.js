@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { callAPI } from "./../../callAPI";
-// import { requests } from "./../../requests";
 import MovieThumbnail from "../MovieThumbnail";
 import WithDetailMovieStyle from "./../../HOC/withDetailMovieStyle";
 function SingleMovieItem(props) {

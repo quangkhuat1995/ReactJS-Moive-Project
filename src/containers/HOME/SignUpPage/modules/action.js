@@ -1,6 +1,5 @@
 import { SIGN_UP_FAILED, SIGN_UP_SUCCESS, SIGN_UP_REQUEST } from "./constant";
-import { callAPI } from "../../../../callAPI";
-import { requests } from "../../../../requests";
+import usersApi from "../../../../api/usersApi";
 
 const actSignUpRequest = () => {
   return {
@@ -13,8 +12,8 @@ const actSignUpRequest = () => {
 // "matKhau": "string",
 // "email": "string",
 // "soDt": "string",
-// "maNhom": "string",
-// "maLoaiNguoiDung": "string",
+// "maNhom": "GP09",
+// "maLoaiNguoiDung": "KhachHang",
 
 const actSignUpSuccess = (user) => {
   return {
@@ -30,20 +29,22 @@ const actSignUpFailed = (error) => {
 };
 
 const actFetchSignUp = (user, history) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(actSignUpRequest());
-    callAPI(requests(null, null, null).dangKy, "POST", user)
-      .then((result) => {
-        dispatch(actSignUpSuccess(result.data));
-        alert("Dang ky thanh cong");
-        // history.goBack();
-        // history.push("/login");
-      })
-      .catch((error) => {
-        dispatch(actSignUpFailed(error));
-        // history.push("/login");
-        history.goBack();
-      });
+    try {
+      const resData = await usersApi.postSignUp(user);
+      dispatch(actSignUpSuccess(resData));
+      alert("Dang ky thanh cong");
+      //TODO SAU KHI DANG KY THANH CONG THI TU DONG DANG NHAP
+      // history.goBack();
+      // history.push("/login");
+    } catch (error) {
+      dispatch(actSignUpFailed(error));
+      console.log(error.response.data);
+
+      // history.push("/login");
+      // history.goBack();
+    }
   };
 };
 

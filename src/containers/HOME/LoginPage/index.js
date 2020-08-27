@@ -14,6 +14,7 @@ import useStyles from "../../../style";
 import useSetBackground from "../../../Hook/useSetBackground";
 import { connect } from "react-redux";
 import { actFetchUserLogin } from "./modules/action";
+import ErrorUI from "../../../Components/ErrorUI";
 
 function Copyright() {
   return (
@@ -88,6 +89,7 @@ function LogInPage(props) {
             control={<Checkbox value="remember" color="primary" />}
             label="Ghi nhớ đăng nhập"
           />
+          {props.error && <ErrorUI message={props.error.response.data} />}
           <Button
             type="submit"
             fullWidth
@@ -118,6 +120,11 @@ function LogInPage(props) {
     </Container>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    error: state.userLoginReducer.error,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchUserLogin: (user, history) => {
@@ -125,4 +132,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(null, mapDispatchToProps)(LogInPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LogInPage);

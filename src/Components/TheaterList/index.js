@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import NavTabLogo from "./NavTabLogo";
-// import { requests } from "./../../requests";
-// import { callAPI } from "../../callAPI";
 import TabContentTheater from "./TabContentTheater";
 import TabContentMovies from "./TabContentMovies";
 import Loading from "./../Loading";
@@ -10,6 +8,25 @@ import {
   actFetchThongTinLichChieu,
 } from "./modules/action";
 import { connect } from "react-redux";
+
+const setTimeClick = () => {
+  //xoa het class acctive cua link
+  document
+    .querySelectorAll(".theater__details .tab-pane .nav-link")
+    .forEach((link) => {
+      link.classList.remove("active");
+    });
+  // async sau click vao link (se tu them class active da xoa vao phan tu dau tien cua pane co class active (do lick vao tam hinh))
+  setTimeout(() => {
+    document.querySelectorAll(".theater__details .tab-pane").forEach((tab) => {
+      if (tab.classList.contains("active")) {
+        // console.log(tab.firstElementChild.firstElementChild);
+
+        tab.firstElementChild.firstElementChild.click();
+      }
+    });
+  }, 250);
+};
 
 function TheaterList(props) {
   const { fetchListHeThongRap, fetchListHeThongLichChieu } = props;
@@ -31,27 +48,6 @@ function TheaterList(props) {
 
     // console.log("did mount");
   });
-
-  const setTimeClick = () => {
-    //xoa het class acctive cua link
-    document
-      .querySelectorAll(".theater__details .tab-pane .nav-link")
-      .forEach((link) => {
-        link.classList.remove("active");
-      });
-    // async sau click vao link (se tu them class active da xoa vao phan tu dau tien cua pane co class active (do lick vao tam hinh))
-    setTimeout(() => {
-      document
-        .querySelectorAll(".theater__details .tab-pane")
-        .forEach((tab) => {
-          if (tab.classList.contains("active")) {
-            // console.log(tab.firstElementChild.firstElementChild);
-
-            tab.firstElementChild.firstElementChild.click();
-          }
-        });
-    }, 250);
-  };
 
   if (props.loading) return <Loading />;
   return (
