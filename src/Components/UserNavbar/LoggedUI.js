@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 function LoggedUI(props) {
   const store = localStorage.getItem("userUser");
-  console.log("did i render");
 
   return (
     <>

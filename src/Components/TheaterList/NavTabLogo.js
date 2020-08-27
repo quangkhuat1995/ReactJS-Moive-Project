@@ -1,6 +1,4 @@
 import React from "react";
-// import { requests } from "./../../requests";
-// import { callAPI } from "../../callAPI";
 import NavLink from "./NavLink";
 import { connect } from "react-redux";
 

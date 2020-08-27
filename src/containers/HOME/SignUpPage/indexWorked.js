@@ -17,6 +17,7 @@ import useStyles from "../../../style";
 import { connect } from "react-redux";
 import { actFetchSignUp } from "./modules/action";
 import useSetBackGround from "./../../../Hook/useSetBackground";
+import ErrorUI from "../../../Components/ErrorUI";
 
 const logo = "/images/logo.png";
 function Copyright() {
@@ -112,12 +113,6 @@ function SignUp(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
-  const renderError = () => {
-    if (error && error.response) {
-      return <div className="alert alert-danger">{error.response.data}</div>;
-    }
-    return null;
-  };
   return (
     <Container component="main" maxWidth="xs" className={classes.wrapper}>
       <CssBaseline />
@@ -233,7 +228,7 @@ function SignUp(props) {
               />
             </Grid>
           </Grid>
-          {error && renderError()}
+          {error && <ErrorUI message={error.response.data} />}
           <Button
             type="submit"
             fullWidth

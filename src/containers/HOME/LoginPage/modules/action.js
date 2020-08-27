@@ -1,6 +1,5 @@
 import { LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS } from "./constant";
-import { requests } from "../../../../requests";
-import { callAPI } from "../../../../callAPI";
+import usersApi from "../../../../api/usersApi";
 
 const actLoginRequest = () => {
   return {
@@ -21,7 +20,7 @@ const actLoginFailed = (error) => {
   };
 };
 
-// result.data = {
+// resData = {
 //   "taiKhoan": "dpnguyen",
 //   "hoTen": "Nguyen",
 //   "email": "dpnguyen@gmail.com",
@@ -31,28 +30,25 @@ const actLoginFailed = (error) => {
 //   "accessToken": "eyJhbG...."
 // }
 const actFetchUserLogin = (user, history) => {
-  return (dispatch) => {
-    dispatch(actLoginRequest());
-    callAPI(requests(null, null, null).dangNhap, "POST", user)
-      .then((result) => {
-        //thanh cong
-        dispatch(actLoginSuccess(result.data));
-        //dua xuong localStorage, xoa local trc khi them vao
-        if (result.data) {
-          if (localStorage.getItem("userUser")) {
-            localStorage.removeItem("userUser");
-          }
-          localStorage.setItem("userUser", JSON.stringify(result.data));
+  return async (dispatch) => {
+    try {
+      dispatch(actLoginRequest());
+      const resData = await usersApi.postLogIn(user);
+      console.log(resData);
+      dispatch(actLoginSuccess(resData));
 
-          // alert("dang nhap thanh cong");
-          console.log(history);
-          history.goBack();
+      if (resData) {
+        if (localStorage.getItem("userUser")) {
+          localStorage.removeItem("userUser");
         }
-      })
-      .catch((error) => {
-        dispatch(actLoginFailed(error));
-        // console.log(error.response.data);
-      });
+        localStorage.setItem("userUser", JSON.stringify(resData));
+        // alert("dang nhap thanh cong");
+        history.goBack();
+      }
+    } catch (error) {
+      dispatch(actLoginFailed(error));
+      // console.log(error.response);
+    }
   };
 };
 

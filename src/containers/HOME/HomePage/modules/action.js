@@ -4,8 +4,7 @@ import {
   LIST_MOVIE_FAILED,
   DETAIL_MOVIE_MODAL,
 } from "./constant";
-import { callAPI } from "../../../../callAPI";
-import { requests } from "../../../../requests";
+import moviesApi from "../../../../api/moviesApi";
 
 const actListMovieRequest = () => {
   return {
@@ -27,18 +26,14 @@ const actListMovieFailed = (error) => {
 };
 
 const actFetchListMoive = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(actListMovieRequest());
-    callAPI(requests().layDanhSachPhim, "GET")
-      .then((result) => {
-        // this.setState({
-        //   listMovie: result.data,
-        // });
-        dispatch(actListMovieSuccess(result.data));
-      })
-      .catch((error) => {
-        dispatch(actListMovieFailed(error));
-      });
+    try {
+      const resData = await moviesApi.getDanhSachPhim();
+      dispatch(actListMovieSuccess(resData));
+    } catch (error) {
+      dispatch(actListMovieFailed(error));
+    }
   };
 };
 

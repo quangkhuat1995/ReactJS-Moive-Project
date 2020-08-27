@@ -1,6 +1,4 @@
 import React from "react";
-// import { requests } from "./../../requests";
-// import { callAPI } from "../../callAPI";
 import SingleMovieItem from "./SingleMovieItem";
 
 export default function PanelContainer(props) {
