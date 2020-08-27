@@ -35,7 +35,7 @@ function Seat(props) {
     }
   };
   // console.log(createState());
-  const [state, setState] = useState(createState());
+  const [state, setState] = useState(() => createState());
   // console.log(state);
 
   const handleChange = (e, item) => {

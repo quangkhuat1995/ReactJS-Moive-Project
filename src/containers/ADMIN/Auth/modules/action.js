@@ -31,8 +31,14 @@ const actFetchAdminLogin = (user, history) => {
     })
       .then((result) => {
         dispatch(actAuthSuccess(result.data));
-        //thanh cong thi chuyen huong sang trang dashboard
-        history.push("/dashboard");
+        //dua xuong localStorge
+        if (result.data.maLoaiNguoiDung === "QuanTri") {
+          localStorage.setItem("userAdmin", JSON.stringify(result.data));
+          //sau do, thanh cong thi chuyen huong sang trang dashboard
+          history.push("/dashboard");
+        } else {
+          alert("Tai khoan khong co quyen truy cap");
+        }
       })
       .catch((error) => {
         dispatch(actAuthFailed(error));

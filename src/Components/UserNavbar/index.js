@@ -1,11 +1,14 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 import { Link } from "react-router-dom";
 import MainNav from "./MainNav";
 
 const logo = "/images/logo.png";
 
-function UserNavbar(props) {
+function UserNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+
+  // const preHis = useMemo(() => window.location.pathname, []);
+  // console.log(preHis);
 
   const handleToggleNav = () => {
     setIsOpen(!isOpen);
@@ -17,6 +20,7 @@ function UserNavbar(props) {
     }
   };
 
+  //effect opacity khi scroll xuống
   useEffect(() => {
     const header_wrapper = document.querySelector(".header-wrapper");
 
@@ -30,6 +34,7 @@ function UserNavbar(props) {
     });
   }, []);
 
+  //Effect tự động đóng nav khi resize window > 768px và khóa cuộn trang khi đang mở nav
   useEffect(() => {
     if (isOpen) {
       window.addEventListener("resize", () => {
@@ -54,11 +59,7 @@ function UserNavbar(props) {
             <Link to="/" className="navbar-brand">
               <img className="logo-img" src={logo} alt="logo" />
             </Link>
-            <MainNav
-              customClass="header__mid"
-              handleClose={handleClose}
-              isOpen={isOpen}
-            />
+            <MainNav customClass="header__mid" />
             <nav className="nav-group">
               <div
                 onClick={handleToggleNav}

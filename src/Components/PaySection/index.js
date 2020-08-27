@@ -12,7 +12,6 @@ function Pay(props) {
           return danhSachGhe.map((item) => {
             return item.codeGhe;
           });
-
         case "giaVe":
           return danhSachGhe.reduce((acc, item) => {
             return acc + item.giaVe;
@@ -26,12 +25,12 @@ function Pay(props) {
   const renderGheDangChon = () => {
     let dsGhe = layThongTinGhe("codeGhe");
     if (dsGhe && dsGhe.length > 0) {
-      return dsGhe.join(", ");
+      return dsGhe.sort().join(", ");
     } else {
       return "Vui lòng chọn ghế";
     }
   };
-  console.log(layThongTinGhe("giaVe"));
+  // console.log(layThongTinGhe("giaVe"));
 
   const renderGiaTien = () => {
     let giaTien = layThongTinGhe("giaVe");
@@ -42,7 +41,7 @@ function Pay(props) {
     }
   };
 
-  const renderCumRap = () => {
+  const renderTenCumRap = () => {
     let ten = thongTinPhim.tenCumRap;
     if (ten.includes("Cineplex")) {
       return ten.split("Cineplex -");
@@ -66,7 +65,7 @@ function Pay(props) {
         <div className="showday row">
           <div className="col-6">Ngày giờ chiếu:</div>
           <div className="col-6 text-right font-weight-bold">
-            <span id="date">{thongTinPhim.ngayChieu}</span> - 
+            <span id="date">{thongTinPhim.ngayChieu}</span> -{" "}
             <span id="time">{thongTinPhim.gioChieu}</span>
           </div>
         </div>
@@ -75,8 +74,8 @@ function Pay(props) {
         <div className="theater row">
           <div className="col-4">Cụm rạp:</div>
           <div className="col-8 text-right font-weight-bold">
-            <span id="cumrap">{renderCumRap()[0]}</span> -
-            <span id="chinhanh">{renderCumRap()[1]}</span>
+            <span id="cumrap">{renderTenCumRap()[0]}</span> -
+            <span id="chinhanh">{renderTenCumRap()[1]}</span>
           </div>
         </div>
       </div>
@@ -122,7 +121,7 @@ function Pay(props) {
               />
               <label className="radio__item--label label__ATM" htmlFor="ATM">
                 <div className="pay__figure">
-                  <img src="./images/ATM.png" alt="atm" />
+                  <img src="/images/ATM.png" alt="atm" />
                 </div>
                 <p className="pay__text">Thẻ ATM nội địa</p>
               </label>
@@ -138,7 +137,7 @@ function Pay(props) {
               />
               <label className="radio__item--label" htmlFor="VISA">
                 <div className="pay__figure">
-                  <img src="./images/visa_mastercard.png" alt="visa card" />
+                  <img src="/images/visa_mastercard.png" alt="visa card" />
                 </div>
                 <p className="pay__text">Visa, Master, JCB</p>
               </label>
@@ -154,7 +153,7 @@ function Pay(props) {
               />
               <label className="radio__item--label" htmlFor="CASH">
                 <div className="pay__figure">
-                  <img src="./images/cash.png" alt="cash" />
+                  <img src="/images/cash.png" alt="cash" />
                 </div>
                 <p className="pay__text">Thanh toán tiền mặt</p>
               </label>
@@ -163,7 +162,9 @@ function Pay(props) {
         </div>
       </div>
       <div className="confirm__item btnPayMoney--desk" data-goto="pay">
-        <button className="btn-confirm">Thanh Toán</button>
+        <button className="btn-confirm" disabled>
+          Thanh Toán
+        </button>
       </div>
     </form>
   );

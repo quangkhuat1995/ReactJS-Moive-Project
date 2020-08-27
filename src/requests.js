@@ -12,5 +12,7 @@ export const requests = (
     layThongTinCumRapTheoHeThong: `/QuanLyRap/LayThongTinCumRapTheoHeThong`,
     LayThongTinLichChieuHeThongRap: `/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP09`,
     LayDanhSachPhongVe: `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=`,
+    dangKy: `/QuanLyNguoiDung/DangKy`,
+    dangNhap: `/QuanLyNguoiDung/DangNhap`,
   };
 };

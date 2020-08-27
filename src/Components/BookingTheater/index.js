@@ -4,8 +4,11 @@ function BookingTheater(props) {
   const { thongTinPhim } = props;
 
   const renderTenCumRap = () => {
-    let tenCumRap = thongTinPhim.tenCumRap;
-    return tenCumRap.split("-");
+    let ten = thongTinPhim.tenCumRap;
+    if (ten.includes("Cineplex")) {
+      return ten.split("Cineplex -");
+    }
+    return ten.split("-");
   };
   if (thongTinPhim) {
     return (

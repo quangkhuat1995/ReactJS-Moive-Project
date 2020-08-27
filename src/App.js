@@ -7,6 +7,8 @@ import PageNotFound from "./containers/HOME/PageNotFound";
 import HomeTemplate from "./templates/HomeTemplate";
 import AdminTemplate from "./templates/AdminTemplate";
 import Auth from "./containers/ADMIN/Auth";
+import SignUpPage from "./containers/HOME/SignUpPage/indexWorked";
+import LogInPage from "./containers/HOME/LoginPage";
 function App() {
   const renderRoutesHome = (routes) => {
     return routes.map((route, index) => {
@@ -40,6 +42,8 @@ function App() {
         {renderRoutesHome(HomeRoutes)}
         {renderRoutesAdmin(AdminRoutes)}
 
+        <Route path="/sign-up" component={SignUpPage} />
+        <Route path="/login" component={LogInPage} />
         <Route path="/auth" component={Auth} />
         <Route path="" component={PageNotFound} />
       </Switch>

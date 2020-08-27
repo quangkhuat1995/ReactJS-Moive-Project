@@ -145,14 +145,15 @@
       @include styleText($color-white-0, $fs-18);
       background: $color-choosing;
       cursor: pointer;
-      background: transparent;
       border: none;
       width: 100%;
       height: 100%;
       display: block;
       padding: 20px 15px;
-      color: #fff;
-      background: #44c020;
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
     }
   }
 }
