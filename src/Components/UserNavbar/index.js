@@ -1,24 +1,19 @@
-import React, { useState, useEffect, memo, useMemo } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import MainNav from "./MainNav";
+import { connect } from "react-redux";
+import {
+  actToggleNav,
+  actSetLogStatus,
+  actToggleNav_Force,
+} from "./modules/action";
 
 const logo = "/images/logo.png";
 
-function UserNavbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  // const preHis = useMemo(() => window.location.pathname, []);
-  // console.log(preHis);
-
-  const handleToggleNav = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClose = (currentStatus) => {
-    if (currentStatus) {
-      setIsOpen(false);
-    }
-  };
+//Theory:  isNavOpen: true-> mở nav, false-> đóng nav
+function UserNavbar(props) {
+  console.log(props);
+  const { isNavOpen, actToggleNav, actToggleNav_Force, isLoggedIn } = props;
 
   //effect opacity khi scroll xuống
   useEffect(() => {
@@ -36,11 +31,12 @@ function UserNavbar() {
 
   //Effect tự động đóng nav khi resize window > 768px và khóa cuộn trang khi đang mở nav
   useEffect(() => {
-    if (isOpen) {
+    if (isNavOpen) {
       window.addEventListener("resize", () => {
         if (window.outerWidth >= 768) {
           // document.body.style.overflowY = "initial";
-          setIsOpen(false);
+          // setIsOpen(false);
+          actToggleNav_Force(false);
         }
       });
       //Khi navbar đang mở thi khóa cuộn trang
@@ -49,7 +45,7 @@ function UserNavbar() {
       //   //set lai bth khi navbar đóng
       document.body.style.overflow = null;
     }
-  }, [isOpen]);
+  }, [isNavOpen]);
 
   return (
     <>
@@ -62,12 +58,15 @@ function UserNavbar() {
             <MainNav customClass="header__mid" />
             <nav className="nav-group">
               <div
-                onClick={handleToggleNav}
-                className={`hamburger ${isOpen ? "active" : ""}`}
+                onClick={actToggleNav}
+                className={`hamburger ${isNavOpen ? "active" : ""}`}
               >
                 <div className="bar" />
               </div>
-              <MainNav handleClose={handleClose} isOpen={isOpen} />
+              <MainNav
+                handleClose={() => actToggleNav_Force(false)}
+                isOpen={isNavOpen}
+              />
             </nav>
           </div>
         </div>
@@ -76,5 +75,21 @@ function UserNavbar() {
     </>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    isNavOpen: state.userStatusReducer.isNavOpen,
+    isLoggedIn: state.userStatusReducer.isLoggedIn,
+  };
+};
 
-export default memo(UserNavbar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actToggleNav: () => {
+      dispatch(actToggleNav());
+    },
+    actToggleNav_Force: (forceStatus) => {
+      dispatch(actToggleNav_Force(forceStatus));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserNavbar);

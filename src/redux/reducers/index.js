@@ -6,6 +6,7 @@ import authAdminReducer from "./../../containers/ADMIN/Auth/modules/reducer";
 import bookingMoviePageReducer from "./../../containers/HOME/BookingPage/modules/reducer";
 import userSignUpReducer from "./../../containers/HOME/SignUpPage/modules/reducer";
 import userLoginReducer from "./../../containers/HOME/LoginPage/modules/reducer";
+import userStatusReducer from "./../../Components/UserNavbar/modules/reducer";
 const rootReducer = combineReducers({
   listMovieReducer, // hien thi danh sach phim trong page home/showtime
   listHeThongRapReducer, // hien thi danh sach cac rap trong page home/theaterlist
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   bookingMoviePageReducer,
   userSignUpReducer,
   userLoginReducer,
+  userStatusReducer,
 });
 
 export { rootReducer };

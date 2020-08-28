@@ -1,19 +1,22 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import LoggedUI from "./LoggedUI";
 import UnLoggedUI from "./UnLoggedUI";
+import { connect } from "react-redux";
+import { actSetLogStatus } from "./modules/action";
 // import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
-  const { customClass, isOpen, handleClose } = props;
+  const { customClass, isOpen, handleClose } = props; //nhận từ cha
+  const { setCurrentLogStatus, isLoggedIn } = props; //store
+  console.log(props);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("userUser")) {
-      setIsLoggedIn(true);
+      setCurrentLogStatus(true);
     } else {
-      setIsLoggedIn(false);
+      setCurrentLogStatus(false);
     }
   }, [isLoggedIn]);
 
@@ -21,7 +24,8 @@ function MainNav(props) {
     (e) => {
       if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
         localStorage.removeItem("userUser");
-        setIsLoggedIn(false);
+        setCurrentLogStatus(false);
+        setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
       } else {
         // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
         e.preventDefault();
@@ -32,7 +36,7 @@ function MainNav(props) {
 
   return (
     <ul
-      onClick={handleClose ? () => handleClose(isOpen) : null}
+      onClick={handleClose ? handleClose : null}
       className={`${customClass} ${isOpen ? "active" : ""}`}
     >
       {isLoggedIn ? <LoggedUI handleLogOut={handleLogOut} /> : <UnLoggedUI />}
@@ -68,4 +72,17 @@ MainNav.propTypes = {
   customClass: PropTypes.string,
   handleClose: PropTypes.func,
 };
-export default MainNav;
+
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.userStatusReducer.isLoggedIn,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentLogStatus: (status) => {
+      dispatch(actSetLogStatus(status));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MainNav);
