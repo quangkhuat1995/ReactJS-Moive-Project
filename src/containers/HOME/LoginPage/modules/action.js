@@ -34,7 +34,7 @@ const actFetchUserLogin = (user, history) => {
     try {
       dispatch(actLoginRequest());
       const resData = await usersApi.postLogIn(user);
-      console.log(resData);
+      // console.log(resData);
       dispatch(actLoginSuccess(resData));
 
       if (resData) {

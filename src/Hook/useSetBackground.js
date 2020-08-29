@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+//change background of <body>
 const useSetBackground = () => {
   useEffect(() => {
     document.body.style.background =
