@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { nodeName } from "jquery";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -26,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+
+    "& :disabled": {
+      opacity: 0.5,
+      cursor: "none",
+      background: "red",
+    },
   },
 }));
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,6 +15,8 @@ import useSetBackground from "../../../Hook/useSetBackground";
 import { connect } from "react-redux";
 import { actFetchUserLogin } from "./modules/action";
 import ErrorUI from "../../../Components/ErrorUI";
+import useFormValidation from "../../../Hook/useFormValidation";
+import validateForm from "../../../Hook/validateForm";
 
 function Copyright() {
   return (
@@ -29,23 +31,42 @@ function Copyright() {
   );
 }
 
+const INIT_LOGIN_STATE = {
+  taiKhoan: "",
+  matKhau: "",
+};
+
 function LogInPage(props) {
+  const { errorLogin, history, fetchUserLogin } = props;
   const classes = useStyles();
   useSetBackground();
-  const [state, setState] = useState({
-    taiKhoan: "",
-    matKhau: "",
-  });
+  // const [state, setState] = useState({
+  //   taiKhoan: "",
+  //   matKhau: "",
+  // });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setState((state) => ({ ...state, [name]: value }));
-  };
+  const {
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    values, // init = INIT_LOGIN_STATE
+    errors, // init = {}
+    isNotValid, //init = true
+  } = useFormValidation(INIT_LOGIN_STATE, validateForm, fetchUserLogin, props);
+  console.log("errors", errors);
+  console.log("values", values);
+  console.log("isNotValid", isNotValid);
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setState((state) => ({ ...state, [name]: value }));
+  // };
   // console.log(props.history);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    props.fetchUserLogin(state, props.history);
-  };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   props.fetchUserLogin(state, props.history);
+  // };
 
   return (
     <Container component="main" maxWidth="xs" className={classes.wrapper}>
@@ -60,6 +81,7 @@ function LogInPage(props) {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
+            error={errors.taiKhoan ? true : false} //ko có lỗi->false
             variant="outlined"
             margin="normal"
             required
@@ -67,12 +89,16 @@ function LogInPage(props) {
             id="taiKhoan"
             label="Tài Khoản"
             name="taiKhoan"
-            autoComplete="taiKhoan"
+            // autoComplete=
             autoFocus
             onChange={handleChange}
-            defaultValue={state.taiKhoan}
+            onBlur={handleBlur}
+            defaultValue={values.taiKhoan}
+            helperText={errors.taiKhoan}
           />
           <TextField
+            // error={isError}
+            error={errors.matKhau ? true : false} //không có lỗi->false
             variant="outlined"
             margin="normal"
             required
@@ -81,21 +107,26 @@ function LogInPage(props) {
             label="Mật Khẩu"
             type="password"
             id="matKhau"
-            autoComplete="current-password"
+            // autoComplete="current-password"
             onChange={handleChange}
-            defaultValue={state.matKhau}
+            onBlur={handleBlur}
+            defaultValue={values.matKhau}
+            helperText={errors.matKhau}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Ghi nhớ đăng nhập"
           />
-          {props.error && <ErrorUI message={props.error.response.data} />}
+          {errorLogin && <ErrorUI message={errorLogin.response.data} />}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            // disabled khi co errors và sau khi click
+            disabled={isNotValid} // || loading tu api
+            // disabled
           >
             Đăng nhập
           </Button>
@@ -122,7 +153,7 @@ function LogInPage(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    error: state.userLoginReducer.error,
+    errorLogin: state.userLoginReducer.error,
   };
 };
 const mapDispatchToProps = (dispatch) => {
