@@ -1,34 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { actBuyTicket, actRefreshBuyTicket } from "../Seat/modules/action";
+import { actBuyTicket } from "../Seat/modules/action";
 import { useParams } from "react-router-dom";
+import Radio from "./../Radio";
 
 function Pay(props) {
-  const { dataSend } = props;
-  const danhSachVe = dataSend.danhSachVe;
+  const { danhSachVe } = props;
   const { thongTinPhim } = props.bookingMovie;
   const param = useParams();
-  // console.log(param);
-
-  // const { danhSachVe } = props.dataSend.danhSachVe;
-
-  // console.log(dataSend);
-  if (props.result) {
-    console.log(props.result);
-  }
-  if (props.error) {
-    console.log(props.error.response);
-  }
-
-  // useEffect(() => {
-  //   console.log("change");
-  //   data = {
-  //     ...data,
-  //     danhSachVe,
-  //   };
-  // }, [danhSachVe]);
-  // console.log(data);
 
   const layThongTinVe = (type) => {
     if (danhSachVe && danhSachVe.length > 0) {
@@ -77,18 +57,19 @@ function Pay(props) {
   const handleBuyTicket = (e) => {
     e.preventDefault();
     if (localStorage.getItem("userUser")) {
-      let data = {
+      const data = {
         maLichChieu: parseInt(param.maLichChieu),
         taiKhoanNguoiDung: JSON.parse(localStorage.getItem("userUser"))
           .taiKhoan,
         danhSachVe,
       };
-      let token = JSON.parse(localStorage.getItem("userUser")).accessToken;
+      const token = JSON.parse(localStorage.getItem("userUser")).accessToken;
       console.log("pay", data);
       // console.log(token);
       props.buyTicket(data, token);
     }
   };
+
   if (!thongTinPhim) return null;
   return (
     <form id="pay">
@@ -131,7 +112,8 @@ function Pay(props) {
       <div className="pay__item--wrapper">
         <div className="seatchosen row">
           <div className="col-8 myseat">
-            <span>Ghế</span> <span id="myseat">{renderGheDangChon()}</span>
+            {danhSachVe && danhSachVe.length > 0 && <span>Ghế </span>}
+            <span id="myseat">{renderGheDangChon()}</span>
           </div>
           <div className="col-4 text-right font-weight-bold" id="demoMoney">
             {renderGiaTien()} đ
@@ -151,60 +133,19 @@ function Pay(props) {
         <div className="howtopay">
           <p>Hình thức thanh toán</p>
           <div className="radio-selection">
-            {/* ATM */}
-            <div className="radio__item">
-              <input
-                className="radio__item--input"
-                type="radio"
-                name="howtopay"
-                id="ATM"
-                defaultValue="ATM"
-              />
-              <label className="radio__item--label label__ATM" htmlFor="ATM">
-                <div className="pay__figure">
-                  <img src="/images/ATM.png" alt="atm" />
-                </div>
-                <p className="pay__text">Thẻ ATM nội địa</p>
-              </label>
-            </div>
-            {/* VISA */}
-            <div className="radio__item">
-              <input
-                className="radio__item--input"
-                type="radio"
-                name="howtopay"
-                id="VISA"
-                defaultValue="VISA"
-              />
-              <label className="radio__item--label" htmlFor="VISA">
-                <div className="pay__figure">
-                  <img src="/images/visa_mastercard.png" alt="visa card" />
-                </div>
-                <p className="pay__text">Visa, Master, JCB</p>
-              </label>
-            </div>
-            {/* CASH */}
-            <div className="radio__item">
-              <input
-                className="radio__item--input"
-                type="radio"
-                name="howtopay"
-                id="CASH"
-                defaultValue="CASH"
-              />
-              <label className="radio__item--label" htmlFor="CASH">
-                <div className="pay__figure">
-                  <img src="/images/cash.png" alt="cash" />
-                </div>
-                <p className="pay__text">Thanh toán tiền mặt</p>
-              </label>
-            </div>
+            <Radio name="howtopay" value="ATM" />
+            <Radio name="howtopay" value="VISA" />
+            <Radio name="howtopay" value="CASH" />
           </div>
         </div>
       </div>
 
-      <div className="confirm__item btnPayMoney--desk" data-goto="pay">
-        <button onClick={handleBuyTicket} className="btn-confirm">
+      <div className="confirm__item btnPayMoney--desk">
+        <button
+          className="btn-confirm"
+          onClick={handleBuyTicket}
+          disabled={danhSachVe && danhSachVe.length === 0}
+        >
           Thanh Toán
         </button>
       </div>
@@ -214,15 +155,12 @@ function Pay(props) {
 
 Pay.propTypes = {
   bookingMovie: PropTypes.object,
-  dataSend: PropTypes.object,
-  danhSachGhe: PropTypes.array,
+  danhSachVe: PropTypes.array,
 };
 const mapStateToProps = (state) => {
   return {
     bookingMovie: state.bookingMoviePageReducer.bookingMovie,
-    dataSend: state.buyTicketReducer.dataSend,
-    result: state.buyTicketReducer.result,
-    error: state.buyTicketReducer.error,
+    danhSachVe: state.buyTicketReducer.danhSachVe,
   };
 };
 const mapDispatchToProps = (dispatch) => {

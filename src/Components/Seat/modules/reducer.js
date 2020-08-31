@@ -18,20 +18,15 @@ import { filterDanhSachVe } from "./action";
   taiKhoanNguoiDung: "string",
 }
  */
-//data send
-const dataSend = {
-  maLichChieu: null,
-  danhSachVe: [],
-  taiKhoanNguoiDung: "",
-};
+
 const initialState = {
   //state nhận về sau khi gửi
   loading: false,
   result: null, //"Đặt vé thành công!"
   error: null,
 
-  //state gửi đi
-  dataSend,
+  //mảng trong data cần post đi
+  danhSachVe: [],
 };
 
 const buyTicketReducer = (state = initialState, action) => {
@@ -56,7 +51,7 @@ const buyTicketReducer = (state = initialState, action) => {
 
     case CHOSING_TICKETS:
       /**Cần filter lại 2 TH:
-       1. TH chỉ chọn thêm ghế: Nếu user chọn thêm 1 ghế thì action.danhSachVe sẽ có 2 phần tử được add thêm vào listNhanDuoc (đang có sẵn 1 ghế) -> sẽ lặp ghế cũ (xảy ra double ghế đầu tiên, tức mange sẽ có 3 phần tử trong khi user chỉ chọn 2 ghế), tương tự khi chọn 3 ghế thì (listNhanDuoc) sẽ có 6 pt, 4->10.
+       1. TH chỉ chọn thêm ghế: Nếu user chọn thêm 1 ghế thì action.danhSachVe sẽ có 2 phần tử được add thêm vào danhSachVe (đang có sẵn 1 ghế) -> sẽ lặp ghế cũ (xảy ra double ghế đầu tiên, tức mảng sẽ có 3 phần tử trong khi user chỉ chọn 2 ghế), tương tự khi chọn 3 ghế thì (danhSachVe) sẽ có 6 pt, 4->10.
 
        2. TH hủy chọn ghế: Tương tự như trên nhưng lúc này các phần tử đã được chọn trong mảng sẽ không mất đi mà chỉ thay đổi value thành null, length mảng vẫn bị tăng lên giống giải thích trên
 
@@ -64,16 +59,15 @@ const buyTicketReducer = (state = initialState, action) => {
 
        3. Sau đó mới update danhSachVe vào state.
       */
-      //add every seats user chose (unchose)
-      let danhSachVe = [...state.dataSend.danhSachVe, ...action.danhSachVe];
+
+      //add every seats user chose (or unchose)
+      let danhSachVe = [...state.danhSachVe, ...action.danhSachVe];
       // filter null and duplicate
       danhSachVe = filterDanhSachVe(danhSachVe);
 
       //update state
-      state.dataSend = {
-        ...state.dataSend,
-        danhSachVe,
-      };
+      state.danhSachVe = danhSachVe;
+
       return { ...state };
 
     case REFRESH_STATE_TICKET:

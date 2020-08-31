@@ -26,12 +26,7 @@ function SeatRow(props) {
       return chunkedDanhSachGhe.map((item, index) => {
         return (
           <div className="seatrow" key={index}>
-            <Seat
-              danhSachGhe={item}
-              index={index}
-              // gheDangChon={props.gheDangChon}
-              // handleChonGhe={props.handleChonGhe}
-            />
+            <Seat danhSachGhe={item} index={index} />
           </div>
         );
       });
@@ -43,8 +38,6 @@ function SeatRow(props) {
 
 SeatRow.propTypes = {
   danhSachGhe: PropTypes.array,
-  gheDangChon: PropTypes.array,
-  handleChonGhe: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

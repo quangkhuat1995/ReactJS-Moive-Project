@@ -1,7 +1,12 @@
 import React from "react";
-
+import { connect } from "react-redux";
+import PropsTypes from "prop-types";
+BookingTheater.propsTypes = {
+  bookingMovie: PropsTypes.object,
+};
 function BookingTheater(props) {
-  const { thongTinPhim } = props;
+  const { bookingMovie } = props;
+  const { thongTinPhim } = bookingMovie;
 
   const renderTenCumRap = () => {
     let ten = thongTinPhim.tenCumRap;
@@ -32,5 +37,9 @@ function BookingTheater(props) {
   }
   return null;
 }
-
-export default BookingTheater;
+const mapStateToProps = (state) => {
+  return {
+    bookingMovie: state.bookingMoviePageReducer.bookingMovie,
+  };
+};
+export default connect(mapStateToProps, null)(BookingTheater);

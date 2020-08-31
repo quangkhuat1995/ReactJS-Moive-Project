@@ -11,9 +11,6 @@ import { URL_API } from "./../constants/config";
 
 const axiosClient = axios.create({
   baseURL: URL_API,
-  header: {
-    "content-type": "application/json-patch+json",
-  },
 });
 
 // Add a request interceptor
