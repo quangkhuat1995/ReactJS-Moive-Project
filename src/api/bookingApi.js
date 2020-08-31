@@ -20,7 +20,12 @@ const bookingApi = {
   /**TODO đọc lại docs chỗ này */
   postDatVe: (data, token) => {
     const uri = `/QuanLyDatVe/DatVe`;
-    return axiosClient.post(uri, data, token); //tham số thứ 3 phải là config?
+    const config = {
+      headers: {
+        ["Authorization"]: `Bearer ${token}`,
+      },
+    };
+    return axiosClient.post(uri, data, config); //tham số thứ 3 phải là config
   },
 };
 

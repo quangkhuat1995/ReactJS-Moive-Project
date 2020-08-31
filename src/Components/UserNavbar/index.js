@@ -12,8 +12,8 @@ const logo = "/images/logo.png";
 
 //Theory:  isNavOpen: true-> mở nav, false-> đóng nav
 function UserNavbar(props) {
-  console.log(props);
-  const { isNavOpen, actToggleNav, actToggleNav_Force, isLoggedIn } = props;
+  // console.log(props);
+  const { isNavOpen, actToggleNav, actToggleNav_Force } = props;
 
   //effect opacity khi scroll xuống
   useEffect(() => {
@@ -78,7 +78,6 @@ function UserNavbar(props) {
 const mapStateToProps = (state) => {
   return {
     isNavOpen: state.userStatusReducer.isNavOpen,
-    isLoggedIn: state.userStatusReducer.isLoggedIn,
   };
 };
 

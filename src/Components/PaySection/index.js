@@ -1,19 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { actBuyTicket } from "../Seat/modules/action";
+import { useParams } from "react-router-dom";
+import Radio from "./../Radio";
 
 function Pay(props) {
-  const { danhSachGhe } = props;
+  const { danhSachVe } = props;
   const { thongTinPhim } = props.bookingMovie;
-  const layThongTinGhe = (type) => {
-    if (danhSachGhe && danhSachGhe.length > 0) {
+  const param = useParams();
+
+  const layThongTinVe = (type) => {
+    if (danhSachVe && danhSachVe.length > 0) {
       switch (type) {
         case "codeGhe":
-          return danhSachGhe.map((item) => {
+          return danhSachVe.map((item) => {
             return item.codeGhe;
           });
         case "giaVe":
-          return danhSachGhe.reduce((acc, item) => {
+          return danhSachVe.reduce((acc, item) => {
             return acc + item.giaVe;
           }, 0);
 
@@ -23,18 +28,18 @@ function Pay(props) {
     }
   };
   const renderGheDangChon = () => {
-    let dsGhe = layThongTinGhe("codeGhe");
-    if (dsGhe && dsGhe.length > 0) {
-      return dsGhe.sort().join(", ");
+    let dsVe = layThongTinVe("codeGhe");
+    if (dsVe && dsVe.length > 0) {
+      return dsVe.sort().join(", ");
     } else {
       return "Vui lòng chọn ghế";
     }
   };
-  // console.log(layThongTinGhe("giaVe"));
+  // console.log(layThongTinVe("giaVe"));
 
   const renderGiaTien = () => {
-    let giaTien = layThongTinGhe("giaVe");
-    if (danhSachGhe && danhSachGhe.length > 0) {
+    let giaTien = layThongTinVe("giaVe");
+    if (danhSachVe && danhSachVe.length > 0) {
       return giaTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     } else {
       return 0;
@@ -48,6 +53,23 @@ function Pay(props) {
     }
     return ten.split("-");
   };
+
+  const handleBuyTicket = (e) => {
+    e.preventDefault();
+    if (localStorage.getItem("userUser")) {
+      const data = {
+        maLichChieu: parseInt(param.maLichChieu),
+        taiKhoanNguoiDung: JSON.parse(localStorage.getItem("userUser"))
+          .taiKhoan,
+        danhSachVe,
+      };
+      const token = JSON.parse(localStorage.getItem("userUser")).accessToken;
+      console.log("pay", data);
+      // console.log(token);
+      props.buyTicket(data, token);
+    }
+  };
+
   if (!thongTinPhim) return null;
   return (
     <form id="pay">
@@ -90,7 +112,8 @@ function Pay(props) {
       <div className="pay__item--wrapper">
         <div className="seatchosen row">
           <div className="col-8 myseat">
-            <span>Ghế</span> <span id="myseat">{renderGheDangChon()}</span>
+            {danhSachVe && danhSachVe.length > 0 && <span>Ghế </span>}
+            <span id="myseat">{renderGheDangChon()}</span>
           </div>
           <div className="col-4 text-right font-weight-bold" id="demoMoney">
             {renderGiaTien()} đ
@@ -110,59 +133,19 @@ function Pay(props) {
         <div className="howtopay">
           <p>Hình thức thanh toán</p>
           <div className="radio-selection">
-            {/* ATM */}
-            <div className="radio__item">
-              <input
-                className="radio__item--input"
-                type="radio"
-                name="howtopay"
-                id="ATM"
-                defaultValue="ATM"
-              />
-              <label className="radio__item--label label__ATM" htmlFor="ATM">
-                <div className="pay__figure">
-                  <img src="/images/ATM.png" alt="atm" />
-                </div>
-                <p className="pay__text">Thẻ ATM nội địa</p>
-              </label>
-            </div>
-            {/* VISA */}
-            <div className="radio__item">
-              <input
-                className="radio__item--input"
-                type="radio"
-                name="howtopay"
-                id="VISA"
-                defaultValue="VISA"
-              />
-              <label className="radio__item--label" htmlFor="VISA">
-                <div className="pay__figure">
-                  <img src="/images/visa_mastercard.png" alt="visa card" />
-                </div>
-                <p className="pay__text">Visa, Master, JCB</p>
-              </label>
-            </div>
-            {/* CASH */}
-            <div className="radio__item">
-              <input
-                className="radio__item--input"
-                type="radio"
-                name="howtopay"
-                id="CASH"
-                defaultValue="CASH"
-              />
-              <label className="radio__item--label" htmlFor="CASH">
-                <div className="pay__figure">
-                  <img src="/images/cash.png" alt="cash" />
-                </div>
-                <p className="pay__text">Thanh toán tiền mặt</p>
-              </label>
-            </div>
+            <Radio name="howtopay" value="ATM" />
+            <Radio name="howtopay" value="VISA" />
+            <Radio name="howtopay" value="CASH" />
           </div>
         </div>
       </div>
-      <div className="confirm__item btnPayMoney--desk" data-goto="pay">
-        <button className="btn-confirm" disabled>
+
+      <div className="confirm__item btnPayMoney--desk">
+        <button
+          className="btn-confirm"
+          onClick={handleBuyTicket}
+          disabled={danhSachVe && danhSachVe.length === 0}
+        >
           Thanh Toán
         </button>
       </div>
@@ -172,11 +155,19 @@ function Pay(props) {
 
 Pay.propTypes = {
   bookingMovie: PropTypes.object,
-  danhSachGhe: PropTypes.array,
+  danhSachVe: PropTypes.array,
 };
 const mapStateToProps = (state) => {
   return {
     bookingMovie: state.bookingMoviePageReducer.bookingMovie,
+    danhSachVe: state.buyTicketReducer.danhSachVe,
   };
 };
-export default connect(mapStateToProps, null)(Pay);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buyTicket: (data, token) => {
+      dispatch(actBuyTicket(data, token));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Pay);

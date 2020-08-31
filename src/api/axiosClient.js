@@ -2,32 +2,33 @@
 
 //https://medium.com/swlh/handling-access-and-refresh-tokens-using-axios-interceptors-3970b601a5da
 
+//https://stackoverflow.com/questions/43051291/attach-authorization-header-for-all-axios-requests
+
+//https://stackoverflow.com/questions/40988238/sending-the-bearer-token-with-axios
+
 import axios from "axios";
 import { URL_API } from "./../constants/config";
 
 const axiosClient = axios.create({
   baseURL: URL_API,
-  header: {
-    "content-type": "application/json-patch+json",
-  },
 });
 
 // Add a request interceptor
 axiosClient.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    let token = "";
-    const local =
-      localStorage.getItem("userUser") || localStorage.getItem("userAdmin");
-    if (localStorage.getItem("userUser")) {
-      token = JSON.parse(localStorage.getItem("userUser")).accessToken;
-    }
-    if (localStorage.getItem("userAdmin")) {
-      token = JSON.parse(localStorage.getItem("userAdmin")).accessToken;
-    }
-    if (local) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
+    // let token = "";
+    // const local =
+    //   localStorage.getItem("userUser") || localStorage.getItem("userAdmin");
+    // if (localStorage.getItem("userUser")) {
+    //   token = JSON.parse(localStorage.getItem("userUser")).accessToken;
+    // }
+    // if (localStorage.getItem("userAdmin")) {
+    //   token = JSON.parse(localStorage.getItem("userAdmin")).accessToken;
+    // }
+    // if (local) {
+    //   config.headers["Authorization"] = `Bearer ${token}`;
+    // }
     return config;
   },
   function (error) {

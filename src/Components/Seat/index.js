@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { actDanhSachVe } from "./modules/action";
 const arrayName = [
   "A",
   "B",
@@ -17,13 +18,13 @@ const arrayName = [
   "M",
 ];
 function Seat(props) {
-  const { danhSachGhe, index } = props;
+  const { danhSachGhe, index, updateMySeats } = props;
   const letter = arrayName[index];
 
   const renderCode = (idx) =>
-    `${letter}${idx + 1 >= 10 ? idx + 1 : `0${idx + 1}`}`; //A11
+    `${letter}${idx + 1 >= 10 ? idx + 1 : `0${idx + 1}`}`; // A01, J16,...
 
-  //Tao 1 obj state co key = name cua input, value la obj chua 2 key maGhe, giaVe
+  /**  output { A01:{}, A02:{},... }*/
   const createState = () => {
     if (danhSachGhe && danhSachGhe.length > 0) {
       return danhSachGhe.reduce((acc, item, idx) => {
@@ -36,17 +37,10 @@ function Seat(props) {
   };
   // console.log(createState());
   const [state, setState] = useState(() => createState());
-  // console.log(state);
 
   const handleChange = (e, item) => {
-    // console.log(item);
+    const { name, checked } = e.target;
 
-    e.persist();
-    const { name, checked, defaultValue, value, dataset } = e.target;
-    // console.log(dataset.render); dataset.giaVe maVe = value;
-
-    // console.log(checked);
-    // state[e.target.name] = e.target.checked;
     if (checked) {
       setState(
         state,
@@ -55,24 +49,17 @@ function Seat(props) {
         (state[name].codeGhe = name)
       );
     } else {
+      //uncheck thì set lại state ban đầu;
       setState(state, (state[name].maGhe = null), (state[name].giaVe = null));
     }
-    // console.log(Object.values(state));
-    let haha = Object.values(state).filter((item) => {
+
+    //filter null trong row, chỉ gửi lên store những ghế được chọn, sau khi gửi lên store mà người dùng hủy chọn thì store sẽ filter lần nữa (xem reducer.js)
+    let listGhe = Object.values(state).filter((item) => {
       return item.maGhe != null;
     });
-    // console.log(...haha);
-    // console.log(haha);
-    props.handleChonGhe(haha);
+    //gửi lên store
+    updateMySeats(listGhe);
   };
-
-  // useEffect(() => {
-  //   let haha = Object.values(state).filter((item) => {
-  //     return item.maGhe != null;
-  //   });
-  //   // console.log(haha);
-  //   props.handleChonGhe(haha);
-  // }, []);
 
   const renderDanhSachGhe = () => {
     if (danhSachGhe && danhSachGhe.length > 0) {
@@ -81,11 +68,7 @@ function Seat(props) {
         // console.log(item.giaVe);
 
         return (
-          <span
-            className="seat-clickable"
-            data-id={`${letter}${item.tenGhe}`}
-            key={item.maGhe}
-          >
+          <span className="seat-clickable" key={item.maGhe}>
             <input
               type="checkbox"
               id={`${letter}${item.tenGhe}`}
@@ -93,13 +76,8 @@ function Seat(props) {
               name={renderCode(idx)}
               disabled={item.daDat}
               onChange={(e) => handleChange(e, item)}
-              // data-render={renderCode(idx)}
             />
-            <label
-              htmlFor={`${letter}${item.tenGhe}`}
-              className={item.loaiGhe}
-              // onclick="showClickedSeat('A01')"
-            >
+            <label htmlFor={`${letter}${item.tenGhe}`} className={item.loaiGhe}>
               <span className="seatnum">{renderCode(idx)}</span>
             </label>
           </span>
@@ -107,6 +85,7 @@ function Seat(props) {
       });
     }
   };
+
   return (
     <>
       <span className="rowname seat-unclickable">{letter}</span>
@@ -119,7 +98,13 @@ function Seat(props) {
 Seat.propTypes = {
   index: PropTypes.number,
   danhSachGhe: PropTypes.array,
-  handleChonGhe: PropTypes.func,
 };
 
-export default Seat;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateMySeats: (list) => {
+      dispatch(actDanhSachVe(list));
+    },
+  };
+};
+export default connect(null, mapDispatchToProps)(Seat);
