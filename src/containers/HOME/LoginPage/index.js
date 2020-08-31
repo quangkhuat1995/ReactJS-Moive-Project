@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,11 +10,14 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import useStyles from "../../../style";
-import useSetBackground from "../../../Hook/useSetBackground";
 import { connect } from "react-redux";
 import { actFetchUserLogin } from "./modules/action";
+//Components
 import ErrorUI from "../../../Components/ErrorUI";
+//Material UI
+import useStyles from "../../../style";
+//Custom Hooks
+import useSetBackground from "../../../Hook/useSetBackground";
 import useFormValidation from "../../../Hook/useFormValidation";
 import validateForm from "../../../Hook/validateForm";
 
@@ -40,10 +43,6 @@ function LogInPage(props) {
   const { errorLogin, history, fetchUserLogin } = props;
   const classes = useStyles();
   useSetBackground();
-  // const [state, setState] = useState({
-  //   taiKhoan: "",
-  //   matKhau: "",
-  // });
 
   const {
     handleChange,
@@ -57,15 +56,10 @@ function LogInPage(props) {
   console.log("values", values);
   console.log("isNotValid", isNotValid);
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setState((state) => ({ ...state, [name]: value }));
-  // };
-  // console.log(props.history);
-
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   props.fetchUserLogin(state, props.history);
+  //  đã được xử lý trong useFormValidation
   // };
 
   return (

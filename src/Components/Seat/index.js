@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useHistory, Redirect } from "react-router-dom";
+import { actDanhSachVe } from "./modules/action";
 const arrayName = [
   "A",
   "B",
@@ -17,13 +19,44 @@ const arrayName = [
   "M",
 ];
 function Seat(props) {
-  const { danhSachGhe, index } = props;
+  const history = useHistory();
+
+  const { danhSachGhe, index, isLoggedIn, updateMySeats } = props;
   const letter = arrayName[index];
 
   const renderCode = (idx) =>
-    `${letter}${idx + 1 >= 10 ? idx + 1 : `0${idx + 1}`}`; //A11
+    `${letter}${idx + 1 >= 10 ? idx + 1 : `0${idx + 1}`}`; // A01, J16,...
 
   //Tao 1 obj state co key = name cua input, value la obj chua 2 key maGhe, giaVe
+
+  /** 2. */
+  // const createState = () => {
+  //   if (danhSachGhe && danhSachGhe.length > 0) {
+  //     let array = danhSachGhe.reduce((acc, item, idx) => {
+  //       let hoho = {
+  //         [renderCode(idx)]: { maGhe: null, giaVe: null, codeGhe: "" },
+  //       };
+
+  //       return [...acc, hoho];
+  //     }, []);
+  //     return [{ ...array }];
+  //   }
+  // };
+  /**1. */
+  // const createState = () => {
+  //   if (danhSachGhe && danhSachGhe.length > 0) {
+  //     return danhSachGhe.reduce((acc, item, idx) => {
+  //       return [
+  //         ...acc,
+  //         {
+  //           [renderCode(idx)]: { maGhe: null, giaVe: null, codeGhe: "" },
+  //         },
+  //       ];
+  //     }, []);
+  //   }
+  // };
+  /** 4. return { A01:{}, A02:{},... }*/
+
   const createState = () => {
     if (danhSachGhe && danhSachGhe.length > 0) {
       return danhSachGhe.reduce((acc, item, idx) => {
@@ -39,10 +72,13 @@ function Seat(props) {
   // console.log(state);
 
   const handleChange = (e, item) => {
-    // console.log(item);
-
     e.persist();
-    const { name, checked, defaultValue, value, dataset } = e.target;
+    if (!isLoggedIn) {
+      alert("Bạn cần đăng nhập trước");
+      history.push("/login");
+    }
+
+    const { name, checked } = e.target;
     // console.log(dataset.render); dataset.giaVe maVe = value;
 
     // console.log(checked);
@@ -58,12 +94,16 @@ function Seat(props) {
       setState(state, (state[name].maGhe = null), (state[name].giaVe = null));
     }
     // console.log(Object.values(state));
-    let haha = Object.values(state).filter((item) => {
+    // console.log(state);
+
+    let listGhe = Object.values(state).filter((item) => {
       return item.maGhe != null;
     });
     // console.log(...haha);
-    // console.log(haha);
-    props.handleChonGhe(haha);
+    //gửi haha lên store
+    // console.log(listGhe);
+    // props.handleChonGhe(listGhe);
+    updateMySeats(listGhe);
   };
 
   // useEffect(() => {
@@ -107,6 +147,11 @@ function Seat(props) {
       });
     }
   };
+  /**TODO : Redirect pages*/
+  // if (!isLoggedIn) {
+  //   // alert("Bạn cần đăng nhập trước");
+  //   return <Redirect to="/login" />;
+  // }
   return (
     <>
       <span className="rowname seat-unclickable">{letter}</span>
@@ -122,4 +167,17 @@ Seat.propTypes = {
   handleChonGhe: PropTypes.func,
 };
 
-export default Seat;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.userStatusReducer.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateMySeats: (list) => {
+      dispatch(actDanhSachVe(list));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Seat);

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Seat from "../Seat";
 // import Seat2 from "../Seat/Seat2";
-const arrayName = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 function SeatRow(props) {
   const { danhSachGhe } = props.bookingMovie;
+
   // console.log(danhSachGhe);
   const chunkArray = (myArray, chunk_size) => {
     let results = [];
@@ -22,7 +22,7 @@ function SeatRow(props) {
     if (danhSachGhe && danhSachGhe.length > 0) {
       const soCot = 16;
       const copyDanhSachGhe = [...danhSachGhe];
-      const chunkedDanhSachGhe = chunkArray(copyDanhSachGhe, soCot); // => 11 hang du 6
+      const chunkedDanhSachGhe = chunkArray(copyDanhSachGhe, soCot); // => 10 x 16
       return chunkedDanhSachGhe.map((item, index) => {
         return (
           <div className="seatrow" key={index}>
@@ -30,32 +30,15 @@ function SeatRow(props) {
               danhSachGhe={item}
               index={index}
               // gheDangChon={props.gheDangChon}
-              handleChonGhe={props.handleChonGhe}
+              // handleChonGhe={props.handleChonGhe}
             />
           </div>
         );
       });
     }
   };
-  // const TEST = () => {
-  //   if (danhSachGhe && danhSachGhe.length > 0) {
-  //     let soDong = arrayName.length;
-  //     let soCot = Math.floor(danhSachGhe.length / arrayName.length);
-  //     for (let i = 0; i < soDong; i++) {
-  //       for (let j = 0; j < soCot; j++) {
-  //         return (
-  //           <Seat2 key={`${i}-${j}`} tenHang={arrayName} tenCot={danhSachGhe} />
-  //         );
-  //       }
-  //     }
-  //   }
-  // };
-  return (
-    <>
-      {renderSeatRow()}
-      {/* {TEST()} */}
-    </>
-  );
+
+  return <>{renderSeatRow()}</>;
 }
 
 SeatRow.propTypes = {

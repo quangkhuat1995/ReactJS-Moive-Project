@@ -1,8 +1,10 @@
 import React, { useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+//Components
 import LoggedUI from "./LoggedUI";
 import UnLoggedUI from "./UnLoggedUI";
+//module
 import { connect } from "react-redux";
 import { actSetLogStatus } from "./modules/action";
 // import avatar from "./../../images/avatar.png";
@@ -10,7 +12,7 @@ import { actSetLogStatus } from "./modules/action";
 function MainNav(props) {
   const { customClass, isOpen, handleClose } = props; //nhận từ cha
   const { setCurrentLogStatus, isLoggedIn } = props; //store
-  console.log(props);
+  // console.log(props);
 
   useEffect(() => {
     if (localStorage.getItem("userUser")) {
