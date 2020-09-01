@@ -1,11 +1,21 @@
 import React from "react";
-
+import listAdvertiseImages from "./../../constants/advertiseData";
+import Slider from "react-slick";
+const settings = {
+  infinite: true,
+  speed: 500,
+  dots: false,
+  autoplay: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+};
 export default function Ads() {
   return (
     <section className="ads" id="ungdung">
       <div className="myContainer">
         <div className="row">
-          <div className="col-12 col-lg-6 ads__item">
+          <div className="col-12 col-lg-6 ">
             <p className="ads__title">Ứng dụng tiện lợi dành cho</p>
             <p className="ads__title">người yêu điện ảnh</p>
             <br />
@@ -20,8 +30,23 @@ export default function Ads() {
               <a href="#!">Android</a>
             </p>
           </div>
-          <div className="col-12 col-lg-6 ads__item">
-            <img src="./images/mobile.png" alt />
+          <div className="col-12 col-lg-6 ">
+            <img
+              className="ads__mobile-img"
+              src="./images/mobile.png"
+              alt="tix-app"
+            />
+            <div className="slider-wrapper">
+              {
+                <Slider {...settings}>
+                  {listAdvertiseImages.map((img, index) => (
+                    <div key={index}>
+                      <img className="img-fluid" src={img} alt="app-tix" />
+                    </div>
+                  ))}
+                </Slider>
+              }
+            </div>
           </div>
         </div>
       </div>

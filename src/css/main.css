@@ -343,6 +343,10 @@ p {
   bottom: 5px;
 }
 
+.nav-group .hamburger.active {
+  margin-right: 17px;
+}
+
 .nav-group .hamburger.active .bar::after, .nav-group .hamburger.active .bar::before {
   top: 0;
   bottom: 0;
@@ -815,52 +819,67 @@ p {
   padding: 60px 0;
 }
 
-.ads .ads__item {
-  text-align: center;
+.ads__mobile-img {
+  width: 100%;
+  margin: auto;
+  padding: 0 28%;
 }
 
-.ads .ads__item .ads__title {
+.ads__title {
   margin-bottom: 10px;
   font-weight: 600;
   color: #fff;
   font-size: 1.8em;
 }
 
-.ads .ads__item .ads__subtitle, .ads .ads__item .text__underbutton {
+.ads__subtitle, .ads .text__underbutton {
   margin: 10px;
   color: #fff;
   font-size: 1em;
 }
 
-.ads .ads__item .text__underbutton a {
+.ads .text__underbutton a {
   color: #fff;
   text-decoration: underline;
 }
 
-.ads .ads__item img {
+.ads .slider-wrapper {
+  z-index: 9;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin: auto;
-  padding: 0 28%;
+  height: 100%;
+  border-radius: 0;
+  padding: 2% 31% 1.5% 31%;
+}
+
+.ads .slider-wrapper .slick-list {
+  border-radius: 20px;
+  height: 100%;
 }
 
 @media screen and (min-width: 992px) {
   .ads {
     padding: 120px 0 80px;
   }
-  .ads .ads__item {
+  .ads__item {
     align-self: center;
     text-align: left;
   }
-  .ads .ads__item .ads__title {
+  .ads__title {
     font-size: 32px;
     font-weight: 700;
   }
-  .ads .ads__item .ads__subtitle, .ads .ads__item .text__underbutton {
+  .ads__subtitle, .ads .text__underbutton {
     margin: 0;
     font-size: 16px;
   }
-  .ads .ads__item .text__underbutton {
+  .ads .text__underbutton {
     padding-top: 10px;
+  }
+  .ads .slider-wrapper {
+    padding: 2% 30.5% 1.5% 30.5%;
   }
 }
 
@@ -1006,7 +1025,7 @@ p {
 }
 
 .theater__details::-webkit-scrollbar {
-  height: 5px;
+  width: 5px;
 }
 
 .theater__details::-webkit-scrollbar-track {
@@ -1049,7 +1068,7 @@ p {
 }
 
 .theater__movies::-webkit-scrollbar {
-  height: 5px;
+  width: 5px;
 }
 
 .theater__movies::-webkit-scrollbar-track {
@@ -1145,8 +1164,8 @@ p {
 
 @media screen and (min-width: 768px) {
   .detail-wrapper {
-    grid-template-columns: repeat(9, 1fr);
-    grid-template-areas: "tr tr ld ld ld ld ld ld ld ld" "tr tr sh sh sh sh sh sh sh sh";
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-areas: "tr tr tr ld ld ld ld ld ld ld" "tr tr tr sh sh sh sh sh sh sh";
   }
 }
 
@@ -1254,8 +1273,9 @@ p {
 
 .detail__theater--item .tenCumRap {
   padding-left: 10px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 .detail__theater--item .arrow {
@@ -1493,14 +1513,19 @@ p {
   justify-content: flex-start;
   align-items: center;
   pointer-events: none;
+  position: relative;
 }
 
 #seat-section .seat__map .listseat .seatrow .seat-unclickable, #seat-section .seat__map .noteseat .seatrow .seat-unclickable, #seat-section .seat__map .listseat .seatrow .seat-clickable label, #seat-section .seat__map .noteseat .seatrow .seat-clickable label {
+  position: absolute;
+  top: 50%;
+  left: -10%;
+  transform: translateY(-50%);
   color: #000;
   font-size: 18px;
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 3vh;
+  height: 3vh;
   line-height: 20px;
   border-radius: 4px;
   margin-right: 60px;
@@ -1520,9 +1545,16 @@ p {
 
 @media screen and (min-width: 768px) {
   #seat-section .seat__map .listseat .seatrow .seat-unclickable, #seat-section .seat__map .noteseat .seatrow .seat-unclickable, #seat-section .seat__map .listseat .seatrow .seat-clickable label, #seat-section .seat__map .noteseat .seatrow .seat-clickable label {
+    width: 4vh;
+    height: 4vh;
+    line-height: 30px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #seat-section .seat__map .listseat .seatrow .seat-unclickable, #seat-section .seat__map .noteseat .seatrow .seat-unclickable, #seat-section .seat__map .listseat .seatrow .seat-clickable label, #seat-section .seat__map .noteseat .seatrow .seat-clickable label {
     width: 30px;
     height: 30px;
-    line-height: 30px;
   }
 }
 
@@ -1531,19 +1563,8 @@ p {
   margin-top: 5px;
 }
 
-#seat-section .seat__map .listseat .seatrow .seat-clickable:nth-child(even) label.couple, #seat-section .seat__map .noteseat .seatrow .seat-clickable:nth-child(even) label.couple {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-right: 0px;
-  margin-left: 5px;
-}
-
-#seat-section .seat__map .listseat .seatrow .seat-clickable:nth-child(odd) label.couple, #seat-section .seat__map .noteseat .seatrow .seat-clickable:nth-child(odd) label.couple {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
 #seat-section .seat__map .listseat .seatrow .seat-clickable label, #seat-section .seat__map .noteseat .seatrow .seat-clickable label {
+  transform: none;
   pointer-events: all;
   margin-bottom: 0;
   margin-right: 5px;
@@ -1553,7 +1574,7 @@ p {
   cursor: pointer;
 }
 
-#seat-section .seat__map .listseat .seatrow .seat-clickable label.vip, #seat-section .seat__map .noteseat .seatrow .seat-clickable label.vip {
+#seat-section .seat__map .listseat .seatrow .seat-clickable label.Vip, #seat-section .seat__map .noteseat .seatrow .seat-clickable label.Vip {
   background: #f7b500;
 }
 
@@ -1585,6 +1606,10 @@ p {
 
 #seat-section .seat__map .listseat .seatrow .seat-clickable input[type="checkbox"]:checked ~ label .seatnum, #seat-section .seat__map .noteseat .seatrow .seat-clickable input[type="checkbox"]:checked ~ label .seatnum {
   visibility: visible;
+}
+
+#seat-section .seat__map .listseat .seatrow .seat-clickable input[type="checkbox"]:disabled ~ label, #seat-section .seat__map .noteseat .seatrow .seat-clickable input[type="checkbox"]:disabled ~ label {
+  background-color: #ccc;
 }
 
 #seat-section .seat__map .noteseat {
@@ -1688,7 +1713,7 @@ p {
   background: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   position: relative;
-  height: 100vh;
+  height: 115vh;
 }
 
 #pay-section .pay-wrapper {
@@ -1801,13 +1826,28 @@ p {
 }
 
 #pay-section .confirm__item {
-  padding: 20px 15px;
-  cursor: pointer;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#pay-section .confirm__item .btn-confirm {
   text-align: center;
   color: #fff;
   font-size: 18px;
   background: #44c020;
-  margin: -15px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 20px 15px;
+}
+
+#pay-section .confirm__item .btn-confirm:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 .body-wrap {
@@ -2758,5 +2798,13 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+body.modal-open {
+  padding-right: 0px !important;
+}
+
+body.modal-open .modal {
+  padding-right: 0px !important;
 }
 /*# sourceMappingURL=main.css.map */

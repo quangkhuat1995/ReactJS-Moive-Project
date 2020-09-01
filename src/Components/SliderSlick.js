@@ -7,6 +7,7 @@ export default function SliderSlick(props) {
     speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
+    // autoplay: true,
     // prevArrow: <button type="button" className="slick-prev"></button>,
     // nextArrow: <button type="button" className="slick-next"></button>,
     // accessibility: false,
@@ -17,9 +18,11 @@ export default function SliderSlick(props) {
         breakpoint: 1065,
         settings: {
           arrows: false,
+          autoplay: false,
         },
       },
     ],
   };
+
   return <Slider {...settings}>{props.children}</Slider>;
 }

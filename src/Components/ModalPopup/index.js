@@ -13,9 +13,9 @@ function ModalPopup(props) {
     });
   }, []);
 
+  const { loading, detailMovie, movie } = props;
   const renderSrc = () => {
     //props movie duoc truyen vao o trang detail
-    const { loading, detailMovie, movie } = props;
     if (loading) return "";
     return detailMovie?.trailer || movie?.trailer;
   };

@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
-import ShowTime from "../../../Components/ShowTime";
+import { connect } from "react-redux";
+import ModalPopup from "../../../Components/ModalPopup";
 import News from "../../../Components/News";
+import Search from "../../../Components/Search";
+import SeperateSection from "../../../Components/SeperateSection";
+import ShowTime from "../../../Components/ShowTime";
 import TheaterList from "../../../Components/TheaterList";
 // import Footer from "../../../Components/Footer";
 import Loading from "./../../../Components/Loading";
-import { connect } from "react-redux";
 import { actFetchListMoive } from "./modules/action";
-import ModalPopup from "../../../Components/ModalPopup";
-import Search from "../../../Components/Search";
+import Carousel from "../../../Components/Carousel";
+import PropTypes from "prop-types";
+import Ads from "../../../Components/Ads";
 
 function HomePage(props) {
   const { fetchListMovie, listMovie, loading } = props;
@@ -20,16 +24,23 @@ function HomePage(props) {
   if (loading) return <Loading />;
   return (
     <>
-      this is HomePage
+      <Carousel />
       <Search />
       <ShowTime listMovie={listMovie} />
+      <SeperateSection />
       <TheaterList />
+      <SeperateSection />
       <News />
+      <SeperateSection />
+      <Ads />
       <ModalPopup />
     </>
   );
 }
-
+HomePage.propTypes = {
+  listMovie: PropTypes.array,
+  loading: PropTypes.bool,
+};
 const mapStateToProps = (state) => {
   return {
     listMovie: state.listMovieReducer.listMovie,
