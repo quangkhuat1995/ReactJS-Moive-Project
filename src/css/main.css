@@ -60,14 +60,30 @@
   color: #e5a813;
 }
 
-.detail__theater--item::after, .detail__showList .theater__details--item::after, .detail__showList .theater__details--item .testTimeList::after {
+.theater .active.nav-link::after, .theater .active.theater__movies--item::after, .active.detail__theater--item::after, .detail__showList .active.theater__details--item:not(:last-child)::after {
+  background-color: #fb4226;
+  box-shadow: 0px -3px 10px 0px #fb4226;
+}
+
+.theater .nav-link::after, .theater .theater__movies--item::after, .detail__theater--item::after, .detail__showList .theater__details--item:not(:last-child)::after {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 0;
+  bottom: 2px;
   transform: translateX(-50%);
   background-color: #ebebec;
-  height: 1px;
+  height: 2px;
+  width: calc(100% - 40px);
+}
+
+.detail__showList .theater__details--item:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ebebec;
+  height: 0.5px;
   width: calc(100% - 40px);
 }
 
@@ -135,6 +151,30 @@ p {
   .myContainer {
     width: calc(100% - 20px);
   }
+}
+
+.CGV {
+  color: #e71a0f;
+}
+
+.BHD {
+  color: #8bc541;
+}
+
+.CNS {
+  color: #df0d7a;
+}
+
+.GLX {
+  color: #f60;
+}
+
+.Lotte {
+  color: #ca4137;
+}
+
+.MegaGS {
+  color: #e5a813;
 }
 
 /**
@@ -434,13 +474,13 @@ p {
   position: relative;
 }
 
-.carousel__item .carousel__img a {
+.carousel__item .carousel__img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.carousel__item .carousel__img a img {
+.carousel__item .carousel__img img {
   width: 100%;
 }
 
@@ -976,6 +1016,12 @@ p {
   transform: scale(1.5);
 }
 
+.theater__image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
 .theater__logos {
   flex-basis: 92px;
   min-height: 735px;
@@ -987,29 +1033,12 @@ p {
   width: 100%;
   border: none;
   position: relative;
-  opacity: 0.5;
-  transition: all 0.25s;
+  opacity: 0.7;
+  transition: all 0.5s;
 }
 
 .theater .nav-link.active, .theater .active.theater__movies--item, .theater .nav-link:hover, .theater .theater__movies--item:hover, .theater .nav-link:focus, .theater .theater__movies--item:focus {
   opacity: 1;
-}
-
-.theater .nav-link::after, .theater .theater__movies--item::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  transform: translateX(-50%);
-  background-color: #ebebec;
-  height: 2px;
-  width: calc(100% - 40px);
-}
-
-.theater__image {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
 }
 
 .theater__details {
@@ -1104,6 +1133,7 @@ p {
 .wrapInfo {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   overflow: hidden;
   padding-left: 10px;
 }
@@ -1325,15 +1355,12 @@ p {
   position: relative;
   transition: 0.3s all;
   flex-wrap: wrap;
-}
-
-.detail__showList .theater__details--item:not(.collapsed)::after {
-  visibility: hidden;
-}
-
-.detail__showList .theater__details--item .testTimeList {
   width: 100%;
-  transform: translateY(20px);
+}
+
+.detail__showList .testTimeList {
+  padding: 20px;
+  height: auto;
 }
 
 /**

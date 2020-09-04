@@ -1,9 +1,8 @@
-import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
-import CarouselItem from "./CarouselItem";
+import React from "react";
 import SliderSlick from "../SliderSlick";
-import { connect } from "react-redux";
 import homeCarouselData from "./../../constants/homeCarouselData";
+import CarouselItem from "./CarouselItem";
 
 function Carousel(props) {
   const { isHero } = props;
@@ -15,7 +14,6 @@ function Carousel(props) {
   };
   return (
     <section className={`carousel ${isHero ? "hero" : ""}`}>
-      {/* ko có class isHero thì hiện slider banner, còn nếu có thì hiện custom 1 banner */}
       {!isHero && (
         <SliderSlick>
           {/* map here */}
@@ -29,17 +27,9 @@ function Carousel(props) {
 
 Carousel.propTypes = {
   isHero: PropTypes.bool,
-  listMovie: PropTypes.array, // store
-  detailMovie: PropTypes.object,
 };
 Carousel.defaultProps = {
   isHero: false,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    listMovie: state.listMovieReducer.listMovie,
-  };
-};
-
-export default connect(mapStateToProps, null)(Carousel);
+export default Carousel;

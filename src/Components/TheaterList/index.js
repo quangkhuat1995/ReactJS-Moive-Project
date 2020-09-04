@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 const setTimeClick = () => {
   //xoa het class acctive cua link
   document
-    .querySelectorAll(".theater__details .tab-pane .nav-link")
+    .querySelectorAll(".theater__details .tab-pane .nav__wrapper")
     .forEach((link) => {
       link.classList.remove("active");
     });
@@ -26,6 +26,7 @@ const setTimeClick = () => {
       }
     });
   }, 250);
+  console.log("i run");
 };
 
 function TheaterList(props) {
@@ -38,7 +39,7 @@ function TheaterList(props) {
 
   useEffect(() => {
     // khi bam vao logo thi se tu dong (wait 0.25s) bam vao link dau tien co .active
-    const imgs = document.querySelectorAll(".theater__logos .nav-link");
+    const imgs = document.querySelectorAll(".theater__logos .nav__wrapper");
 
     imgs.forEach((img) => {
       img.addEventListener("click", () => {
@@ -58,6 +59,9 @@ function TheaterList(props) {
           {/* COT THU 1*/}
           {/*  */}
           {/* NAV THEATER LOGO */}
+          {/* <div className='nav nav-tabs theater__logos flex-column'>
+     
+          </div> */}
           <NavTabLogo />
 
           {/*  */}
@@ -70,7 +74,9 @@ function TheaterList(props) {
           {/* COT THU 3 */}
           {/*  */}
           {/* MOVIE LIST */}
-          <TabContentMovies />
+          <div className="tab-content theater__movies">
+            <TabContentMovies />
+          </div>
         </div>
       </div>
     </section>

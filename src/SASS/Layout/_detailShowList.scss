@@ -111,19 +111,29 @@ $total-height: 735px;
   .theater__details--item {
     padding: 20px;
     position: relative;
-    @extend %underLinePsuedo;
+
     transition: 0.3s all;
     flex-wrap: wrap;
-    &:not(.collapsed) {
-      &::after {
-        visibility: hidden;
-      }
+    width: 100%;
+    &:not(:first-child) {
+      @extend %upperLinePsuedo;
     }
-    .testTimeList {
+    &:not(:last-child) {
       @extend %underLinePsuedo;
-      // padding: 20px;
-      width: 100%;
-      transform: translateY(20px);
     }
+    // &:not(.collapsed) {
+    //   &::after {
+    //     visibility: hidden;
+    //   }
+    // }
+  }
+  .testTimeList {
+    padding: 20px;
+    height: auto;
+    // padding-bottom: 20px;
+    // border-bottom: 1px solid #ebebec;
+    // height: auto;
+    // width: 100%;
+    // transform: translateY(20px);
   }
 }

@@ -76,12 +76,28 @@
 }
 
 %underLinePsuedo {
+  &.active {
+    &::after {
+      background-color: $color-red-primary;
+      box-shadow: 0px -3px 10px 0px #fb4226;
+    }
+  }
   &::after {
     content: "";
-    @include positionAbsolute(false, 50%, 0, false);
+    @include positionAbsolute(false, 50%, 2px, false);
     transform: translateX(-50%);
     background-color: #ebebec;
-    height: 1px;
+    height: 2px;
+    width: calc(100% - 40px);
+  }
+}
+%upperLinePsuedo {
+  &::before {
+    content: "";
+    @include positionAbsolute(0, 50%);
+    transform: translateX(-50%);
+    background-color: #ebebec;
+    height: 0.5px;
     width: calc(100% - 40px);
   }
 }

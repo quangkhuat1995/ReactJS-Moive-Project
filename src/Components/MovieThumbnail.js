@@ -26,7 +26,7 @@ function MovieThumbnail(props) {
           data-target="#movieTrailer"
           data-toggle="modal"
           className="play__link"
-          onClick={() => props.getMovieDetail(movie.maPhim)}
+          onClick={() => props.getMovieDetail(movie)}
         >
           <img src={play} alt="play trailer" />
         </a>
@@ -39,8 +39,8 @@ function MovieThumbnail(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMovieDetail: (id) => {
-      dispatch(actFindMovieTrailer(id));
+    getMovieDetail: (movie) => {
+      dispatch(actFindMovieTrailer(movie));
       // && dispatch(actFetchDetailMovie(id));
     },
   };
