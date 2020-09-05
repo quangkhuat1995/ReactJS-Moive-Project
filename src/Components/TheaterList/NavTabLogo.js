@@ -25,7 +25,7 @@ function NavTabLogo(props) {
   };
 
   return (
-    <div className={`nav nav-tabs theater__logos flex-column`}>
+    <div className={`nav nav-tabs theater__logos flex-md-column `}>
       {renderLogo()}
     </div>
   );

@@ -1,3 +1,5 @@
+$max-height: 545px;
+
 .theater {
   &__image {
     width: 50px;
@@ -8,8 +10,27 @@
   //child 1
   &__logos {
     flex-basis: 92px; //90px +2px cua border
-    min-height: 735px; //90 * so luong rap (8) =  720 +15px cho dep
+    max-height: $max-height;
     border: 1px solid #ebebec;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    overflow-y: hidden;
+    overflow-x: auto;
+    @include styleScrollBar(true);
+
+    transition: all 0.5s;
+
+    .nav__wrapper {
+      width: unset !important;
+      flex-shrink: 0;
+    }
+    @include RESPONSIVE("768px") {
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      @include styleScrollBar(false);
+    }
   }
 
   .nav__wrapper {
@@ -22,7 +43,8 @@
     transition: all 0.5s;
     &.active,
     &:hover,
-    &:focus {
+    &:focus,
+    &.collapse__mobile {
       opacity: 1;
     }
     @extend %underLinePsuedo;
@@ -32,14 +54,19 @@
   &__details {
     flex-basis: 30%;
     min-width: 30%;
-    height: 735px;
+    width: 100%;
+    max-height: $max-height;
     border: 1px solid #ebebec;
-    // overflow-x: hidden;
-    // overflow-y: auto;
-    overflow: hidden;
+
+    overflow-x: hidden;
+    overflow-y: auto;
     @include styleScrollBar();
-    &:hover {
-      overflow-y: auto;
+
+    @include RESPONSIVE("768px") {
+      overflow: hidden;
+      &:hover {
+        overflow-y: auto;
+      }
     }
 
     &--item {
@@ -57,7 +84,7 @@
   // child 3
   &__movies {
     flex-grow: 1;
-    height: 735px;
+    max-height: $max-height;
     width: calc(100% - 92px - 30%);
     border: 1px solid #ebebec;
     // overflow-x: hidden;
@@ -111,10 +138,11 @@
 }
 
 .wrapper__collapse {
-  padding: 20px;
-  width: 100%;
-  border: none;
   position: relative;
+  width: 100%;
+  padding: 20px;
+
+  border: none;
   opacity: 1;
   transition: all 0.5s;
 
@@ -137,7 +165,7 @@
       content: "\f078"; // arrow down
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
-      @include positionAbsolute(50%, false, false, 20px);
+      @include positionAbsolute(50%, false, false, 0);
       transform: translateY(-50%);
       width: 20px;
       height: 20px;
@@ -149,6 +177,12 @@
     }
   }
   .content__collapse {
-    // display: flex;
+    .digital {
+      @include styleText($color-black-1, $fs-18);
+      font-weight: 500;
+    }
+    .start {
+      @include styleText($color-green-primary, $fs-18);
+    }
   }
 }

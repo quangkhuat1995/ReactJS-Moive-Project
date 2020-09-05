@@ -5,8 +5,11 @@ import DetailTheaterItem from "./DetailTheaterItem";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import TabPanel from "../TabPanel.js";
-import ListShowByGroup from "../ListShowByGroup";
+import GroupMoviesInCinema from "../GroupMoviesInCinema";
+import useMedia from "../../Hook/useMedia";
 function TabContentTheater(props) {
+  const isMobile = useMedia("(max-width: 768px)"); //true
+
   //render thong tin tung cum rap
   const renderPanelItems = (singleHeThongRap) => {
     // console.log(singleHeThongRap.lstCumRap);
@@ -14,22 +17,42 @@ function TabContentTheater(props) {
     // console.log(listCumRap);
     if (listCumRap && listCumRap.length > 0) {
       return listCumRap.map((cumRap, index) => {
-        const settings = {
-          className: `nav__wrapper ${index === 0 ? "active" : ""}`,
-          "data-toggle": "tab",
-          role: "tab",
+        //moblie thi toggle collapse, desktop thì toggle tab.
+        const settings = isMobile
+          ? {
+              className: `nav__wrapper collapse__mobile`,
+            }
+          : {
+              className: `nav__wrapper ${index === 0 ? "active" : ""}`,
+              "data-toggle": "tab",
+              role: "tab",
+              "data-target": `#${cumRap.maCumRap}`,
+            };
+        const settingsCollapse = {
+          className: `collapsed`,
+          "data-toggle": "collapse",
           "data-target": `#${cumRap.maCumRap}`,
         };
         return (
           <TabPanel key={cumRap.maCumRap} settings={settings}>
-            <DetailTheaterItem
-              theater={cumRap}
-              heThong={singleHeThongRap}
-              hasLabel={true}
-            />
-
-            {/* mobie collapse */}
-            {/* <ListShowByGroup cumRap={cumRap}/> */}
+            {isMobile ? (
+              <>
+                <TabPanel settings={settingsCollapse}>
+                  <DetailTheaterItem
+                    theater={cumRap}
+                    heThong={singleHeThongRap}
+                    hasLabel={true}
+                  />
+                </TabPanel>
+                <GroupMoviesInCinema cumRap={cumRap} />
+              </>
+            ) : (
+              <DetailTheaterItem
+                theater={cumRap}
+                heThong={singleHeThongRap}
+                hasLabel={true}
+              />
+            )}
           </TabPanel>
         );
       });

@@ -3,8 +3,9 @@ import TabPanel from "./TabPanel";
 import DetailMovieItem from "./DetailMovieItem";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import ListShowByGroup from "../ListShowByGroup";
+import GroupMoviesInCinema from "../GroupMoviesInCinema";
 import { forwardRef } from "react";
+import useMedia from "../../Hook/useMedia";
 //api tra ve string sai nen phai lam cai nay
 // "maCumRap": "glx-nguyen-du\r\n",
 const checkId = (idString) => {
@@ -83,13 +84,13 @@ const renderMovieDetail = (cumRap) => {
 //export
 function TabContentMovies(props) {
   const { listHeThongLichChieu } = props;
-  console.log(listHeThongLichChieu);
+  // console.log(listHeThongLichChieu);
 
   const allLstCumRap = getLstCumRap(listHeThongLichChieu);
-  console.log(allLstCumRap);
+  // console.log(allLstCumRap);
   cinemaToday = findCumRapHasShowToday(allLstCumRap);
   // console.log(cinemaToday);
-  console.log(allLstCumRap);
+  // console.log(allLstCumRap);
 
   const renderTabPanel = () => {
     if (allLstCumRap && allLstCumRap.length > 0) {
@@ -124,7 +125,7 @@ function TabContentMovies(props) {
           <Fragment key={heThongLichChieu.maHeThongRap}>
             {heThongLichChieu.lstCumRap.map((cumRap, index) => {
               return (
-                <ListShowByGroup
+                <GroupMoviesInCinema
                   key={cumRap.maCumRap}
                   cumRap={cumRap}
                   index={index}
@@ -139,12 +140,14 @@ function TabContentMovies(props) {
   };
 
   //main return
-
+  const isDesktop = useMedia("(min-width:768px)");
   return (
-    <>
-      {renderTabPanel()}
-      {/* {renderTest()} */}
-    </>
+    isDesktop && (
+      <div className="tab-content theater__movies">
+        {/* {renderTabPanel()} */}
+        {renderTest()}
+      </div>
+    )
   );
 }
 

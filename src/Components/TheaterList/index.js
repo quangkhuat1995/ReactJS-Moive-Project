@@ -54,7 +54,7 @@ function TheaterList(props) {
   return (
     <section className="theater">
       <div className="myContainer">
-        <div className="row">
+        <div className="row flex-md-row flex-column">
           {/*  */}
           {/* COT THU 1*/}
           {/*  */}
@@ -73,10 +73,8 @@ function TheaterList(props) {
           {/*  */}
           {/* COT THU 3 */}
           {/*  */}
-          {/* MOVIE LIST */}
-          <div className="tab-content theater__movies">
-            <TabContentMovies />
-          </div>
+          {/* MOVIE LIST : Chỉ render desktop view*/}
+          <TabContentMovies />
         </div>
       </div>
     </section>

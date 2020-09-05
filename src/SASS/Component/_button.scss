@@ -57,16 +57,20 @@
 
 .btn-time {
   display: block;
-  @include styleButton(rgba(246, 246, 246, 0.6), #e4e4e4, false, false, 7px);
-  margin: 0 10px 10px 0;
-  @include styleText(#9b9b9b, $fs-14);
-  transition: all 0.5s;
-  font-weight: 700;
   float: left;
-  // width: calc()
+  margin: 0 10px 10px 0;
+
+  @include styleButton(rgba(246, 246, 246, 0.6), #e4e4e4, false, false, 7px);
+  @include styleText(#9b9b9b, $fs-14);
+
+  font-weight: 700;
   min-width: 20%;
+  transition: all 0.5s;
 
   &:hover {
-    color: $color-red-primary;
+    color: #9b9b9b !important;
+  }
+  &:not(:disabled):hover {
+    color: $color-red-primary !important;
   }
 }

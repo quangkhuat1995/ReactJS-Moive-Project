@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import LinkButton from "../LinkButton";
 
 //api tra ve string sai nen phai lam cai nay
 // "maCumRap": "glx-nguyen-du\r\n",
@@ -28,6 +29,29 @@ const styleTime = (ngayChieuGioChieu) => {
   return [startTime, endTime];
 };
 
+const checkPassStartTime = (startTime) => {
+  let d = new Date();
+  let currentTime = d.toLocaleTimeString("it-IT", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  // let [currentHour, currentMin] = currentTime.split(":");
+  // let [startHour, startMin] = startTime.split(":");
+  // if (parseInt(startHour) - parseInt(currentHour) > 0) {
+  //   return false
+  // }
+  // else{
+
+  // }
+  if (startTime > currentTime) {
+    return false;
+  }
+  return true;
+  // console.log(currentTime);
+  // return null;
+};
+checkPassStartTime("10:10");
+
 //export
 function DetailMovieItem(props) {
   const { movie, maCumRap, todayListTime } = props;
@@ -39,13 +63,14 @@ function DetailMovieItem(props) {
       return todayListTime.map((item, index) => {
         const [startTime, endTime] = styleTime(item.ngayChieuGioChieu);
         return (
-          <Link
+          <LinkButton
             key={item.maLichChieu}
             to={`/booking/${item.maLichChieu}`}
             className="btn btn-time"
+            disabled={checkPassStartTime(startTime)}
           >
-            {startTime} ~ {endTime}
-          </Link>
+            <span className="start">{startTime}</span> ~ {endTime}
+          </LinkButton>
         );
       });
     }
@@ -76,7 +101,7 @@ function DetailMovieItem(props) {
         id={`${checkId(maCumRap)}_${movie.maPhim}`}
       >
         <div className="pt-3 row content__collapse stack">
-          <div className="col-12">2D Digital</div>
+          <div className="col-12 digital">2D Digital</div>
           <div className="col-12">{renderBtnTime()}</div>
         </div>
       </div>
