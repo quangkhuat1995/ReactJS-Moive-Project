@@ -54,7 +54,6 @@ const renderListMovie = (cumRap) => {
     return cumRap.danhSachPhim.map((movie) => {
       const todayListTime = getTodayListTime(movie.lstLichChieuTheoPhim);
 
-      console.log(todayListTime);
       //phim có thời gian chiếu trong hôm nay mới render ra
       return (
         todayListTime.length > 0 && (
@@ -74,8 +73,8 @@ const renderListMovie = (cumRap) => {
 function GroupMoviesInCinema(props) {
   const { cumRap, index, j } = props;
   const cinemaToday = findMovieHasShowToday(cumRap);
-  console.log(cinemaToday);
   const isMobile = useMedia("(max-width: 768px)");
+
   const settings = isMobile
     ? {
         className: "collapse GroupMoviesInCinema MOBILE",
