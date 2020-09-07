@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 const play = "/images/play.png";
 function CarouselItem(props) {
   const location = useLocation();
-  console.log(location);
 
   const { detailMovie, isHero } = props;
   if (!detailMovie) return null;

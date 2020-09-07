@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actSortLichChieu } from "../../containers/HOME/DetailPage/modules/action";
+import LabelContent from "../LabelContent.js";
 
+//api tra ve string sai nen phai lam cai nay
+// "maCumRap": "glx-nguyen-du\r\n",
+const checkId = (idString) => {
+  return idString.replace(/[\r\n]/g, "");
+};
+
+//export
 function ShowList(props) {
   const { singleHeThongRapChieu } = props; //obj
   // const { cumRapChieu } = singleHeThongRapChieu; //array
@@ -13,11 +21,6 @@ function ShowList(props) {
   }, []);
   console.log(cumRapChieu);
 
-  const renderTenCumRap = (cumRap) => {
-    // tenCumRap = CGV - CresionMall || BHD Star - Pham Hung
-    const tenCumRap = cumRap.tenCumRap;
-    return tenCumRap.split(" -"); // ["BHD Star", " Pham Hung"]
-  };
   const renderSort = (inputNgayChieuGioChieu) => {
     return null;
   };
@@ -28,7 +31,7 @@ function ShowList(props) {
       minute: "2-digit",
     });
   };
-
+  // 2019-01-01T10:10:00
   const renderTimeList = (cumRap) => {
     // let listLichChieuPhim = [];
     // if(cumRap.lichChieuPhim && cumRap.lichChieuPhim.length > 0){
@@ -67,42 +70,37 @@ function ShowList(props) {
     if (cumRapChieu && cumRapChieu.length > 0) {
       return cumRapChieu.map((cumRap, index) => {
         return (
-          <div
-            key={cumRap.maCumRap}
-            className="theater__details--item"
-            data-toggle="collapse"
-            data-target={`#${singleHeThongRapChieu.maHeThongRap}_${cumRap.maCumRap}`}
-          >
-            <img
-              className="theater__image"
-              src={singleHeThongRapChieu.logo}
-              alt={singleHeThongRapChieu.tenHeThongRap}
-            />
-            <div className="wrapInfo">
-              <span className="chiNhanh">
-                <span
-                  className={`tenRap ${singleHeThongRapChieu.maHeThongRap}`}
-                >
-                  {renderTenCumRap(cumRap)[0]}
-                </span>{" "}
-                - {renderTenCumRap(cumRap)[1]}
-              </span>
-              {/* <span className="diaChi">
-                Tầng 2, Thảo Điền Mall, 12 Quốc Hương, Phường Thảo --&gt; Điền,
-                Quận 2, TP. Hồ Chí Minh
-              </span> */}
+          <div key={cumRap.maCumRap} className="wrapper__collapse">
+            <div
+              className="main__collapse"
+              data-toggle="collapse"
+              data-target={`#${singleHeThongRapChieu.maHeThongRap}_${checkId(
+                cumRap.maCumRap
+              )}`}
+            >
+              <img
+                className="theater__image"
+                src={singleHeThongRapChieu.logo}
+                alt={singleHeThongRapChieu.tenHeThongRap}
+              />
+              <LabelContent theater={cumRap} />
             </div>
             <div
-              className="collapse show timeList testTimeList"
-              id={`${singleHeThongRapChieu.maHeThongRap}_${cumRap.maCumRap}`}
+              className="collapse show "
+              id={`${singleHeThongRapChieu.maHeThongRap}_${checkId(
+                cumRap.maCumRap
+              )}`}
             >
-              {renderTimeList(cumRap)}
+              <div className="pt-3 row content__collapse">
+                {renderTimeList(cumRap)}
+              </div>
             </div>
           </div>
         );
       });
     }
   };
+  //main return
   return <>{renderCumRap()}</>;
 }
 

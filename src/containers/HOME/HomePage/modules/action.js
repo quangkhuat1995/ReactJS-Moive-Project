@@ -37,10 +37,10 @@ const actFetchListMoive = () => {
   };
 };
 
-const actFindMovieTrailer = (id) => {
+const actFindMovieTrailer = (movie) => {
   return {
     type: DETAIL_MOVIE_MODAL,
-    id,
+    movie,
   };
 };
 

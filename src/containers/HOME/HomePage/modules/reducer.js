@@ -31,18 +31,18 @@ const listMovieReducer = (state = initialState, action) => {
       return { ...state };
 
     case DETAIL_MOVIE_MODAL:
-      if (typeof action.id === "number") {
-        let index = state.listMovie.findIndex((item) => {
-          return item.maPhim === action.id;
-        });
+      // if (typeof action.id === "number") {
+      //   let index = state.listMovie.findIndex((item) => {
+      //     return item.maPhim === action.id;
+      //   });
 
-        if (index !== -1) {
-          state.detailMovie = state.listMovie[index];
-        }
-      } else {
-        //nếu ko truyền id dạng số vào mà truyền object thì cho detailMovie= object đó luôn. trường hopẹ dành cho mở modal carousel từ homepage
-        state.detailMovie = action.id;
-      }
+      //   if (index !== -1) {
+      //     state.detailMovie = state.listMovie[index];
+      //   }
+      // } else {
+      //   //nếu ko truyền id dạng số vào mà truyền object thì cho detailMovie= object đó luôn. trường hopẹ dành cho mở modal carousel từ homepage
+      // }
+      state.detailMovie = action.movie;
 
       return { ...state };
 

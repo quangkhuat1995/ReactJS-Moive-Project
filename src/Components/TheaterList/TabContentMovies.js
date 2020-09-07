@@ -1,54 +1,154 @@
-import React from "react";
+import React, { useRef, Fragment } from "react";
 import TabPanel from "./TabPanel";
 import DetailMovieItem from "./DetailMovieItem";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import GroupMoviesInCinema from "../GroupMoviesInCinema";
+import { forwardRef } from "react";
+import useMedia from "../../Hook/useMedia";
+//api tra ve string sai nen phai lam cai nay
+// "maCumRap": "glx-nguyen-du\r\n",
+const checkId = (idString) => {
+  return idString.replace(/[\r\n]/g, "");
+};
 
-function TabContentMovies(props) {
-  const getLstCumRap = (array) => {
-    if (array && array.length > 0) {
-      return array.reduce((acc, item) => acc.concat(item.lstCumRap), []);
-    }
-  };
+//gộp lại tất cả các danh sách lịch chiếu của từng cụm rạp vào chung thành 1 mảng. output:
+// [{BHD cumRap1}, {BHD cumRap2},..,{CGV cumRap1},..{Lotte cumRap4},...]
+const getLstCumRap = (array) => {
+  //lstCumRap
+  if (array && array.length > 0) {
+    return array.reduce((acc, item) => acc.concat(item.lstCumRap), []);
+  }
+};
 
-  const renderMovieDetail = (cumRap) => {
+const TODAY = "2019-01-01";
+//lấy danh sách phim có lịch chiếu hôm nay
+const getTodayListTime = (lstLichChieu = []) => {
+  if (lstLichChieu && lstLichChieu.length > 0) {
+    return lstLichChieu.filter((lichChieu) => {
+      return lichChieu.ngayChieuGioChieu.slice(0, 10) === TODAY;
+    });
+  }
+};
+
+let cinemaToday = [];
+const findCumRapHasShowToday = (allLstCumRap = []) => {
+  allLstCumRap.forEach((cumRap) => {
+    let todayList = [];
     if (cumRap.danhSachPhim && cumRap.danhSachPhim.length > 0) {
-      return cumRap.danhSachPhim.map((movie, index) => {
-        return (
-          <DetailMovieItem
-            key={movie.maPhim}
-            movie={movie}
-            maCumRap={cumRap.maCumRap}
-          />
-        );
+      cumRap.danhSachPhim.forEach((movie) => {
+        todayList = getTodayListTime(movie.lstLichChieuTheoPhim);
+        if (todayList.length > 0) {
+          cinemaToday.push(cumRap);
+        }
       });
     }
-  };
+  });
 
-  //api tra ve string sai nen phai lam cai nay
-  // "maCumRap": "glx-nguyen-du\r\n",
-  const checkId = (idString) => {
-    return idString.replace(/[\r\n]/g, "");
-  };
+  //filter (remove) duplicate
+  cinemaToday = cinemaToday.reduce(
+    (items, item) =>
+      items.find((x) => x.maCumRap === item.maCumRap)
+        ? [...items]
+        : [...items, item],
+    []
+  );
+  return cinemaToday;
+};
+
+const checkCumRapHasShowToday = (cinemaToday = [], maCumRap) => {
+  return cinemaToday.some((item) => item.maCumRap === maCumRap);
+};
+
+const renderMovieDetail = (cumRap) => {
+  if (cumRap.danhSachPhim && cumRap.danhSachPhim.length > 0) {
+    return cumRap.danhSachPhim.map((movie, index) => {
+      const todayListTime = getTodayListTime(movie.lstLichChieuTheoPhim);
+
+      return (
+        <>
+          {todayListTime.length > 0 && (
+            <DetailMovieItem
+              key={movie.maPhim}
+              movie={movie}
+              maCumRap={cumRap.maCumRap}
+              todayListTime={todayListTime}
+            />
+          )}
+        </>
+      );
+    });
+  }
+};
+
+//export
+function TabContentMovies(props) {
+  const { listHeThongLichChieu } = props;
+  // console.log(listHeThongLichChieu);
+
+  const allLstCumRap = getLstCumRap(listHeThongLichChieu);
+  // console.log(allLstCumRap);
+  cinemaToday = findCumRapHasShowToday(allLstCumRap);
+  // console.log(cinemaToday);
+  // console.log(allLstCumRap);
 
   const renderTabPanel = () => {
-    const { listHeThongLichChieu } = props;
-    const listCumRapDetail = getLstCumRap(listHeThongLichChieu);
-    if (listCumRapDetail && listCumRapDetail.length > 0) {
-      return listCumRapDetail.map((item, index) => {
+    if (allLstCumRap && allLstCumRap.length > 0) {
+      return allLstCumRap.map((cumRap, index) => {
         const settings = {
           className: `tab-pane fade ${index === 0 ? "show active" : ""}`,
-          id: checkId(item.maCumRap),
+          id: checkId(cumRap.maCumRap),
         };
+        let isCumRapHasShowToday = checkCumRapHasShowToday(
+          cinemaToday,
+          cumRap.maCumRap
+        );
         return (
-          <TabPanel key={item.maCumRap} settings={settings}>
-            {renderMovieDetail(item)}
+          <TabPanel key={cumRap.maCumRap} settings={settings}>
+            {isCumRapHasShowToday ? (
+              renderMovieDetail(cumRap)
+            ) : (
+              <div className="alert alert-danger">
+                Không có lịch chiếu hôm nay
+              </div>
+            )}
           </TabPanel>
         );
       });
     }
   };
 
-  return <div className="tab-content theater__movies">{renderTabPanel()}</div>;
+  const renderTest = () => {
+    if (listHeThongLichChieu && listHeThongLichChieu.length > 0) {
+      return listHeThongLichChieu.map((heThongLichChieu, j) => {
+        return (
+          <Fragment key={heThongLichChieu.maHeThongRap}>
+            {heThongLichChieu.lstCumRap.map((cumRap, index) => {
+              return (
+                <GroupMoviesInCinema
+                  key={cumRap.maCumRap}
+                  cumRap={cumRap}
+                  index={index}
+                  j={j}
+                />
+              );
+            })}
+          </Fragment>
+        );
+      });
+    }
+  };
+
+  //main return
+  const isDesktop = useMedia("(min-width:768px)");
+  return (
+    isDesktop && (
+      <div className="tab-content theater__movies">
+        {/* {renderTabPanel()} */}
+        {renderTest()}
+      </div>
+    )
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -56,5 +156,10 @@ const mapStateToProps = (state) => {
     listHeThongLichChieu: state.listHeThongRapReducer.listHeThongLichChieu,
   };
 };
-
+TabContentMovies.propTypes = {
+  listHeThongLichChieu: PropTypes.array,
+};
+TabContentMovies.defaultProps = {
+  listHeThongLichChieu: [],
+};
 export default connect(mapStateToProps, null)(TabContentMovies);

@@ -1,25 +1,59 @@
 import React from "react";
-import TabPanel from "./TabPanel";
+// import TabPanel from "./TabPanel";
 import NavLink from "./NavLink";
 import DetailTheaterItem from "./DetailTheaterItem";
 import { connect } from "react-redux";
-
+import PropTypes from "prop-types";
+import TabPanel from "../TabPanel.js";
+import GroupMoviesInCinema from "../GroupMoviesInCinema";
+import useMedia from "../../Hook/useMedia";
 function TabContentTheater(props) {
+  const isMobile = useMedia("(max-width: 768px)"); //true
+
   //render thong tin tung cum rap
-  const renderNavLink = (singleHeThongRap) => {
+  const renderPanelItems = (singleHeThongRap) => {
     // console.log(singleHeThongRap.lstCumRap);
     const listCumRap = singleHeThongRap.lstCumRap;
     // console.log(listCumRap);
     if (listCumRap && listCumRap.length > 0) {
-      return listCumRap.map((item, index) => {
+      return listCumRap.map((cumRap, index) => {
+        //moblie thi toggle collapse, desktop thì toggle tab.
+        const settings = isMobile
+          ? {
+              className: `nav__wrapper collapse__mobile`,
+            }
+          : {
+              className: `nav__wrapper ${index === 0 ? "active" : ""}`,
+              "data-toggle": "tab",
+              role: "tab",
+              "data-target": `#${cumRap.maCumRap}`,
+            };
+        const settingsCollapse = {
+          className: `collapsed`,
+          "data-toggle": "collapse",
+          "data-target": `#${cumRap.maCumRap}`,
+        };
         return (
-          <NavLink
-            key={item.maCumRap}
-            href={item.maCumRap}
-            className={`nav-item nav-link${index === 0 ? " active" : ""}`}
-          >
-            <DetailTheaterItem cumRap={item} heThong={singleHeThongRap} />
-          </NavLink>
+          <TabPanel key={cumRap.maCumRap} settings={settings}>
+            {isMobile ? (
+              <>
+                <TabPanel settings={settingsCollapse}>
+                  <DetailTheaterItem
+                    theater={cumRap}
+                    heThong={singleHeThongRap}
+                    hasLabel={true}
+                  />
+                </TabPanel>
+                <GroupMoviesInCinema cumRap={cumRap} />
+              </>
+            ) : (
+              <DetailTheaterItem
+                theater={cumRap}
+                heThong={singleHeThongRap}
+                hasLabel={true}
+              />
+            )}
+          </TabPanel>
         );
       });
     }
@@ -34,7 +68,10 @@ function TabContentTheater(props) {
       };
       return (
         <TabPanel key={item.maHeThongRap} settings={settings}>
-          <div className="nav nav-tabs">{renderNavLink(item)}</div>
+          <div className="nav nav-tabs">
+            {/* many tabpanel here */}
+            {renderPanelItems(item)}
+          </div>
         </TabPanel>
       );
     });
@@ -47,5 +84,13 @@ const mapStateToProps = (state) => {
   return {
     listHeThongLichChieu: state.listHeThongRapReducer.listHeThongLichChieu,
   };
+};
+
+TabContentTheater.propTypes = {
+  listHeThongLichChieu: PropTypes.array.isRequired,
+};
+
+TabContentTheater.defaultProps = {
+  listHeThongLichChieu: [],
 };
 export default connect(mapStateToProps, null)(TabContentTheater);

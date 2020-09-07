@@ -27,12 +27,16 @@ function HomePage(props) {
       <Carousel />
       <Search />
       <ShowTime listMovie={listMovie} />
+
       <SeperateSection />
       <TheaterList />
+
       <SeperateSection />
       <News />
+
       <SeperateSection />
       <Ads />
+
       <ModalPopup />
     </>
   );

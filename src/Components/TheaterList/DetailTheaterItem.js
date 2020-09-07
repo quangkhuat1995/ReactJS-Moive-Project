@@ -1,48 +1,38 @@
+import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
+import LabelContent from "../LabelContent.js";
+import theaterImagesData from "./../../constants/theaterImagesData";
+
+const getLogo = (maHeThong) => {
+  let foundCumRap = theaterImagesData.find((item) => {
+    return item.maHeThongRap === maHeThong;
+  });
+  return foundCumRap.logo;
+};
 
 function DetailTheaterItem(props) {
-  const renderTenCumRap = () => {
-    // tenCumRap = CGV - CresionMall || BHD Star - Pham Hung
-    const tenCumRap = props.cumRap.tenCumRap;
-    return tenCumRap.split(" -"); // ["BHD Star", " Pham Hung"]
-  };
-  const getLogo = (maHeThong) => {
-    const { listHeThongRap } = props;
-    if (listHeThongRap) {
-      let heThong = listHeThongRap.find((item) => {
-        return item.maHeThongRap === maHeThong;
-      });
-      return heThong.logo;
-    }
-  };
-
-  const { cumRap, heThong } = props;
-  // console.log(this.props);
-
+  const { heThong, hasLabel, theater } = props;
+  // note:  nếu CÓ hasLabel thì props theater là cụm rạp, nếu KHÔNG thì props theater là hệ thống rạp
   return (
     <div className="theater__details--item">
       <img
         className="theater__image"
-        src={getLogo(heThong.maHeThongRap)}
-        alt={heThong.maHeThongRap}
+        src={theater?.logo || getLogo(heThong.maHeThongRap)}
+        alt={theater?.tenHeThongRap || heThong?.tenHeThongRap}
       />
-      <div className="wrapInfo">
-        <span className="chiNhanh">
-          <span className={`tenRap ${renderTenCumRap()[0]}`}>
-            {renderTenCumRap()[0]}
-          </span>{" "}
-          - {renderTenCumRap()[1]}
-        </span>
-        <span className="diaChi">{cumRap.diaChi} </span>
-      </div>
+      {hasLabel && <LabelContent theater={theater} />}
     </div>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    listHeThongRap: state.listHeThongRapReducer.listHeThongRap,
-  };
-};
 
-export default connect(mapStateToProps, null)(DetailTheaterItem);
+DetailTheaterItem.propTypes = {
+  theater: PropTypes.object,
+  heThong: PropTypes.object,
+  hasLabel: PropTypes.bool,
+};
+DetailTheaterItem.defaultProps = {
+  theater: {},
+  heThong: {},
+  hasLabel: false,
+};
+export default DetailTheaterItem;
