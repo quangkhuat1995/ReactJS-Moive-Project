@@ -1,0 +1,27 @@
+//common style
+.logo__wrapper {
+  width: 100%;
+  border: none;
+  position: relative;
+  opacity: 0.7;
+  transition: all 0.5s;
+  &.active,
+  &:hover,
+  &:focus,
+  &.collapse__mobile {
+    opacity: 1;
+  }
+  @extend %underLinePsuedo;
+}
+
+.theaterList__logos .logo__wrapper {
+  width: unset !important;
+  flex-shrink: 0;
+
+  @include RESPONSIVE("768px") {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    @include styleScrollBar(false);
+  }
+}

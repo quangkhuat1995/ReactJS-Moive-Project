@@ -1,34 +1,28 @@
-import React from "react";
-import NavLink from "./NavLink";
-import { connect } from "react-redux";
-import TabPanel from "../TabPanel.js";
 import PropTypes from "prop-types";
-import DetailTheaterItem from "./DetailTheaterItem";
+import React from "react";
+import { connect } from "react-redux";
+import TabPanel from "../TabPanel";
+import LogoHeThong from "../LogoHeThong";
 
 function NavTabLogo(props) {
   const renderLogo = () => {
-    const { listHeThongRap } = props;
+    const { listHeThongRap, hasLabel } = props;
     return listHeThongRap.map((item, index) => {
       const settings = {
-        className: `nav__wrapper ${index === 0 ? "active" : ""}`,
+        className: `logo__wrapper ${index === 0 ? "active" : ""}`,
         "data-toggle": "tab",
         role: "tab",
         "data-target": `#${item.maHeThongRap}`,
       };
       return (
         <TabPanel key={item.maHeThongRap} settings={settings}>
-          {/* chỉ render logo hệ thống rạp hasLabel={false} */}
-          <DetailTheaterItem hasLabel={false} theater={item} />
+          <LogoHeThong hasLabel={hasLabel} heThong={item} />
         </TabPanel>
       );
     });
   };
 
-  return (
-    <div className={`nav nav-tabs theater__logos flex-md-column `}>
-      {renderLogo()}
-    </div>
-  );
+  return <>{renderLogo()}</>;
 }
 
 const mapStateToProps = (state) => {
@@ -39,10 +33,12 @@ const mapStateToProps = (state) => {
 
 NavTabLogo.propTypes = {
   listHeThongRap: PropTypes.array.isRequired,
+  hasLabel: PropTypes.bool.isRequired,
 };
 
 NavTabLogo.defaultProps = {
   listHeThongRap: [],
+  hasLabel: false,
 };
 
 export default connect(mapStateToProps, null)(NavTabLogo);

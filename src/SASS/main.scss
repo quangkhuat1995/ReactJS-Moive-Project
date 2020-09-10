@@ -29,9 +29,14 @@
 @import "./Layout/ads";
 @import "./Layout/footer";
 @import "./Layout/modalLogin";
-@import "./Layout/theater";
+// @import "./Layout/theater"; bỏ
 @import "./Layout/main-wrapper";
 @import "./Layout/detailShowList";
+//@theaterList
+@import "./../Components/NavTabLogo/NavTabLogo";
+@import "./../Components/CinemaDetailItem/CinemaDetailItem";
+@import "./../Components/TheaterList/DetailMovieItem";
+@import "./../Components/TheaterList/TheaterList";
 
 /**
 * PAGES

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
+import "./LabelContent.scss";
 
 // tenCumRap = CGV - CresionMall || BHD Star Cineplex - Pham Hung
 const renderTenCumRap = (tenCumRap) => {
@@ -10,8 +11,10 @@ const renderTenCumRap = (tenCumRap) => {
 };
 
 function LabelContent(props) {
-  const { theater } = props;
-  const tenCumRap = theater.tenCumRap;
+  const { cinema } = props;
+  const tenCumRap = cinema.tenCumRap;
+  const diaChi = cinema.diaChi;
+
   return (
     <div className="wrapInfo">
       <span className="chiNhanh">
@@ -21,16 +24,16 @@ function LabelContent(props) {
         </span>{" "}
         - {renderTenCumRap(tenCumRap)[1]}
       </span>
-      {theater.diaChi && <span className="diaChi">{theater.diaChi}</span>}
+      {diaChi && <span className="diaChi">{diaChi}</span>}
     </div>
   );
 }
 
 LabelContent.propTypes = {
-  theater: PropTypes.object.isRequired,
+  cinema: PropTypes.object.isRequired,
 };
 LabelContent.defaultProps = {
-  theater: {},
+  cinema: {},
 };
 
-export default LabelContent;
+export default memo(LabelContent);

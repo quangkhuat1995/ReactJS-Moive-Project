@@ -69,7 +69,7 @@
       height: unset;
       padding: 10px;
       font-size: 14px;
-      &:hover {
+      &:not(:disabled):hover {
         font-size: 14px;
       }
     }

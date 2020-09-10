@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { actFindMovieTrailer } from "./../containers/HOME/HomePage/modules/action";
 import { connect } from "react-redux";
-// import { actFetchDetailMovie } from "../containers/HOME/DetailPage/modules/action";
+import { actFindMovieTrailer } from "../../containers/HOME/HomePage/modules/action";
 const play = "/images/play.png";
 
 function MovieThumbnail(props) {

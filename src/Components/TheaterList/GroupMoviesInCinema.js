@@ -1,14 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DetailMovieItem from "../TheaterList/DetailMovieItem";
-import TabPanel from "../TheaterList/TabPanel";
+import DetailMovieItem from "./DetailMovieItem";
+import TabPanel from "../TabPanel";
 import useMedia from "../../Hook/useMedia";
-
-//api tra ve string sai nen phai lam cai nay
-// "maCumRap": "glx-nguyen-du\r\n",
-const checkId = (idString) => {
-  return idString.replace(/[\r\n]/g, "");
-};
 
 const TODAY = "2019-01-01";
 const getTodayListTime = (lstLichChieu = []) => {
@@ -19,7 +13,6 @@ const getTodayListTime = (lstLichChieu = []) => {
   }
 };
 
-//mảng chứa những cụm rạp nào có phim bất kỳ chiếu vào ngày hôm nay
 /**
  * Nếu có bất kì phim nào trong cumRap có lịch chiếu vào ngày hôm nay thì thì đưa cumRap đó vào mảng cinemaToday
  */
@@ -78,13 +71,13 @@ function GroupMoviesInCinema(props) {
   const settings = isMobile
     ? {
         className: "collapse GroupMoviesInCinema MOBILE",
-        id: checkId(cumRap.maCumRap),
+        id: cumRap.maCumRap.trim(),
       }
     : {
         className: `tab-pane fade ${
           index === 0 && j === 0 ? "show active" : ""
         }`,
-        id: checkId(cumRap.maCumRap),
+        id: cumRap.maCumRap.trim(),
       };
 
   let isCinemaHasMovieToday = checkCinemaHasShowToday(

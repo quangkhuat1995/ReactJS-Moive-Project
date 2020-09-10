@@ -77,8 +77,11 @@ $total-height: 735px;
 // style detail__theater
 .detail__theater {
   @include displayFlex(flex-start, stretch, column);
+  flex-wrap: nowrap;
+  flex-basis: 100%;
   overflow-y: auto;
   @include styleScrollBar(false);
+
   &--item {
     padding: $sp-20;
     @include displayFlex(flex-start, center);
