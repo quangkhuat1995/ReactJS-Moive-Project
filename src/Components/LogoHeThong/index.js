@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import "./LogoDetail.scss";
+
 function LogoHeTHong(props) {
   const { heThong, hasLabel } = props;
   return (

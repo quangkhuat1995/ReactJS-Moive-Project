@@ -1,0 +1,34 @@
+.seat__section--map {
+  .noteseat {
+    @extend .listseat;
+    margin-top: 50px;
+    @include displayFlex(center, center);
+    .note__item {
+      margin-right: $sp-20;
+      @include displayFlex(center, center, column);
+      .seat-normal {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: $border-radius;
+        background: $color-normal;
+      }
+      .seat-vip {
+        @extend .seat-normal;
+        background: $color-vip;
+      }
+      .seat-current {
+        @extend .seat-normal;
+        background: $color-green-primary;
+      }
+      .seat-taken {
+        @extend .seat-normal;
+        background: $color-taken;
+      }
+      .seat-info {
+        @include styleText($color-light-1, $fs-12);
+        margin-top: $sp-5;
+      }
+    }
+  }
+}

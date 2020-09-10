@@ -1,0 +1,27 @@
+.seat__section--top {
+  .top__left {
+    display: flex;
+    .cinema-logo {
+      margin-right: $sp-5;
+      img {
+        @include roundElement(45px, 45px, 4px);
+        object-fit: cover;
+      }
+    }
+    .cinema-info {
+      .address {
+        @include styleText($color-black-1, $fs-16);
+        margin-top: 2px;
+        margin-bottom: $sp-10;
+        .cinema-name {
+          color: $color-green-primary;
+        }
+      }
+      .diaChi {
+        @include styleText($color-light-1, $fs-14);
+        line-height: 5px;
+        margin: 0;
+      }
+    }
+  }
+}

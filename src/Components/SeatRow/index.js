@@ -3,21 +3,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Seat from "../Seat";
 // import Seat2 from "../Seat/Seat2";
+// console.log(danhSachGhe);
+const chunkArray = (myArray, chunk_size) => {
+  let results = [];
+
+  while (myArray.length) {
+    results.push(myArray.splice(0, chunk_size));
+  }
+
+  return results;
+  // var result = chunkArray([1,2,3,4,5,6,7,8], 3);
+  //  Outputs : [ [1,2,3] , [4,5,6] ,[7,8] ]
+};
+
 function SeatRow(props) {
   const { danhSachGhe } = props.bookingMovie;
 
-  // console.log(danhSachGhe);
-  const chunkArray = (myArray, chunk_size) => {
-    let results = [];
-
-    while (myArray.length) {
-      results.push(myArray.splice(0, chunk_size));
-    }
-
-    return results;
-    // var result = chunkArray([1,2,3,4,5,6,7,8], 3);
-    //  Outputs : [ [1,2,3] , [4,5,6] ,[7,8] ]
-  };
   const renderSeatRow = () => {
     if (danhSachGhe && danhSachGhe.length > 0) {
       const soCot = 16;
@@ -37,7 +38,7 @@ function SeatRow(props) {
 }
 
 SeatRow.propTypes = {
-  danhSachGhe: PropTypes.array,
+  bookingMovie: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

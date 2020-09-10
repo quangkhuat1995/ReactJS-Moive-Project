@@ -80,6 +80,8 @@ function Search(props) {
     return () => {
       setState({ ...initialState });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [heThongRapChieu]);
 
   const handleChange = (e) => {
@@ -212,7 +214,7 @@ function Search(props) {
           <UnSelectUI
             name="daySelect"
             label="Ngày chiếu"
-            message="Vui lòng chọn rạp"
+            message="Vui lòng chọn phim và rạp"
           />
         )}
 
@@ -228,7 +230,7 @@ function Search(props) {
           <UnSelectUI
             name="timeSelect"
             label="Giờ chiếu"
-            message="Vui lòng chọn ngày chiếu"
+            message="Vui lòng chọn phim, rạp và ngày chiếu"
           />
         )}
 

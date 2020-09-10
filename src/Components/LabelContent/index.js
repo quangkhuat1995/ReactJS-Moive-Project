@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import "./LabelContent.scss";
 
 // tenCumRap = CGV - CresionMall || BHD Star Cineplex - Pham Hung
 const renderTenCumRap = (tenCumRap) => {
