@@ -1,10 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
+import TabPanel from "../TabPanel";
 import Theater from "./Theater";
+import TheaterContent from "./TheaterContent";
+import useMedia from "../../Hook/useMedia";
 import TheaterPanel from "./TheaterPanel";
 
 const img = "/images/theater.jpg";
 
 function SingleShowTimeDetail(props) {
+  const { listHeThongRap } = props;
+  const isDesktop = useMedia("(min-width:768px)");
+
   return (
     <section className="detail">
       <div className="myContainer detail-wrapper">
@@ -63,18 +70,37 @@ function SingleShowTimeDetail(props) {
             <p className="date">27</p>
           </li>
         </ul>
+
         {/* THEATER */}
-        <Theater /> {/* data-target="#maHTRap"*/}
-        {/* SHOW LIST */}
-        <div className="detail__showList tab-content">
-          {/* <ShowList movie={movie} /> */}
-          <TheaterPanel />
-          {/* Hethong 1 class="tab-pane active" id=maHTRap*/}
-          {/* HeThong 2 */}
+        <div className="nav detail__theater" role="tablist">
+          <Theater />
         </div>
+
+        {/* SHOW LIST only show in desktop view*/}
+        {isDesktop && (
+          <div className="detail__showList tab-content">
+            {/* <TheaterPanel /> */}
+
+            {listHeThongRap &&
+              listHeThongRap.length > 0 &&
+              listHeThongRap.map((item, index) => {
+                return (
+                  <TheaterPanel
+                    key={item.maHeThongRap}
+                    heThongRap={item}
+                    index={index}
+                  />
+                );
+              })}
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
-export default SingleShowTimeDetail;
+const mapStateToProps = (state) => {
+  return {
+    listHeThongRap: state.listHeThongRapReducer.listHeThongRap,
+  };
+};
+export default connect(mapStateToProps, null)(SingleShowTimeDetail);

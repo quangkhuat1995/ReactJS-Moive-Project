@@ -99,7 +99,7 @@ $total-height: 735px;
       transform: translateY(-50%);
       width: 20px;
       height: 20px;
-      background: url("./../../images/next-session.png") center center/cover;
+      background: url("/images/next-session.png") center center/cover;
       @include RESPONSIVE("768px") {
         display: none;
       }

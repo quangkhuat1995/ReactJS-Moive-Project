@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 //Components
@@ -87,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
     },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(MainNav);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(MainNav));

@@ -1,85 +1,35 @@
 import React from "react";
-import { connect } from "react-redux";
-import TabPanel from "../TheaterList/TabPanel";
 import TheaterContent from "./TheaterContent";
+import TabPanel from "../TabPanel";
+import useMedia from "../../Hook/useMedia";
+import PropTypes from "prop-types";
 
 function TheaterPanel(props) {
-  const { listHeThongRap } = props;
-  const { heThongRapChieu } = props.detailMovie;
-  const renderHeThongRapChieu = () => {
-    if (heThongRapChieu && heThongRapChieu.length > 0) {
-      return heThongRapChieu.map((item) => {
-        return (
-          <div
-            key={item.maHeThongRap}
-            className="theater__details--item"
-            data-toggle="collapse"
-            data-target={`#${item.maHeThongRap}-colappsed`}
-          >
-            <img
-              className="theater__image"
-              src={item.logo}
-              alt={item.tenHeThongRap}
-            />
-            <div className="wrapInfo">
-              <span className="chiNhanh">
-                <span className="tenRap CGV">CGV</span> - Thảo Điền Pearl
-              </span>
-              <span className="diaChi">
-                Tầng 2, Thảo Điền Mall, 12 Quốc Hương, Phường Thảo --&gt; Điền,
-                Quận 2, TP. Hồ Chí Minh
-              </span>
-            </div>
-            <div
-              className="collapse show timeList testTimeList"
-              id={`${item.maHeThongRap}-colappsed`}
-            >
-              <a href="#" className="btn btn-time">
-                13:20
-              </a>
-              <a href="#" className="btn btn-time">
-                13:20
-              </a>
-              <a href="#" className="btn btn-time">
-                13:20
-              </a>
-              <a href="#" className="btn btn-time">
-                13:20
-              </a>
-              <a href="#" className="btn btn-time">
-                13:20
-              </a>
-            </div>
-          </div>
-        );
-      });
-    }
-  };
+  const { heThongRap, index } = props;
+  const isMobile = useMedia("(max-width:768px)");
 
-  // return <TabPanel className="detail__showList tab-pane">
-  //  { renderHeThongRapChieu()}
-  // </TabPanel>;
-  const renderTabPanel = () => {
-    if (listHeThongRap && listHeThongRap.length > 0) {
-      return listHeThongRap.map((item, index) => {
-        const settings = {
-          className: `tab-pane fade ${index === 0 ? "show active" : ""}`,
-          id: item.maHeThongRap,
-        };
-        return (
-          <TabPanel settings={settings} key={item.maHeThongRap}>
-            <TheaterContent maHeThongRap={item.maHeThongRap} />
-          </TabPanel>
-        );
-      });
-    }
-  };
-  return <>{renderTabPanel()}</>;
+  const settings = isMobile
+    ? {
+        className: "collapse",
+        id: heThongRap.maHeThongRap,
+      }
+    : {
+        className: `tab-pane fade ${index === 0 ? "show active" : ""}`,
+        id: heThongRap.maHeThongRap,
+      };
+  return (
+    <TabPanel settings={settings}>
+      <TheaterContent maHeThongRap={heThongRap.maHeThongRap} />
+    </TabPanel>
+  );
 }
-const mapStateToProps = (state) => {
-  return {
-    listHeThongRap: state.listHeThongRapReducer.listHeThongRap,
-    detailMovie: state.detailMovieReducer.detailMovie,
-  };
+
+TheaterPanel.propTypes = {
+  heThongRap: PropTypes.object.isRequired,
+  index: PropTypes.number,
 };
-export default connect(mapStateToProps, null)(TheaterPanel);
+TheaterPanel.defaultProps = {
+  heThongRap: {},
+  index: 0,
+};
+export default TheaterPanel;

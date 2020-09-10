@@ -1,0 +1,25 @@
+.logo__detail {
+  padding: $sp-20;
+  @include displayFlex(flex-start, center);
+  cursor: pointer;
+  position: relative;
+  @extend %underLinePsuedo;
+
+  .tenHeThong {
+    padding-left: $sp-10;
+    font-size: $fs-14 + 1;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .arrow {
+    @include positionAbsolute(50%, false, false, 20px);
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: url("./../../images/next-session.png") center center/cover; //TODO
+
+    @include RESPONSIVE("768px") {
+      display: none;
+    }
+  }
+}

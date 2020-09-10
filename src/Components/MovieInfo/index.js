@@ -4,7 +4,7 @@ import WithDetailMovieStyle from "../../HOC/withDetailMovieStyle";
 function MainDetail(props) {
   const { movie, renderDate } = props;
   return (
-    <main className="movie-main">
+    <section className="movie__info">
       <div className="myContainer row">
         <div className="col-12 col-md-6">
           {/* ngày công chiếu */}
@@ -47,7 +47,7 @@ function MainDetail(props) {
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }
 

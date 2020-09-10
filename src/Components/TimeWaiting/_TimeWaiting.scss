@@ -1,0 +1,13 @@
+.seat__section--top {
+  .top__right {
+    @include styleText($color-light-1, $fs-12);
+    text-align: center;
+    p {
+      margin: 0;
+    }
+    #timewaiting {
+      @include styleText($color-red-primary, 29px);
+      line-height: 29px;
+    }
+  }
+}

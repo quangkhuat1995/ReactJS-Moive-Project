@@ -30,7 +30,7 @@ function BookingTheater(props) {
               - {renderTenCumRap()[1]} - {thongTinPhim.tenRap}
             </span>
           </p>
-          <p className="day-show">{thongTinPhim.diaChi}</p>
+          <p className="diaChi">{thongTinPhim.diaChi}</p>
         </div>
       </div>
     );

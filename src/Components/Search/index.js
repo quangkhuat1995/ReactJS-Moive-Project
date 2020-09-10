@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import SelectItem from "./SelectItem";
-import LinkButton from "../LinkButton";
+import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { actFetchDetailMovie } from "../../containers/HOME/DetailPage/modules/action";
+import LinkButton from "../LinkButton";
+import SelectItem from "./SelectItem";
 import UnSelectUI from "./UnSelectUI";
+
+/**
+ * đưa tất cả các cụm rạp của tất cả các hệ thống thành 1 mảng để xử lý
+ */
 const getAllListCumRap = (heThongRapChieu = []) => {
   if (heThongRapChieu && heThongRapChieu.length > 0) {
     return heThongRapChieu.reduce(
@@ -12,16 +16,23 @@ const getAllListCumRap = (heThongRapChieu = []) => {
       []
     );
   }
-
   return [];
 };
 
 const getCumRapDuocChon = (listCumRapChieu = [], tenCumRap) => {
   if (listCumRapChieu && listCumRapChieu.length > 0) {
-    return listCumRapChieu.find((cumRap, index) => {
+    return listCumRapChieu.find((cumRap) => {
       return cumRap.tenCumRap === tenCumRap;
-    }); // {...} chỉ có 1 item duy nhất
+    }); // {.....}
   }
+};
+
+const getDanhSachGioChieuTheoNgay = (cumRapDuocChon, ngayChieu) => {
+  return cumRapDuocChon.lichChieuPhim.filter((item) => {
+    return (
+      new Date(item.ngayChieuGioChieu).toLocaleDateString("it-IT") === ngayChieu
+    );
+  });
 };
 
 const getMaLichChieuTheoGioChieu = (times = [], gioChieu) => {
@@ -33,61 +44,56 @@ const getMaLichChieuTheoGioChieu = (times = [], gioChieu) => {
   return lichChieu.maLichChieu;
 };
 
-const getDanhSachGioChieuTheoNgay = (cumRapDuocChon, ngayChieu) => {
-  let danhSachGioChieu = cumRapDuocChon.lichChieuPhim.filter((time) => {
-    return (
-      new Date(time.ngayChieuGioChieu).toLocaleDateString("it-IT") === ngayChieu
-    );
-  });
-  // return danhSachGioChieu.map((item) => {
-  //   return new Date(item.ngayChieuGioChieu).toLocaleTimeString("it-IT", {
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //   });
-  // });
-  return danhSachGioChieu;
-};
-
+//export
 function Search(props) {
   const { listMovie, heThongRapChieu, getThongTinLichChieuPhim } = props;
-  const [state, setState] = useState({
-    // state thay đổi khi handleChange
-    movieSelect: "", //Ted part 2
-    cinemaSelect: "", // CGV- SƯ vạn hạnh
-    daySelect: "", // 1/1/2019
-    timeSelect: "", //
+  const initialState = useMemo(
+    () => ({
+      // state thay đổi khi handleChange
+      movieSelect: "", //Ted part 2
+      cinemaSelect: "", // CGV- SƯ vạn hạnh
+      daySelect: "", // 1/1/2019
+      timeSelect: "", //
 
-    //state truyền vào as props
-    listCumRapChieu: [], //luôn reset lại theo phim đã chọn []<object>
-    cumRapDuocChon: {},
-    times: [], //chứa ds thông tin lịch chiếu theo ngày đã chọn []<obj>
+      //state truyền vào as props (thay đổi phụ thuộc vào nhóm State trên)
+      listCumRapChieu: [], //luôn reset lại theo phim đã chọn []<object>
+      cumRapDuocChon: {},
+      times: [], //chứa ds thông tin lịch chiếu theo ngày đã chọn []<obj>
 
-    //state kiểm tra
-    isDone: false,
+      //state kiểm tra
+      isCompleted: false,
 
-    //call API
-    maLichChieu: null,
-  });
+      //router to:
+      maLichChieu: "",
+    }),
+    []
+  );
 
+  const [state, setState] = useState(initialState);
+
+  //khi API trả về thì cập nhật danh sách cumRap có chiếu phim đã chọn
   useEffect(() => {
-    console.log("efect run");
-
     setState({
       ...state,
       listCumRapChieu: getAllListCumRap(heThongRapChieu),
     });
+    return () => {
+      setState({ ...initialState });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [heThongRapChieu]);
 
   const handleChange = (e) => {
     e.persist();
 
-    //value có thể là tenPhim, tenCumRap, 1/1/2019, 10:10,
+    //value là tenPhim, tenCumRap, 1/1/2019, 10:10:00, tùy vào name
     const { name, value, selectedIndex } = e.target;
     const { id } = e.target.childNodes[selectedIndex];
 
     switch (name) {
       case "movieSelect":
         getThongTinLichChieuPhim(id);
+
         setState({
           ...state,
           [name]: value,
@@ -108,7 +114,6 @@ function Search(props) {
         setState({
           ...state,
           [name]: value,
-          cumRapDuocChon: {},
           cumRapDuocChon: getCumRapDuocChon(state.listCumRapChieu, value),
           //reset
           daySelect: "",
@@ -122,7 +127,6 @@ function Search(props) {
         setState({
           ...state,
           [name]: value,
-          times: [],
           times: getDanhSachGioChieuTheoNgay(state.cumRapDuocChon, value),
           //reset
           timeSelect: "",
@@ -134,8 +138,7 @@ function Search(props) {
         setState({
           ...state,
           [name]: value,
-          // maLichChieu: "",
-          // maLichChieu: getMaLichChieuTheoGioChieu(state.times, value),
+          maLichChieu: getMaLichChieuTheoGioChieu(state.times, value),
         });
         break;
 
@@ -143,58 +146,42 @@ function Search(props) {
         break;
     }
 
+    //chọn xong timeSelect mới có maLichChieu nên chỉ cần kiểm tra tồn tại maLichChieu thì cho submit
     setState((prevState) => {
-      if (prevState.timeSelect.length > 0) {
-        let maLichChieu = getMaLichChieuTheoGioChieu(
-          prevState.times,
-          prevState.timeSelect
-        );
-
-        if (maLichChieu && maLichChieu.length > 0) {
-          return {
-            ...prevState,
-            maLichChieu,
-            isDone: true,
-          };
-        }
+      if (prevState.maLichChieu && prevState.maLichChieu.length > 0) {
         return {
           ...prevState,
-          maLichChieu: null,
-          isDone: false,
+          isCompleted: true,
         };
       }
-      return { ...prevState };
+      return {
+        ...prevState,
+        isCompleted: false,
+      };
     });
   };
   console.log(state);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // setState({ ...state, movieSelect: movieSelectRef.current.value });
-  };
 
   const {
     movieSelect,
     cinemaSelect,
     daySelect,
-    timeSelect,
 
     listCumRapChieu,
     cumRapDuocChon,
     times,
-    isDone,
 
+    isCompleted,
     maLichChieu,
   } = state;
 
   return (
     <section className="search myContainer">
-      <form className="search__form" onSubmit={handleSubmit}>
+      <form className="search__form">
         <SelectItem
           label="Phim"
           name="movieSelect"
           list={listMovie}
-          keyLoop="maPhim"
           handleChange={handleChange}
         />
 
@@ -204,7 +191,6 @@ function Search(props) {
             name="cinemaSelect"
             label="Rạp"
             list={listCumRapChieu}
-            keyLoop="cinema"
             handleChange={handleChange}
           />
         ) : (
@@ -227,7 +213,7 @@ function Search(props) {
           <UnSelectUI
             name="daySelect"
             label="Ngày chiếu"
-            message="Vui lòng chọn rạp"
+            message="Vui lòng chọn phim và rạp"
           />
         )}
 
@@ -243,7 +229,7 @@ function Search(props) {
           <UnSelectUI
             name="timeSelect"
             label="Giờ chiếu"
-            message="Vui lòng chọn ngày chiếu"
+            message="Vui lòng chọn phim, rạp và ngày chiếu"
           />
         )}
 
@@ -251,7 +237,8 @@ function Search(props) {
           {/* <button className="btnBuyTicket">MUA VÉ NGAY</button> */}
 
           <LinkButton
-            disabled={isDone}
+            type="button"
+            disabled={!isCompleted}
             className="btnBuyTicket"
             to={`/booking/${maLichChieu}`}
           >

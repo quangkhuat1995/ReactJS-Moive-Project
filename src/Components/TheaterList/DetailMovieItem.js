@@ -1,13 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import React from "react";
 import LinkButton from "../LinkButton";
-
-//api tra ve string sai nen phai lam cai nay
-// "maCumRap": "glx-nguyen-du\r\n",
-const checkId = (idString) => {
-  return idString.replace(/[\r\n]/g, "");
-};
+// import "./DetailMovieItem.scss";
 
 //Return startTime ~ endTime depend on API string(ex: 2019-01-01T10:10:00)
 const styleTime = (ngayChieuGioChieu) => {
@@ -35,46 +29,34 @@ const checkPassStartTime = (startTime) => {
     hour: "2-digit",
     minute: "2-digit",
   });
-  // let [currentHour, currentMin] = currentTime.split(":");
-  // let [startHour, startMin] = startTime.split(":");
-  // if (parseInt(startHour) - parseInt(currentHour) > 0) {
-  //   return false
-  // }
-  // else{
 
-  // }
   if (startTime > currentTime) {
     return false;
   }
   return true;
-  // console.log(currentTime);
-  // return null;
 };
-checkPassStartTime("10:10");
+
+const renderBtnTime = (listTimes) => {
+  if (listTimes && listTimes.length > 0) {
+    return listTimes.map((item, index) => {
+      const [startTime, endTime] = styleTime(item.ngayChieuGioChieu);
+      return (
+        <LinkButton
+          key={item.maLichChieu}
+          to={`/booking/${item.maLichChieu}`}
+          className="btn btn-time"
+          disabled={checkPassStartTime(startTime)}
+        >
+          <span className="start">{startTime}</span> ~ {endTime}
+        </LinkButton>
+      );
+    });
+  }
+};
 
 //export
 function DetailMovieItem(props) {
   const { movie, maCumRap, todayListTime } = props;
-  // console.log(props);
-
-  // ngayChieuGioChieu: 2019-01-01T10:10:00
-  const renderBtnTime = () => {
-    if (todayListTime && todayListTime.length > 0) {
-      return todayListTime.map((item, index) => {
-        const [startTime, endTime] = styleTime(item.ngayChieuGioChieu);
-        return (
-          <LinkButton
-            key={item.maLichChieu}
-            to={`/booking/${item.maLichChieu}`}
-            className="btn btn-time"
-            disabled={checkPassStartTime(startTime)}
-          >
-            <span className="start">{startTime}</span> ~ {endTime}
-          </LinkButton>
-        );
-      });
-    }
-  };
 
   // main return
   return (
@@ -82,10 +64,10 @@ function DetailMovieItem(props) {
       <div
         className="main__collapse"
         data-toggle="collapse"
-        data-target={`#${checkId(maCumRap)}_${movie.maPhim}`}
+        data-target={`#${maCumRap.trim()}_${movie.maPhim}`}
       >
         <img
-          className="theater__image"
+          className="theaterList__image"
           src={movie.hinhAnh}
           alt={movie.tenPhim}
         />
@@ -96,13 +78,11 @@ function DetailMovieItem(props) {
           <span className="movieDetail">116 phút - TIX 8.6 - IMDb 0</span>
         </div>
       </div>
-      <div
-        className="collapse show"
-        id={`${checkId(maCumRap)}_${movie.maPhim}`}
-      >
+
+      <div className="collapse show" id={`${maCumRap.trim()}_${movie.maPhim}`}>
         <div className="pt-3 row content__collapse stack">
           <div className="col-12 digital">2D Digital</div>
-          <div className="col-12">{renderBtnTime()}</div>
+          <div className="col-12">{renderBtnTime(todayListTime)}</div>
         </div>
       </div>
     </div>
@@ -112,11 +92,11 @@ function DetailMovieItem(props) {
 DetailMovieItem.propTypes = {
   movie: PropTypes.object.isRequired,
   maCumRap: PropTypes.string.isRequired,
-  todayList: PropTypes.array.isRequired,
+  todayListTime: PropTypes.array.isRequired,
 };
 DetailMovieItem.defaultProps = {
   movie: {},
   maCumRap: null,
-  todayList: [],
+  todayListTime: [],
 };
 export default DetailMovieItem;

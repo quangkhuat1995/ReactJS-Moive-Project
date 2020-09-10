@@ -1,0 +1,89 @@
+.seat__section--map {
+  .listseat {
+    display: grid;
+    place-items: center;
+    margin: auto;
+    width: 90%;
+    .seatrow {
+      @include displayFlex(flex-start, center);
+      pointer-events: none;
+      position: relative;
+      .seat-unclickable {
+        @include positionAbsolute(50%, -10%);
+        transform: translateY(-50%);
+        @include styleText($color-black-1, $fs-18);
+        display: inline-block;
+        width: 3vh; //30px desk
+        height: 3vh;
+        line-height: 20px;
+        border-radius: $border-radius;
+        margin-right: 60px;
+        text-align: center;
+        cursor: default;
+        &.hideOnMobile {
+          margin-right: calc(100vw / 16);
+          @include RESPONSIVE("768px") {
+            margin-right: 60px;
+          }
+        }
+        @include RESPONSIVE("768px") {
+          width: 4vh;
+          height: 4vh;
+          line-height: 30px;
+        }
+        @include RESPONSIVE("992px") {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .seat-clickable {
+        position: relative;
+        margin-top: 5px;
+
+        label {
+          @extend .seat-unclickable;
+          transform: none;
+          pointer-events: all;
+          margin-bottom: 0;
+          margin-right: 5px;
+          background: $color-normal;
+          border: 1px solid #ccc;
+          position: relative;
+          cursor: pointer;
+          // &:last-of-type {
+          //   margin-right: 0;
+          // }
+          &.Vip {
+            background: $color-vip;
+          }
+
+          .seatnum {
+            visibility: hidden;
+            @include positionAbsolute(50%, 50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+            // line-height: ;
+            @include styleText($color-black-1, $fs-14);
+          }
+        }
+        input[type="checkbox"] {
+          position: absolute;
+          visibility: hidden;
+          &:checked {
+            & ~ label {
+              background-color: $color-choosing;
+            }
+            & ~ label .seatnum {
+              visibility: visible;
+            }
+          }
+          &:disabled {
+            & ~ label {
+              background-color: $color-taken;
+            }
+          }
+        }
+      }
+    }
+  }
+}
