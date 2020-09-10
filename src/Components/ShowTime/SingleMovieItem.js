@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MovieThumbnail from "../MovieThumbnail";
 import WithDetailMovieStyle from "./../../HOC/withDetailMovieStyle";
+
 function SingleMovieItem(props) {
   const { movie } = props;
   //props nay duoc nhan tu HOC

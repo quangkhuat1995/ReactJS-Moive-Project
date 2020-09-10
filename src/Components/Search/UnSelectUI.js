@@ -1,15 +1,15 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 function UnSelectUI(props) {
   const { name, label, message } = props;
   return (
     <div className={`search__group ${name}`}>
-      <select name={name} onChange={props.handleChange}>
-        <option selected disabled hidden>
+      <select defaultValue name={name} onChange={props.handleChange}>
+        <option value="" hidden>
           {label}
         </option>
-        <option value="" disabled>
+        <option value={message} disabled>
           {message}
         </option>
       </select>
@@ -23,4 +23,4 @@ UnSelectUI.propTypes = {
   message: PropTypes.string.isRequired,
 };
 
-export default UnSelectUI;
+export default memo(UnSelectUI);

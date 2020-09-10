@@ -1,52 +1,59 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
+import useMedia from "../../Hook/useMedia";
+import LogoHeThong from "../LogoHeThong";
+import NavTabLogo from "../NavTabLogo";
+import TabPanel from "../TabPanel";
+import TheaterPanel from "./TheaterPanel";
+
+const renderLogoAsCollapse = (listHeThongRap) => {
+  if (listHeThongRap && listHeThongRap.length > 0) {
+    return listHeThongRap.map((item, index) => {
+      const settingsCollapse = {
+        className: "collapsed MOBILE wrapper__collase?",
+        "data-toggle": "collapse",
+        "data-target": `#${item.maHeThongRap}`,
+      };
+      return (
+        <div className="logo__wrapper collapse__mobile" key={item.maHeThongRap}>
+          <TabPanel settings={settingsCollapse}>
+            <LogoHeThong heThong={item} hasLabel={true} />
+          </TabPanel>
+          {/* collapse items */}
+          <TheaterPanel heThongRap={item} />
+        </div>
+      );
+    });
+  }
+};
 
 function Theater(props) {
   const { listHeThongRap } = props;
-  /**TODO */
-  // const checkWindowWidth = window.outerWidth >="768";
-  // if(checkWindowWidth){
-  //   //render desktop ele render moblie
-  // }
-  const renderTheaterInfo = () => {
-    if (listHeThongRap && listHeThongRap.length > 0) {
-      return listHeThongRap.map((item, index) => {
-        return (
-          <div
-            key={item.maHeThongRap}
-            className={`deatail__theater--single ${
-              index === 0 ? "active" : ""
-            }`}
-            data-toggle="tab"
-            data-target={`#${item.maHeThongRap}`}
-            role="tab"
-          >
-            <div className="detail__theater--item">
-              <img
-                className="theater__image"
-                src={item.logo}
-                alt={item.tenHeThongRap}
-              />
-              <span className="tenCumRap">{item.tenHeThongRap}</span>
-              <span className="arrow" />
-            </div>
-            {/* <div>so luong phim tung cum rap</div> */}
-          </div>
-        );
-      });
-    }
-  };
+  const isMobile = useMedia("(max-width:768px)");
+
   return (
-    // phai co class "nav" moi toggle class active dc
-    <div className="nav detail__theater" role="tablist">
-      {renderTheaterInfo()}
-    </div>
+    <>
+      {isMobile ? (
+        <>{renderLogoAsCollapse(listHeThongRap)}</>
+      ) : (
+        <NavTabLogo hasLabel={true} />
+      )}
+    </>
   );
 }
+
+Theater.propTypes = {
+  listHeThongRap: PropTypes.array.isRequired,
+};
+Theater.defaultProps = {
+  listHeThongRap: [],
+};
+
 const mapStateToProps = (state) => {
   return {
     listHeThongRap: state.listHeThongRapReducer.listHeThongRap,
   };
 };
-//TODO 1 hàm mapDispatch để sort lại state
+
 export default connect(mapStateToProps, null)(Theater);
