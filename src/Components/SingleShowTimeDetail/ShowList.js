@@ -50,7 +50,7 @@ const renderBtnTime = (listTimes) => {
           key={item.maLichChieu}
           to={`/booking/${item.maLichChieu}`}
           className="btn btn-time"
-          // disabled={checkPassStartTime(startTime)}
+          disabled={checkPassStartTime(startTime)}
         >
           <span className="start">{startTime}</span> ~ {endTime}
         </LinkButton>

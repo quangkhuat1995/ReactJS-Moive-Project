@@ -81,6 +81,7 @@ function Search(props) {
       setState({ ...initialState });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [heThongRapChieu]);
 
   const handleChange = (e) => {
