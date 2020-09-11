@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import TabPanel from "../TabPanel";
 import Theater from "./Theater";
 import TheaterContent from "./TheaterContent";
 import useMedia from "../../Hook/useMedia";
 import TheaterPanel from "./TheaterPanel";
-
+import ListOfDay from "./ListOfDay";
 const img = "/images/theater.jpg";
 
 function SingleShowTimeDetail(props) {
@@ -16,61 +16,8 @@ function SingleShowTimeDetail(props) {
     <section className="detail">
       <div className="myContainer detail-wrapper">
         {/* LIST OF DAY */}
-        <ul className="detail__listOfDay">
-          <li className="detail__listOfDay--item active">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-          <li className="detail__listOfDay--item">
-            <p>Ngày</p>
-            <p className="date">27</p>
-          </li>
-        </ul>
 
+        <ListOfDay />
         {/* THEATER */}
         <div className="nav detail__theater" role="tablist">
           <Theater />

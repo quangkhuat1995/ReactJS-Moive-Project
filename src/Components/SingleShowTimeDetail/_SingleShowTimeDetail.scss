@@ -1,8 +1,10 @@
 // define Grid
 $row-1-height: 90px;
 $total-height: 735px;
+
 .detail {
   margin: 30px 0;
+  background: $color-white-1;
   &__listOfDay {
     grid-area: ld;
     max-height: $row-1-height;
@@ -17,7 +19,7 @@ $total-height: 735px;
 
   &__showList {
     grid-area: sh;
-    max-height: calc($total-height - $row-1-height);
+    max-height: calc(#{$total-height} - #{$row-1-height});
     border: 1px solid #ebebec;
   }
 
@@ -50,17 +52,22 @@ $total-height: 735px;
   overflow-y: hidden;
   overflow-x: auto;
   @include styleScrollBar(true);
+
   &--item {
     @include displayFlex(stretch, center, column);
     min-width: 70px;
     cursor: pointer;
-
+    opacity: 0.7;
+    transition: all 0.5s;
     p {
       margin: 0;
       font-size: $fs-14;
       text-align: center;
+      pointer-events: none;
     }
-
+    .dayOfWeek {
+      font-weight: 700;
+    }
     .date {
       font-size: $fs-18;
       @include RESPONSIVE("768px") {
@@ -68,8 +75,12 @@ $total-height: 735px;
       }
     }
 
-    &.active {
+    &.active,
+    &:hover {
       color: $color-red-primary;
+      font-weight: 700;
+      opacity: 1;
+      transform: scale(1.1);
     }
   }
 }

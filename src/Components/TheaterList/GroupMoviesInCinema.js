@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import DetailMovieItem from "./DetailMovieItem";
 import TabPanel from "../TabPanel";
 import useMedia from "../../Hook/useMedia";
+import { TODAY } from "./../../constants/config";
 
-const TODAY = "2019-01-01";
 const getTodayListTime = (lstLichChieu = []) => {
   if (lstLichChieu && lstLichChieu.length > 0) {
     return lstLichChieu.filter((lichChieu) => {

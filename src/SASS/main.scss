@@ -60,7 +60,6 @@
 @import "./../Components/SeatRow/SeatRow";
 @import "./../Components/NoteSeat/NoteSeat";
 
-
 @import "./../Components/PaySection/Pay";
 /**
 * PAGES
@@ -71,7 +70,8 @@
 * Component
 */
 @import "./Component/button";
-@import "./Component/tabs"; //keep
+// @import "./Component/tabs"; //keep
+@import "./../Components/NavigationTab/NavigationTab"; //keep
 @import "./Component/playContainer"; //keep
 // @import "./Component/movieThumbnail";
 // @import "./Component/main-title-detail";
