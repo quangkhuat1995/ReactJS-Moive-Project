@@ -9,6 +9,7 @@ import userLoginReducer from "./../../containers/HOME/LoginPage/modules/reducer"
 import userStatusReducer from "./../../Components/UserNavbar/modules/reducer";
 
 import buyTicketReducer from "./../../Components/Seat/modules/reducer";
+import accountReducer from "./../../containers/ADMIN/Accounts/modules/reducer";
 const rootReducer = combineReducers({
   listMovieReducer, // hien thi danh sach phim trong page home/showtime
   listHeThongRapReducer, // hien thi danh sach cac rap trong page home/theaterlist
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   userLoginReducer,
   userStatusReducer,
   buyTicketReducer,
+  accountReducer,
 });
 
 export { rootReducer };

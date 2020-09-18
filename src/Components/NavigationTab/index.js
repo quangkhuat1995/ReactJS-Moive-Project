@@ -14,7 +14,7 @@ function NavigationTab(props) {
               data-toggle="tab"
               href={`#${item[0]}`}
               role="tab"
-              aria-selected={`${idx === 0 ? true : false}`}
+              aria-selected={`${idx === 0 && true}`}
             >
               {item[1]}
             </a>

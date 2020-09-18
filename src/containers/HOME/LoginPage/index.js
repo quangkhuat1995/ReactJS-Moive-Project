@@ -15,24 +15,12 @@ import { actFetchUserLogin } from "./modules/action";
 //Components
 import ErrorUI from "../../../Components/ErrorUI";
 //Material UI
-import useStyles from "../../../style";
+import useUserStyles from "../../../style/useUserStyle";
 //Custom Hooks
 import useSetBackground from "../../../Hook/useSetBackground";
 import useFormValidation from "../../../Hook/useFormValidation";
 import validateForm from "../../../Hook/validateForm";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" to="/">
-        Tix.vn
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "../../../Components/Copyright";
 
 const INIT_LOGIN_STATE = {
   taiKhoan: "",
@@ -41,7 +29,7 @@ const INIT_LOGIN_STATE = {
 
 function LogInPage(props) {
   const { errorLogin, history, fetchUserLogin } = props;
-  const classes = useStyles();
+  const classes = useUserStyles();
   useSetBackground();
 
   const {
@@ -139,6 +127,7 @@ function LogInPage(props) {
           </Grid>
         </form>
       </div>
+
       <Box mt={8}>
         <Copyright />
       </Box>

@@ -27,6 +27,22 @@ const bookingApi = {
     };
     return axiosClient.post(uri, data, config); //tham số thứ 3 phải là config
   },
+
+  // {
+  //   "maPhim": 0,
+  //   "ngayChieuGioChieu": "string", // dd/mm/yyyy 10:10:00
+  //   "maRap": 0,
+  //   "giaVe": 0
+  // }
+  postTaoLichChieu: (data, token) => {
+    const uri = `/QuanLyDatVe/TaoLichChieu`;
+    const config = {
+      headers: {
+        ["Authorization"]: `Bearer ${token}`,
+      },
+    };
+    return axiosClient.post(uri, data, config);
+  },
 };
 
 export default bookingApi;

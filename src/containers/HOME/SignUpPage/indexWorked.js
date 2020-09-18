@@ -12,29 +12,18 @@ import Box from "@material-ui/core/Box";
 // import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import useUserStyles from "../../../style/useUserStyle";
 
-import useStyles from "../../../style";
 import { connect } from "react-redux";
 import { actFetchSignUp } from "./modules/action";
 import useSetBackGround from "./../../../Hook/useSetBackground";
 import ErrorUI from "../../../Components/ErrorUI";
+import Copyright from "../../../Components/Copyright";
 
 const logo = "/images/logo.png";
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Tix.vn
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 function SignUp(props) {
-  const classes = useStyles();
+  const classes = useUserStyles();
   const { fetchSighUp, loading, error } = props; // lay tu store redux
   // console.log(props.history);
   /*
