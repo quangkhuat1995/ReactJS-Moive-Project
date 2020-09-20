@@ -4,7 +4,7 @@ import PageTitle from "../PageTitle";
 import MoviesTable from "./MoviesTable";
 import useAdminStyles from "../../../style/useAdminStyle";
 
-export default function ManageMovies(props) {
+export default function ManageMovies() {
   // console.log(props);
 
   const classes = useAdminStyles();
@@ -15,9 +15,9 @@ export default function ManageMovies(props) {
         <Grid container spacing={3}>
           {/* page title here */}
           <Grid item xs={12}>
-            {/* <Paper className={classes.paper}> */}
-            <MoviesTable />
-            {/* </Paper> */}
+            <Paper className={classes.paper}>
+              <MoviesTable />
+            </Paper>
           </Grid>
         </Grid>
       </Container>

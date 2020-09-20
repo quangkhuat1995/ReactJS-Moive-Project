@@ -18,24 +18,16 @@ const usersApi = {
     return axiosClient.get(uri);
   },
 
-  postAddAccount: (user, token) => {
+  postAddAccount: (user) => {
     const uri = "/QuanLyNguoiDung/ThemNguoiDung";
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.post(uri, user, config);
+
+    return axiosClient.post(uri, user);
   },
 
-  deleteAccount: (taiKhoan, token) => {
+  deleteAccount: (taiKhoan) => {
     const uri = `/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.delete(uri, config);
+
+    return axiosClient.delete(uri);
   },
 
   // {
@@ -47,14 +39,10 @@ const usersApi = {
   //   "maLoaiNguoiDung": "QuanTri",
   //   "hoTen": "Duy Quang"
   // }
-  editAccount: (user, token) => {
+  editAccount: (user) => {
     const uri = `/QuanLyNguoiDung/CapNhatThongTinNguoiDung`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.put(uri, user, config);
+
+    return axiosClient.put(uri, user);
   },
 
   //info= {taiKhoan: '' }

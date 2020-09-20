@@ -17,15 +17,10 @@ const bookingApi = {
   //   ],
   //   "taiKhoanNguoiDung": "string"
   // }
-  /**TODO đọc lại docs chỗ này */
-  postDatVe: (data, token) => {
+  postDatVe: (data) => {
     const uri = `/QuanLyDatVe/DatVe`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.post(uri, data, config); //tham số thứ 3 phải là config
+
+    return axiosClient.post(uri, data);
   },
 
   // {
@@ -34,14 +29,10 @@ const bookingApi = {
   //   "maRap": 0,
   //   "giaVe": 0
   // }
-  postTaoLichChieu: (data, token) => {
+  postTaoLichChieu: (data) => {
     const uri = `/QuanLyDatVe/TaoLichChieu`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.post(uri, data, config);
+
+    return axiosClient.post(uri, data);
   },
 };
 

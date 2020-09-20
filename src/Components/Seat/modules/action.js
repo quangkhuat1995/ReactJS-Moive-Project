@@ -55,12 +55,12 @@ const actFetchBuyTicketFailed = (error) => {
 // }
 
 //post data to sever to book ticket
-const actBuyTicket = (data, token) => {
+const actBuyTicket = (data) => {
   let configData = actConfigDanhSachVe(data);
   return async (dispatch) => {
     dispatch(actFetchBuyTicketRequest());
     try {
-      const resData = await bookingApi.postDatVe(configData, token); // nhận về result: '"Đặt vé thành công!"'
+      const resData = await bookingApi.postDatVe(configData); // nhận về result: '"Đặt vé thành công!"'
       dispatch(actFetchBuyTicketSuccess(resData));
     } catch (error) {
       dispatch(actFetchBuyTicketFailed(error));

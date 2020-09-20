@@ -19,34 +19,36 @@ const moviesApi = {
     return axiosClient.get(uri, { param });
   },
 
-  postThemPhim: (movie, token) => {
-    const uri = `/QuanLyPhim/ThemPhim`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.post(uri, movie, config);
+  // postImages: (fileImg, token) => {
+  //   const uri = `/QuanLyPhim/UploadHinhAnhPhim`;
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+  //   return axiosClient.post(uri, fileImg, config);
+  // },
+
+  postThemPhim: (movie) => {
+    const uri = `/QuanLyPhim/ThemPhimUploadHinh`;
+    //trong obj movie có key hinhAnh là file nên phải chuyển sang formData
+    const formData = new FormData();
+    for (const key in movie) {
+      formData.append(key, movie[key]);
+    }
+    return axiosClient.post(uri, formData);
   },
 
-  postCapNhatPhim: (movie, token) => {
+  postCapNhatPhim: (movie) => {
     const uri = `/QuanLyPhim/CapNhatPhim`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.post(uri, movie, config);
+
+    return axiosClient.post(uri, movie);
   },
 
-  deleteMovie: (maPhim, token) => {
+  deleteMovie: (maPhim) => {
     const uri = `/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`;
-    const config = {
-      headers: {
-        ["Authorization"]: `Bearer ${token}`,
-      },
-    };
-    return axiosClient.delete(uri, config);
+
+    return axiosClient.delete(uri);
   },
 };
 

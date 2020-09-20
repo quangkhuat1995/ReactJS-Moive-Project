@@ -7,6 +7,7 @@ import UnLoggedUI from "./UnLoggedUI";
 //module
 import { connect } from "react-redux";
 import { actSetLogStatus } from "./modules/action";
+import { USER_KEY } from "../../constants/config";
 // import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
@@ -15,7 +16,7 @@ function MainNav(props) {
   // console.log(props);
 
   useEffect(() => {
-    if (localStorage.getItem("userUser")) {
+    if (localStorage.getItem(USER_KEY)) {
       setCurrentLogStatus(true);
     } else {
       setCurrentLogStatus(false);
@@ -25,7 +26,7 @@ function MainNav(props) {
   const handleLogOut = useCallback(
     (e) => {
       if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
-        localStorage.removeItem("userUser");
+        localStorage.removeItem(USER_KEY);
         setCurrentLogStatus(false);
         setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
       } else {

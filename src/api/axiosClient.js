@@ -7,7 +7,7 @@
 //https://stackoverflow.com/questions/40988238/sending-the-bearer-token-with-axios
 
 import axios from "axios";
-import { URL_API } from "./../constants/config";
+import { URL_API, USER_KEY } from "./../constants/config";
 
 const axiosClient = axios.create({
   baseURL: URL_API,
@@ -17,18 +17,13 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    // let token = "";
-    // const local =
-    //   localStorage.getItem("userUser") || localStorage.getItem("userAdmin");
-    // if (localStorage.getItem("userUser")) {
-    //   token = JSON.parse(localStorage.getItem("userUser")).accessToken;
-    // }
-    // if (localStorage.getItem("userAdmin")) {
-    //   token = JSON.parse(localStorage.getItem("userAdmin")).accessToken;
-    // }
-    // if (local) {
-    //   config.headers["Authorization"] = `Bearer ${token}`;
-    // }
+    let token = "";
+    const local = localStorage.getItem(USER_KEY);
+
+    if (local) {
+      token = JSON.parse(local).accessToken;
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
     return config;
   },
   function (error) {

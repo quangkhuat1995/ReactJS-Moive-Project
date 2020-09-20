@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import Copyright from "../Components/Copyright";
+import { USER_KEY } from "../constants/config";
 import Sidebar from "../containers/ADMIN/Sidebar";
 //
 //Must import last
@@ -45,7 +46,8 @@ export default function AdminTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={(propsOfComponent) => {
-        if (localStorage.getItem("userAdmin")) {
+        const user = localStorage.getItem(USER_KEY);
+        if (JSON.parse(user).maLoaiNguoiDung === "QuanTri") {
           return (
             <AdminLayout>
               <Component {...propsOfComponent} />

@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { USER_KEY } from "../../constants/config";
 
+const user = localStorage.getItem(USER_KEY);
 function LoggedUI(props) {
-  const store = localStorage.getItem("userUser");
-
   return (
     <>
       <li className="nav-item nav-item--login">
         <span className="nav-link">
-          Xin chào <span>{JSON.parse(store).hoTen}</span>
+          Xin chào <span>{JSON.parse(user).hoTen}</span>
         </span>
       </li>
       <li className="nav-item nav-item--register">
