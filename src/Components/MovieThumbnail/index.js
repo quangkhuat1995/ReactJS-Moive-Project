@@ -2,16 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actFindMovieTrailer } from "../../containers/HOME/HomePage/modules/action";
+import PropTypes from "prop-types";
 
 const play = "/images/play.png";
 
 function MovieThumbnail(props) {
-  const { movie, renderDate } = props; // render date nay duoc nhan tu Comp cha: singleMovieItem
+  const { movie, renderDate, allowNavigate } = props; // render date nay duoc nhan tu Comp cha: singleMovieItem
 
   return (
     <div className="movieThumbnail__img">
       <Link
-        to={`/phim/${movie.maPhim}-${movie.biDanh}`}
+        to={allowNavigate ? `/phim/${movie.maPhim}-${movie.biDanh}` : "#"}
         className="img__link"
         style={{
           background: `url(${movie.hinhAnh}) center center/cover`,
@@ -44,6 +45,16 @@ const mapDispatchToProps = (dispatch) => {
       // && dispatch(actFetchDetailMovie(id));
     },
   };
+};
+
+MovieThumbnail.propTypes = {
+  allowNavigate: PropTypes.bool.isRequired,
+  movie: PropTypes.object.isRequired,
+};
+
+MovieThumbnail.defaultProps = {
+  allowNavigate: true,
+  movie: {},
 };
 
 export default connect(null, mapDispatchToProps)(MovieThumbnail);

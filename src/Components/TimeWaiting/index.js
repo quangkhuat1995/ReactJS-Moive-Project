@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import { Redirect } from "react-router-dom";
 import Countdown, { zeroPad } from "react-countdown";
 import { TIME_BOOKING } from "../../constants/config";
@@ -15,8 +15,6 @@ function TimeWaiting() {
         setIsInTimeBooking(false);
       }, 1000);
 
-      // return <Redirect to="/" />;
-
       return <p id="timewaiting">00:00</p>;
     } else {
       // Render a countdown
@@ -27,7 +25,7 @@ function TimeWaiting() {
       );
     }
   };
-  if (isInTimeBooking === false) {
+  if (!isInTimeBooking) {
     return <Redirect to="/" />;
   }
   return (
@@ -43,4 +41,4 @@ function TimeWaiting() {
   );
 }
 
-export default TimeWaiting;
+export default memo(TimeWaiting);

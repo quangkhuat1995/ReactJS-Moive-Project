@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { actSortLichChieu } from "../../containers/HOME/DetailPage/modules/action";
-import theaterImagesData from "../../constants/theaterImagesData";
-import LinkButton from "../LinkButton";
 import CinemaDetailItem from "../CinemaDetailItem";
-const getLogo = (maHeThong) => {
-  let foundCumRap = theaterImagesData.find((item) => {
-    return item.maHeThongRap === maHeThong;
-  });
-  return foundCumRap.logo;
-};
+import LinkButton from "../LinkButton";
+import PropTypes from "prop-types";
+
 const styleTime = (ngayChieuGioChieu) => {
   let d = new Date(ngayChieuGioChieu);
   // console.log(d);
@@ -43,6 +36,8 @@ const checkPassStartTime = (startTime) => {
 };
 const renderBtnTime = (listTimes) => {
   if (listTimes && listTimes.length > 0) {
+    // console.log(listTimes);
+
     return listTimes.map((item, index) => {
       const [startTime, endTime] = styleTime(item.ngayChieuGioChieu);
       return (
@@ -58,98 +53,57 @@ const renderBtnTime = (listTimes) => {
     });
   }
 };
-// TODO btn này được render dựa vào state
-const renderTimeList = (cumRap) => {
-  // let listLichChieuPhim = [];
-  // if(cumRap.lichChieuPhim && cumRap.lichChieuPhim.length > 0){
-  //   listLichChieuPhim = sortLichChieuByDate("tryen date can sort vao");
-  // }
 
-  if (cumRap.lichChieuPhim && cumRap.lichChieuPhim.length > 0) {
-    return cumRap.lichChieuPhim.map((lichChieu) => {
-      let myTime = new Date(lichChieu.ngayChieuGioChieu).toLocaleTimeString(
-        "it-IT",
-        {
-          hour: "2-digit",
-          minute: "2-digit",
-        }
-      );
-      let myDate = new Date(lichChieu.ngayChieuGioChieu).toLocaleDateString(
-        "en-GB"
-      );
-      if (true) {
-        return (
-          <Link
-            to={`/booking/${lichChieu.maLichChieu}`}
-            className="btn btn-time"
-            key={lichChieu.maLichChieu}
-          >
-            {myTime} - {myDate}
-            {/* { sortDate(lichChieu.ngayChieuGioChieu)} */}
-          </Link>
-        );
-      }
-    });
-  }
+//nếu hệ thống rạp có chiếu phim được truyền vào comp này nhưng vào ngày nhất định nào đó, TẤT CẢ cụm rạp trong hệ thống đó KHÔNG có lịch chiếu nào (every cumRap.lichChieuPhim.length === 0) thì hiển thị UI khác (if true)
+const checkCumRapHasNothingToShow = (cumRapChieu = []) => {
+  return cumRapChieu.every((cumRap) => cumRap.lichChieuPhim.length === 0);
 };
-
 //export
 function ShowList(props) {
-  const { singleHeThongRapChieu } = props; //obj
-  const { cumRapChieu } = singleHeThongRapChieu; //array
-  const { lichChieu } = props; //array lau tu store
-  // const [cumRapChieu, setCumRapChieu] = useState([]);
-  // useEffect(() => {
-  //   setCumRapChieu(singleHeThongRapChieu.cumRapChieu);
-  // }, []);
-  // console.log();
-
-  console.log(cumRapChieu);
-
-  const renderSort = (inputNgayChieuGioChieu) => {
-    return null;
-  };
-
-  const sortLichChieuByDate = (ngayGioChieu) => {
-    let outputDate = new Date(ngayGioChieu).toLocaleTimeString("it-IT", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-  // 2019-01-01T10:10:00
+  const { foundHeThongRap } = props; //obj
+  const { cumRapChieu } = foundHeThongRap; //array
 
   const renderCumRap = () => {
     if (cumRapChieu && cumRapChieu.length > 0) {
-      return cumRapChieu.map((cumRap, index) => {
+      //tất cả cụm rạp không có lịch chiếu thị hiện UI thông báo
+      const isCumRapHasNothingToShow = checkCumRapHasNothingToShow(cumRapChieu);
+      if (isCumRapHasNothingToShow) {
         return (
-          <div key={cumRap.maCumRap} className="wrapper__collapse">
-            <div
-              className="main__collapse"
-              data-toggle="collapse"
-              data-target={`#${
-                singleHeThongRapChieu.maHeThongRap
-              }_${cumRap.maCumRap.trim()}`}
-            >
-              <CinemaDetailItem
-                system={singleHeThongRapChieu}
-                cinema={cumRap}
-              />
-            </div>
-            <div
-              className="collapse"
-              id={`${
-                singleHeThongRapChieu.maHeThongRap
-              }_${cumRap.maCumRap.trim()}`}
-            >
-              <div className="pt-3 row content__collapse stack">
-                <div className="col-12">2D Digital</div>
-                <div className="col-12">
-                  {/* {renderTimeList(cumRap)} */}
-                  {renderBtnTime(cumRap.lichChieuPhim)}
+          <div className="alert alert-danger">Ngày này không có lịch chiếu</div>
+        );
+      }
+
+      return cumRapChieu.map((cumRap, index) => {
+        //chỉ cụm rạp nào có lịch chiếu mới render
+        const isCumRapShowOnDay =
+          cumRap.lichChieuPhim && cumRap.lichChieuPhim.length > 0;
+
+        return (
+          isCumRapShowOnDay && (
+            <div key={cumRap.maCumRap} className="wrapper__collapse">
+              <div
+                className="main__collapse"
+                data-toggle="collapse"
+                data-target={`#${
+                  foundHeThongRap.maHeThongRap
+                }_${cumRap.maCumRap.trim()}`}
+              >
+                <CinemaDetailItem system={foundHeThongRap} cinema={cumRap} />
+              </div>
+              <div
+                className="collapse"
+                id={`${foundHeThongRap.maHeThongRap}_${cumRap.maCumRap.trim()}`}
+              >
+                <div className="pt-3 row content__collapse stack">
+                  <div className="col-12">2D Digital</div>
+                  <div className="col-12">
+                    {/* {renderTimeList(cumRap.lichChieuPhim, selectDay)} */}
+                    {renderBtnTime(cumRap.lichChieuPhim)}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )
         );
       });
     }
@@ -160,15 +114,11 @@ function ShowList(props) {
 
 const mapStateToProps = (state) => {
   return {
-    lichChieu: state.detailMovieReducer.detailMovie.lichChieu, //array
+    selectDay: state.detailMovieReducer.selectDay,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getSortedListLichChieu: (ngayChieuGioChieu) => {
-      dispatch(actSortLichChieu(ngayChieuGioChieu));
-    },
-  };
+ShowList.propsTypes = {
+  foundHeThongRap: PropTypes.object.isRequired,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(ShowList);
+export default connect(mapStateToProps, null)(ShowList);

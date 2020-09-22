@@ -1,5 +1,6 @@
 import { LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS } from "./constant";
 import usersApi from "../../../../api/usersApi";
+import { USER_KEY } from "../../../../constants/config";
 
 const actLoginRequest = () => {
   return {
@@ -38,10 +39,7 @@ const actFetchUserLogin = (user, history) => {
       dispatch(actLoginSuccess(resData));
 
       if (resData) {
-        if (localStorage.getItem("userUser")) {
-          localStorage.removeItem("userUser");
-        }
-        localStorage.setItem("userUser", JSON.stringify(resData));
+        localStorage.setItem(USER_KEY, JSON.stringify(resData));
         // alert("dang nhap thanh cong");
         history.goBack();
       }

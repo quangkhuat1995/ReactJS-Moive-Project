@@ -12,20 +12,26 @@ import { actFetchListMoive } from "./modules/action";
 import Carousel from "../../../Components/Carousel";
 import PropTypes from "prop-types";
 import Ads from "../../../Components/Ads";
+import useMedia from "../../../Hook/useMedia";
 
 function HomePage(props) {
-  const { fetchListMovie, listMovie, loading } = props;
-  // console.log(props);
+  const { loadingListMovie, fetchListMovie, listMovie } = props;
+  const isDesktop = useMedia("(min-width:992px)");
+  // // console.log(props);
   useEffect(() => {
     fetchListMovie();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) return <Loading />;
+  if (loadingListMovie) return <Loading />;
+
   return (
     <>
       <Carousel />
-      <Search />
+      {isDesktop && <Search />}
+
+      {/* <Search /> */}
+
       <ShowTime listMovie={listMovie} />
 
       <SeperateSection />
@@ -43,12 +49,14 @@ function HomePage(props) {
 }
 HomePage.propTypes = {
   listMovie: PropTypes.array,
-  loading: PropTypes.bool,
+  loadingListMovie: PropTypes.bool,
 };
+
 const mapStateToProps = (state) => {
   return {
     listMovie: state.listMovieReducer.listMovie,
-    loading: state.listMovieReducer.loading,
+    loadingListMovie: state.listMovieReducer.loading,
+    // loadingListTheater: state.listMovieReducer.loading,
   };
 };
 

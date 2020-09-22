@@ -1,8 +1,8 @@
 import HomePage from "./../containers/HOME/HomePage";
 import DetailPage from "./../containers/HOME/DetailPage";
 import BookingPage from "./../containers/HOME/BookingPage";
-import Dashboard from "../containers/ADMIN/Dashboard";
-import AddUser from "../containers/ADMIN/AddUser";
+import Accounts from "../containers/ADMIN/Accounts";
+import ManageMovies from "../containers/ADMIN/ManageMovies";
 
 const HomeRoutes = [
   {
@@ -25,13 +25,13 @@ const HomeRoutes = [
 const AdminRoutes = [
   {
     exact: true,
-    path: "/dashboard",
-    component: Dashboard,
+    path: "/dashboard", // chỉnh sửa movie
+    component: ManageMovies,
   },
   {
     exact: true,
-    path: "/add-user",
-    component: AddUser,
+    path: "/user-management",
+    component: Accounts,
   },
 ];
 export { HomeRoutes, AdminRoutes };

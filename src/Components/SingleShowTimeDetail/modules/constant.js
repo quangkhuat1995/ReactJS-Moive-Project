@@ -1,2 +1,0 @@
-export const DANH_SACH_LICH_CHIEU_THEO_NGAY =
-  "sortedNgayChieuReducer/DANH_SACH_LICH_CHIEU_THEO_NGAY";

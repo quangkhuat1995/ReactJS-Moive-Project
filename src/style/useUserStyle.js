@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { nodeName } from "jquery";
 
-const useStyles = makeStyles((theme) => ({
+const useUserStyles = makeStyles((theme) => ({
   wrapper: {
     // paddingTop: "15px",
     // paddingBottom: "15px",
@@ -36,4 +35,4 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default useStyles;
+export default useUserStyles;

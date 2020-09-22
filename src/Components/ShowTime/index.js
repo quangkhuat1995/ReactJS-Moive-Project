@@ -1,57 +1,34 @@
+import PropTypes from "prop-types";
 import React from "react";
-
+import NavigationTab from "../NavigationTab/";
 import TabShowOrComing from "./TabShowOrComing";
 
+const chunkArray = (myArray, chunk_size) => {
+  let results = [];
+
+  while (myArray.length) {
+    results.push(myArray.splice(0, chunk_size));
+  }
+
+  return results;
+  // var result = chunkArray([1,2,3,4,5,6,7,8], 3);
+  //  Outputs : [ [1,2,3] , [4,5,6] ,[7,8] ]
+};
+const items = {
+  showing: "Đang chiếu",
+  coming: "Sắp chiếu",
+};
 function ShowTime(props) {
-  const chunkArray = (myArray, chunk_size) => {
-    let results = [];
-
-    while (myArray.length) {
-      results.push(myArray.splice(0, chunk_size));
-    }
-
-    return results;
-    // var result = chunkArray([1,2,3,4,5,6,7,8], 3);
-    //  Outputs : [ [1,2,3] , [4,5,6] ,[7,8] ]
-  };
-
   const { listMovie } = props;
   let myList = [...listMovie];
-
+  // const items = useMemo(() => items, [])
   const movieArray = chunkArray(myList, 24); // [ [24 items] , [20 items] ]
   // console.log(movieArray);
 
   return (
     <section className="showtime" id="lichchieu">
       <div className="myContainer">
-        <ul className="nav nav-tabs navigation__tab" role="tablist">
-          <li className="nav-item" role="presentation">
-            <a
-              className="nav-link active"
-              id="showing-tab"
-              data-toggle="tab"
-              href="#showing"
-              role="tab"
-              aria-controls="showing"
-              aria-selected="true"
-            >
-              Đang chiếu
-            </a>
-          </li>
-          <li className="nav-item" role="presentation">
-            <a
-              className="nav-link"
-              id="coming-tab"
-              data-toggle="tab"
-              href="#coming"
-              role="tab"
-              aria-controls="coming"
-              aria-selected="false"
-            >
-              Sắp chiếu
-            </a>
-          </li>
-        </ul>
+        <NavigationTab items={items} />
         <div className="tab-content showtime__content">
           {/* Showing / Đang Chiếu */}
           <div
@@ -77,4 +54,10 @@ function ShowTime(props) {
   );
 }
 
+ShowTime.propTypes = {
+  listMovie: PropTypes.array.isRequired,
+};
+ShowTime.defaultProps = {
+  listMovie: [],
+};
 export default ShowTime;

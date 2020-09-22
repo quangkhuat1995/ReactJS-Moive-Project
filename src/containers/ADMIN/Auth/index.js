@@ -27,7 +27,7 @@ class Auth extends Component {
     };
     // console.log(e);
 
-    this.props.fetchLogin(user, this.props.history);
+    this.props.fetchAdminLogin(user, this.props.history);
   };
 
   renderNoti = () => {
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchLogin: (user, history) => {
+    fetchAdminLogin: (user, history) => {
       dispatch(actFetchAdminLogin(user, history));
     },
   };

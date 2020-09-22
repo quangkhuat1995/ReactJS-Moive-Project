@@ -7,6 +7,7 @@ import UnLoggedUI from "./UnLoggedUI";
 //module
 import { connect } from "react-redux";
 import { actSetLogStatus } from "./modules/action";
+import { USER_KEY } from "../../constants/config";
 // import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
@@ -15,26 +16,24 @@ function MainNav(props) {
   // console.log(props);
 
   useEffect(() => {
-    if (localStorage.getItem("userUser")) {
+    if (localStorage.getItem(USER_KEY)) {
       setCurrentLogStatus(true);
     } else {
       setCurrentLogStatus(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  const handleLogOut = useCallback(
-    (e) => {
-      if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
-        localStorage.removeItem("userUser");
-        setCurrentLogStatus(false);
-        setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
-      } else {
-        // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
-        e.preventDefault();
-      }
-    },
-    [isLoggedIn]
-  );
+  const handleLogOut = (e) => {
+    if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
+      localStorage.removeItem(USER_KEY);
+      setCurrentLogStatus(false);
+      setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
+    } else {
+      // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
+      e.preventDefault();
+    }
+  };
 
   return (
     <ul

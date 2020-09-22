@@ -4,6 +4,7 @@ import {
   AUTH_ADMIN_FAILED,
 } from "./constant";
 import Axios from "axios";
+import { USER_KEY } from "../../../../constants/config";
 const actAuthRequest = () => {
   return {
     type: AUTH_ADMIN_REQUEST,
@@ -33,7 +34,7 @@ const actFetchAdminLogin = (user, history) => {
         dispatch(actAuthSuccess(result.data));
         //dua xuong localStorge
         if (result.data.maLoaiNguoiDung === "QuanTri") {
-          localStorage.setItem("userAdmin", JSON.stringify(result.data));
+          localStorage.setItem(USER_KEY, JSON.stringify(result.data));
           //sau do, thanh cong thi chuyen huong sang trang dashboard
           history.push("/dashboard");
         } else {

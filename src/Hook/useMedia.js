@@ -15,11 +15,14 @@ function useMedia(mediaQuery) {
 
     let listener = () => setIsMatched(media.matches);
 
-    media.addListener(listener);
+    // media.addListener(listener);
+    media.addEventListener("change", listener);
     //clean up
     return () => {
-      media.removeListener(listener);
+      // media.removeListener(listener);
+      media.removeEventListener("change", listener);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mediaQuery]);
 
   return isMatched;
