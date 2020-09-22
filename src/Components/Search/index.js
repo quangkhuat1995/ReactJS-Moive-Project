@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { actFetchDetailMovie } from "../../containers/HOME/DetailPage/modules/action";
 import LinkButton from "../LinkButton";
@@ -44,30 +44,27 @@ const getMaLichChieuTheoGioChieu = (times = [], gioChieu) => {
   return lichChieu.maLichChieu;
 };
 
+const initialState = {
+  // state thay đổi khi handleChange
+  movieSelect: "", //Ted part 2
+  cinemaSelect: "", // CGV- SƯ vạn hạnh
+  daySelect: "", // 1/1/2019
+  timeSelect: "", //
+
+  //state truyền vào as props (thay đổi phụ thuộc vào nhóm State trên)
+  listCumRapChieu: [], //luôn reset lại theo phim đã chọn []<object>
+  cumRapDuocChon: {},
+  times: [], //chứa ds thông tin lịch chiếu theo ngày đã chọn []<obj>
+
+  //state kiểm tra
+  isCompleted: false,
+
+  //router to:
+  maLichChieu: "",
+};
 //export
 function Search(props) {
   const { listMovie, heThongRapChieu, getThongTinLichChieuPhim } = props;
-  const initialState = useMemo(
-    () => ({
-      // state thay đổi khi handleChange
-      movieSelect: "", //Ted part 2
-      cinemaSelect: "", // CGV- SƯ vạn hạnh
-      daySelect: "", // 1/1/2019
-      timeSelect: "", //
-
-      //state truyền vào as props (thay đổi phụ thuộc vào nhóm State trên)
-      listCumRapChieu: [], //luôn reset lại theo phim đã chọn []<object>
-      cumRapDuocChon: {},
-      times: [], //chứa ds thông tin lịch chiếu theo ngày đã chọn []<obj>
-
-      //state kiểm tra
-      isCompleted: false,
-
-      //router to:
-      maLichChieu: "",
-    }),
-    []
-  );
 
   const [state, setState] = useState(initialState);
 
@@ -78,10 +75,10 @@ function Search(props) {
       listCumRapChieu: getAllListCumRap(heThongRapChieu),
     });
     return () => {
+      //clean up sau khi tìm kiếm
       setState({ ...initialState });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, [heThongRapChieu]);
 
   const handleChange = (e) => {
@@ -161,7 +158,6 @@ function Search(props) {
       };
     });
   };
-  console.log(state);
 
   const {
     movieSelect,

@@ -1,7 +1,7 @@
+import PropTypes from "prop-types";
 import React from "react";
-
-import TabShowOrComing from "./TabShowOrComing";
 import NavigationTab from "../NavigationTab/";
+import TabShowOrComing from "./TabShowOrComing";
 
 const chunkArray = (myArray, chunk_size) => {
   let results = [];
@@ -54,4 +54,10 @@ function ShowTime(props) {
   );
 }
 
+ShowTime.propTypes = {
+  listMovie: PropTypes.array.isRequired,
+};
+ShowTime.defaultProps = {
+  listMovie: [],
+};
 export default ShowTime;

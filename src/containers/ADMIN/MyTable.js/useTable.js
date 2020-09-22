@@ -1,12 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
-import PropTypes from "prop-types";
-// const getToken = () => {
-//   const userAdmin = localStorage.getItem("userAdmin");
-//   if (userAdmin) {
-//     return JSON.parse(userAdmin).accessToken;
-//   }
-//   return null;
-// };
+import { useState, useCallback } from "react";
 
 const findUpatedKey = (newData = {}, oldData = {}) => {
   const updatedKeys = Object.keys(newData).filter((key, idx) => {
@@ -42,18 +34,18 @@ const alertCase = (caseType, tableType, res, newData = {}, oldData = {}) => {
         tableType === "Movie Table" ||
         tableType === "Showtime Table"
       ) {
-        alert(`${res} phim: ${oldData.tenPhim}`);
+        alert(`${res} phim: ${oldData.tenPhim}`); //xoa thành công...
       }
       break;
 
     case "add":
       if (tableType === "Account Table") {
-        alert(`Thêm thành công người dùng: ${res.taiKhoan}`);
+        alert(`Thêm thành công người dùng: ${res.taiKhoan || newData.tenPhim}`);
       } else if (
         tableType === "Movie Table" ||
         tableType === "Showtime Table"
       ) {
-        alert(`Thêm thành công phim: ${res.tenPhim}`);
+        alert(`Thêm thành công phim: ${res.tenPhim || newData.tenPhim}`);
       }
       break;
 
@@ -70,11 +62,11 @@ const transformString = (text = "") => {
 function useTable(tableType) {
   //data of table
   const [data, setData] = useState([]);
-
+  const [isChanged, setIsChanged] = useState(true);
   const callAPI = useCallback((api, body, ...option) => {
     // console.log("api call");
-
-    if (!api) return alert("something wrong!!");
+    //no api endpoint
+    if (!api) return alert("something wrong!! You can't do this action");
 
     //post,put,delete
     if (body !== null) {
@@ -86,6 +78,10 @@ function useTable(tableType) {
         // api(body,...option)
         .then((res) => {
           setData(res);
+          //chỉ gọi lại api get với table Movie
+          if (tableType === "Movie Table") {
+            setIsChanged(false);
+          }
         })
         .catch((error) => {
           alert(error.response.data);
@@ -94,17 +90,29 @@ function useTable(tableType) {
   }, []);
 
   const handleRowUpdate = (newData, oldData, resolve, reject, updateAPI) => {
-    console.log(newData);
+    // let newHinhAnh = newData.hinhAnh;
+
+    // if (typeof newData.hinhAnh === "string") {
+    //   newHinhAnh = await urlToObj(newData.hinhAnh);
+    // }
+
     let body = {};
     if (tableType === "Account Table") {
       body = { ...newData };
     } else if (tableType === "Movie Table") {
       body = {
         ...newData,
-
-        // biDanh: newData.biDanh || transformString(newData.tenPhim),
+        biDanh:
+          oldData.tenPhim !== newData.tenPhim
+            ? transformString(newData.tenPhim)
+            : oldData.biDanh,
+        ngayKhoiChieu: new Date(newData.ngayKhoiChieu).toLocaleDateString(
+          "en-GB"
+        ),
+        hinhAnh: typeof newData.hinhAnh === "string" ? null : newData.hinhAnh,
       };
     }
+
     // usersApi
     //   .editAccount({ ...newData, maNhom: "GP09" }, getToken())
     callAPI(updateAPI, { ...body, maNhom: "GP09" })
@@ -122,10 +130,14 @@ function useTable(tableType) {
         //     res.taiKhoan
         //   }`
         // );
+        setIsChanged(true);
         resolve();
       })
       .catch((error) => {
-        alert(error.response.data);
+        alert(
+          "Lỗi sever, không thể cập nhật. Hãy chắc chắn bạn đã điền đầy đủ thông tin"
+        );
+        setIsChanged(false);
         reject();
       });
   };
@@ -138,7 +150,7 @@ function useTable(tableType) {
       body = {
         ...newData,
         maNhom: "GP09",
-        biDanh: newData.biDanh || transformString(newData.tenPhim),
+        biDanh: transformString(newData.tenPhim),
         ngayKhoiChieu: new Date(newData.ngayKhoiChieu).toLocaleDateString(
           "en-GB"
         ),
@@ -156,11 +168,12 @@ function useTable(tableType) {
 
         alertCase("add", tableType, res, newData, null);
         // alert(`Thêm thành công người dùng: ${res.taiKhoan}`);
-
+        setIsChanged(true);
         resolve();
       })
       .catch((error) => {
         alert(error?.response?.data);
+        setIsChanged(false);
         reject();
       });
   };
@@ -184,27 +197,24 @@ function useTable(tableType) {
 
         alertCase("delete", tableType, res, null, oldData);
         // alert(`${res}: ${oldData.taiKhoan}`);
-
+        setIsChanged(true);
         resolve();
       })
       .catch((error) => {
         alert(error?.response?.data);
+        setIsChanged(false);
         reject();
       });
   };
 
   return {
     data,
-    setData,
+    isChanged,
     callAPI,
     handleRowUpdate,
     handleRowAdd,
     handleRowDelete,
   };
 }
-
-useTable.propTypes = {
-  // tableType: PropTypes.string.isRequired,
-};
 
 export default useTable;

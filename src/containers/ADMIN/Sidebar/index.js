@@ -26,6 +26,7 @@ import { withRouter } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
 import Title from "../Title";
 import useAdminStyles from "../../../style/useAdminStyle";
+import { USER_KEY } from "../../../constants/config";
 
 const structure = [
   { id: 0, label: "Movie Management", link: "/dashboard", icon: <HomeIcon /> },
@@ -75,7 +76,7 @@ const structure = [
   },
 ];
 const getAdminInfo = () => {
-  const admin = localStorage.getItem("userAdmin");
+  const admin = localStorage.getItem(USER_KEY);
   if (admin) {
     return JSON.parse(admin).taiKhoan;
   }

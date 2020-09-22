@@ -40,9 +40,15 @@ const moviesApi = {
   },
 
   postCapNhatPhim: (movie) => {
-    const uri = `/QuanLyPhim/CapNhatPhim`;
+    const uri = `/QuanLyPhim/CapNhatPhimUpload`;
+    const formData = new FormData();
+    for (const key in movie) {
+      formData.append(key, movie[key]);
+    }
 
-    return axiosClient.post(uri, movie);
+    console.log(formData.get("hinhAnh"));
+
+    return axiosClient.post(uri, formData);
   },
 
   deleteMovie: (maPhim) => {

@@ -1,12 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import TabPanel from "../TabPanel";
 import Theater from "./Theater";
-import TheaterContent from "./TheaterContent";
 import useMedia from "../../Hook/useMedia";
 import TheaterPanel from "./TheaterPanel";
 import ListOfDay from "./ListOfDay";
-const img = "/images/theater.jpg";
 
 function SingleShowTimeDetail(props) {
   const { listHeThongRap } = props;

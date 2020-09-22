@@ -44,14 +44,6 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-const getToken = () => {
-  const userAdmin = localStorage.getItem("userAdmin");
-  if (userAdmin) {
-    return JSON.parse(userAdmin).accessToken;
-  }
-  return null;
-};
-
 const findUpatedKey = (newData = {}, oldData = {}) => {
   const updatedKeys = Object.keys(newData).filter((key, idx) => {
     return oldData[key] !== newData[key];
@@ -110,14 +102,12 @@ const transformString = (text = "") => {
 };
 
 function MyTable(props) {
-  //useTable(props.type)
-  // usC;
   const { tableType, getAPI, addAPI, updateAPI, deleteAPI } = props;
   const isMobile = useMedia("(max-width:768px)");
 
   const {
     data,
-    setData,
+    isChanged,
     callAPI,
     handleRowUpdate,
     handleRowAdd,
@@ -125,9 +115,11 @@ function MyTable(props) {
   } = useTable(tableType);
 
   useEffect(() => {
-    callAPI(props.getAPI, null);
+    if (isChanged) {
+      callAPI(getAPI, null);
+    }
     // eslint-disable-line react-hooks/exhaustive-deps
-  }, [props.getAPI]);
+  }, [isChanged]);
 
   return (
     <>
@@ -164,7 +156,7 @@ function MyTable(props) {
         editable={{
           onRowAdd: (newData) =>
             new Promise((resovle, reject) => {
-              handleRowAdd(newData, resovle, reject, props.addAPI);
+              handleRowAdd(newData, resovle, reject, addAPI);
             }),
           /**
            * EDIT
@@ -172,70 +164,14 @@ function MyTable(props) {
 
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              // let body = {};
-              // if (tableType === "Account Table") {
-              //   body = { ...newData, maNhom: "GP09" };
-              // } else if (tableType === "Movie Table") {
-              //   body = {
-              //     ...newData,
-              //     maNhom: "GP09",
-              //     maPhim: transformString(newData.tenPhim),
-              //   };
-              // }
-
-              handleRowUpdate(
-                newData,
-                oldData,
-                resolve,
-                reject,
-                props.updateAPI
-              );
-
-              // callAPI(updateAPI, { ...body }, getToken())
-              //   .then((res) => {
-              //     const dataUpdate = [...data];
-              //     const index = oldData.tableData.id;
-              //     dataUpdate[index] = body;
-
-              //     //update lai Table UI
-              //     setData([...dataUpdate]);
-
-              //     alertCase("update", tableType, res, body, oldData);
-              //     // alert(
-              //     //   `Đã cập nhật ${findUpatedKey(newData, oldData)} người dùng: ${
-              //     //     res.taiKhoan
-              //     //   }`
-              //     // );
-              //     resolve();
-              //   })
-              //   .catch((error) => {
-              //     alert(error.response.data);
-              //     reject();
-              //   });
+              handleRowUpdate(newData, oldData, resolve, reject, updateAPI);
             }),
           /**
            * DELETE
            */
           onRowDelete: (oldData) =>
             new Promise((resolve, reject) => {
-              handleRowDelete(oldData, resolve, reject, props.deleteAPI);
-              // // return reject(error);
-              // callAPI(deleteAPI, oldData.taiKhoan, getToken())
-              //   .then((res) => {
-              //     const dataDelete = [...data];
-              //     const index = oldData.tableData.id;
-              //     dataDelete.splice(index, 1);
-              //     setData([...dataDelete]);
-
-              //     alertCase("delete", tableType, res, null, oldData);
-              //     // alert(`${res}: ${oldData.taiKhoan}`);
-
-              //     resolve();
-              //   })
-              //   .catch((error) => {
-              //     alert(error?.response?.data);
-              //     reject();
-              //   });
+              handleRowDelete(oldData, resolve, reject, deleteAPI);
             }),
         }}
       />
@@ -254,10 +190,12 @@ MyTable.propTypes = {
   updateAPI: PropTypes.func.isRequired,
   deleteAPI: PropTypes.func,
 };
+
 MyTable.defaultProps = {
   title: "Account List",
   columns: [],
   tableType: "Account Table",
+
   getAPI: () => {},
   addAPI: () => {},
   updateAPI: () => {},

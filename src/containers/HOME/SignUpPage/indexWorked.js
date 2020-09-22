@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -63,10 +63,10 @@ function SignUp(props) {
 
   useSetBackGround();
 
-  const validEmpty = () => {
-    //moi phan tu deu khac ""
-    return Object.values(state).every((item) => item !== "");
-  };
+  // const validEmpty = () => {
+  //   //moi phan tu deu khac ""
+  //   return Object.values(state).every((item) => item !== "");
+  // };
 
   const handleChange = (e) => {
     setState(state, (state[e.target.name] = e.target.value));

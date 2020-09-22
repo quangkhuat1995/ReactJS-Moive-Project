@@ -21,21 +21,19 @@ function MainNav(props) {
     } else {
       setCurrentLogStatus(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  const handleLogOut = useCallback(
-    (e) => {
-      if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
-        localStorage.removeItem(USER_KEY);
-        setCurrentLogStatus(false);
-        setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
-      } else {
-        // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
-        e.preventDefault();
-      }
-    },
-    [isLoggedIn]
-  );
+  const handleLogOut = (e) => {
+    if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
+      localStorage.removeItem(USER_KEY);
+      setCurrentLogStatus(false);
+      setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
+    } else {
+      // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
+      e.preventDefault();
+    }
+  };
 
   return (
     <ul
