@@ -38,14 +38,18 @@ const actFetchUserLogin = (user, history) => {
       // console.log(resData);
       dispatch(actLoginSuccess(resData));
 
-      if (resData) {
-        localStorage.setItem(USER_KEY, JSON.stringify(resData));
+      if (resData.maLoaiNguoiDung === "KhachHang") {
         // alert("dang nhap thanh cong");
-        history.goBack();
+        localStorage.setItem(USER_KEY, JSON.stringify(resData));
+        //TODO: chuyển hướng về trang trước đó
+        history.push("/");
+        // history.goBack();
+      } else {
+        alert("Không thể đăng nhập bằng tài khoản này");
       }
     } catch (error) {
       dispatch(actLoginFailed(error));
-      // console.log(error.response);
+      // console.log(error.response?.data);
     }
   };
 };

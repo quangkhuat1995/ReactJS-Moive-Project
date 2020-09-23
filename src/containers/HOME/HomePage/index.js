@@ -13,10 +13,12 @@ import Carousel from "../../../Components/Carousel";
 import PropTypes from "prop-types";
 import Ads from "../../../Components/Ads";
 import useMedia from "../../../Hook/useMedia";
+import useTitle from "../../../Hook/useTitle";
 
 function HomePage(props) {
   const { loadingListMovie, fetchListMovie, listMovie } = props;
   const isDesktop = useMedia("(min-width:992px)");
+  useTitle("Trang chủ");
   // // console.log(props);
   useEffect(() => {
     fetchListMovie();

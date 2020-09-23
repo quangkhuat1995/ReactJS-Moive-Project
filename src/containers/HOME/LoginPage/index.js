@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as NavigateLink } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,12 +16,13 @@ import { actFetchUserLogin } from "./modules/action";
 //Components
 import ErrorUI from "../../../Components/ErrorUI";
 //Material UI
-import useUserStyles from "../../../style/useUserStyle";
 //Custom Hooks
 import useSetBackground from "../../../Hook/useSetBackground";
 import useFormValidation from "../../../Hook/useFormValidation";
 import validateForm from "../../../Hook/validateForm";
 import Copyright from "../../../Components/Copyright";
+import useUserStyles from "../../../style/useUserStyle";
+import useTitle from "../../../Hook/useTitle";
 
 const INIT_LOGIN_STATE = {
   taiKhoan: "",
@@ -28,27 +30,22 @@ const INIT_LOGIN_STATE = {
 };
 
 function LogInPage(props) {
-  const { errorLogin, fetchUserLogin } = props;
+  const { errorLogin, fetchUserLogin, loadingLogin } = props;
   const classes = useUserStyles();
   useSetBackground();
+  useTitle("Đăng Nhập");
 
   const {
     handleChange,
     handleSubmit,
     handleBlur,
     values, // init = INIT_LOGIN_STATE
-    errors, // init = {}
+    errors, // init = INIT_LOGIN_STATE
     isNotValid, //init = true
   } = useFormValidation(INIT_LOGIN_STATE, validateForm, fetchUserLogin, props);
   console.log("errors", errors);
   console.log("values", values);
   console.log("isNotValid", isNotValid);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   props.fetchUserLogin(state, props.history);
-  //  đã được xử lý trong useFormValidation
-  // };
 
   return (
     <Container component="main" maxWidth="xs" className={classes.wrapper}>
@@ -61,7 +58,11 @@ function LogInPage(props) {
         <Typography component="h1" variant="h5">
           Đăng nhập
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={(e) => handleSubmit(e, values)}
+        >
           <TextField
             error={errors.taiKhoan ? true : false} //ko có lỗi->false
             variant="outlined"
@@ -99,7 +100,7 @@ function LogInPage(props) {
             control={<Checkbox value="remember" color="primary" />}
             label="Ghi nhớ đăng nhập"
           />
-          {errorLogin && <ErrorUI message={errorLogin.response.data} />}
+          {errorLogin && <ErrorUI message={errorLogin.response?.data} />}
           <Button
             type="submit"
             fullWidth
@@ -107,7 +108,7 @@ function LogInPage(props) {
             color="primary"
             className={classes.submit}
             // disabled khi co errors và sau khi click
-            disabled={isNotValid} // || loading tu api
+            disabled={isNotValid || loadingLogin} // || loading tu api
             // disabled
           >
             Đăng nhập
@@ -120,9 +121,11 @@ function LogInPage(props) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/sign-up" variant="body2">
+              {/* <Link href="#" variant="body2"> */}
+              <NavigateLink to="/sign-up">
                 {"Chưa có tài khoản? Đăng ký ngay"}
-              </Link>
+              </NavigateLink>
+              {/* </Link> */}
             </Grid>
           </Grid>
         </form>
@@ -137,6 +140,7 @@ function LogInPage(props) {
 const mapStateToProps = (state) => {
   return {
     errorLogin: state.userLoginReducer.error,
+    loadingLogin: state.userLoginReducer.loading,
   };
 };
 const mapDispatchToProps = (dispatch) => {

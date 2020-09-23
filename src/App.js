@@ -7,7 +7,7 @@ import PageNotFound from "./containers/HOME/PageNotFound";
 import HomeTemplate from "./templates/HomeTemplate";
 import AdminTemplate from "./templates/AdminTemplate";
 import Auth from "./containers/ADMIN/Auth";
-import SignUpPage from "./containers/HOME/SignUpPage/indexWorked";
+import SignUpPage from "./containers/HOME/SignUpPage";
 import LogInPage from "./containers/HOME/LoginPage";
 function App() {
   const renderRoutesHome = (routes) => {

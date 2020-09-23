@@ -1,40 +1,39 @@
 import { useState, useEffect } from "react";
 
 //** */ Share validation forms logic
+// initialState phải là obj có key/ value='' để validate
 function useFormValidation(
   initialState,
   validateFunc,
   sendSubmit,
   { ...props }
 ) {
-  // console.log(props);
-  // console.log(props.fetchUserLogin);
-
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState(initialState);
+
   // trang thai truoc khi gui
   const [isNotValid, setIsNotValid] = useState(true);
-  //Hàm useEffect này cần phải có để tránh trường hợp ng dùng nhập matKhau trc mà ko nhập taiKhoan
+
   useEffect(() => {
     console.log("i run");
 
     const noErrors = Object.values(errors).every((val) => val === "");
-    const noValues = Object.values(values).every((val) => val === "");
+    //vẫn có field chưa nhập
+    const someValues = Object.values(values).some((val) => val === "");
 
-    //TH đã nhập thông tin và chính xác (thì kiểm tra lại lần nữa)
+    //TH ko có lỗi (thì kiểm tra lại lần nữa)
     if (noErrors) {
       //TH chưa nhập gì hết đã bấm gửi
-      if (noValues) {
-        console.log("chưa nhập gì cả");
+      if (someValues) {
+        console.log("Có cái chưa nhập");
 
         setIsNotValid(true);
       } else {
         console.log("i allow");
-        setIsNotValid(false); // đã nhập thông tin chính xác và ko có lỗi
+
+        // đã nhập thông tin đầy đủ và ko có lỗi
+        setIsNotValid(false);
       }
-    } else {
-      console.log("còn lỗi");
-      setIsNotValid(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors]);
@@ -45,6 +44,10 @@ function useFormValidation(
     setValues({
       ...values,
       [name]: value,
+    });
+    setErrors({
+      ...errors,
+      [name]: "",
     });
   };
   //check tat ca cac the loai input
@@ -77,37 +80,30 @@ function useFormValidation(
       ...errors,
       [name]: errorMessages,
     });
+
+    //form đó có field matKhau2
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, data) => {
     e.preventDefault();
+
     // kiểm tra validate rồi submit
-    //vì đã set valid ở hàm onBlur chỉ cần khi hacker F12 xóa disabled
+
     for (const key in values) {
-      // validate gia tri input, nêu xuất hiện chuỗi báo lỗi thì đưa chuỗi đó vào obj errors với key tương ứng
-      const errorMessages = validateFunc(key, values[key]); //
+      const errorMessages = validateFunc(key, values[key]);
       setErrors({
         ...errors,
         [key]: errorMessages,
       });
     }
 
-    if (values.matKhau !== values.matKhau2) {
-      setErrors({
-        ...errors,
-        matKhau2: "Xác thực mật khẩu không chính xác",
-      });
-    }
-
     if (isNotValid) {
       console.log("REJECT found:", errors.taiKhoan, errors.matKhau);
-      return;
     } else {
       console.log("SUBMIT authenticated!", values.taiKhoan, values.matKhau);
-      console.log(props.history);
+      // console.log(props.history);
 
-      sendSubmit(values, props.history);
-      return;
+      sendSubmit(data, props.history);
     }
   };
 
