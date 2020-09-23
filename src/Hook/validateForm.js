@@ -1,4 +1,5 @@
 //https://formik.org/docs/overview#the-gist
+
 const PARTERN_HO_TEN = new RegExp(
   "^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +
     "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" +
@@ -41,6 +42,20 @@ function validateForm(name, value) {
   }
 
   //valid matKhau
+  if (name === "matKhau") {
+    if (!value) {
+      errorMessage = "*Mật khẩu không được để trống";
+    } else if (value.length < 6 || value.length > 18) {
+      errorMessage = "*Mật khẩu từ 6 - 12 ký tự";
+    }
+    // else if (!value.match(PARTERN_MAT_KHAU)) {
+    //   errorMessage =
+    //     "*Mật khẩu không hợp lệ! Hãy kết hợp với ký tự đặc biệt thay vì dùng Tiếng Việt có dấu";
+    // }
+    else if (!PARTERN_MAT_KHAU.test(value)) {
+      errorMessage = "*Mật khẩu không hợp lệ! Cần có ít nhất 1 ký tự hoặc số";
+    }
+  }
   if (name === "matKhau") {
     if (!value) {
       errorMessage = "*Mật khẩu không được để trống";

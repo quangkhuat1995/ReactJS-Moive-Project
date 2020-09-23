@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, memo } from "react";
+import React, { useEffect, memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 //Components

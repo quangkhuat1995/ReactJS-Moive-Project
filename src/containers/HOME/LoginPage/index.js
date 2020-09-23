@@ -28,7 +28,7 @@ const INIT_LOGIN_STATE = {
 };
 
 function LogInPage(props) {
-  const { errorLogin, history, fetchUserLogin } = props;
+  const { errorLogin, fetchUserLogin } = props;
   const classes = useUserStyles();
   useSetBackground();
 
@@ -120,7 +120,7 @@ function LogInPage(props) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/sign-up" variant="body2">
                 {"Chưa có tài khoản? Đăng ký ngay"}
               </Link>
             </Grid>

@@ -2,11 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import MainNav from "./MainNav";
 import { connect } from "react-redux";
-import {
-  actToggleNav,
-  actSetLogStatus,
-  actToggleNav_Force,
-} from "./modules/action";
+import { actToggleNav, actToggleNav_Force } from "./modules/action";
 
 const logo = "/images/logo.png";
 
@@ -45,6 +41,7 @@ function UserNavbar(props) {
       //   //set lai bth khi navbar đóng
       document.body.style.overflow = null;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNavOpen]);
 
   return (
