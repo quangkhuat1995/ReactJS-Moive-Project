@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { actFindMovieTrailer } from "../../containers/HOME/HomePage/modules/action";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
 const play = "/images/play.png";
-function CarouselItem(props) {
-  const location = useLocation();
 
+function CarouselItem(props) {
   const { detailMovie, isHero } = props;
   if (!detailMovie) return null;
   return (

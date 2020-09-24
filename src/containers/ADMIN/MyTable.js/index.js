@@ -44,63 +44,6 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-const findUpatedKey = (newData = {}, oldData = {}) => {
-  const updatedKeys = Object.keys(newData).filter((key, idx) => {
-    return oldData[key] !== newData[key];
-  });
-  updatedKeys.pop(); // bỏ key tableData
-  return updatedKeys.join(", ");
-};
-const alertCase = (caseType, tableType, res, newData = {}, oldData = {}) => {
-  switch (caseType) {
-    case "update":
-      if (tableType === "Account Table") {
-        alert(
-          `Đã cập nhật ${findUpatedKey(newData, oldData)} người dùng: ${
-            res.taiKhoan
-          }`
-        );
-      } else if (
-        tableType === "Movie Table" ||
-        tableType === "Showtime Table"
-      ) {
-        alert(
-          `Đã cập nhật ${findUpatedKey(newData, oldData)} phim: ${res.tenPhim}`
-        );
-      }
-      break;
-
-    case "delete":
-      if (tableType === "Account Table") {
-        alert(`${res} tài khoản: ${oldData.taiKhoan}`);
-      } else if (
-        tableType === "Movie Table" ||
-        tableType === "Showtime Table"
-      ) {
-        alert(`${res} phim: ${oldData.tenPhim}`);
-      }
-      break;
-
-    case "add":
-      if (tableType === "Account Table") {
-        alert(`Thêm thành công người dùng: ${res.taiKhoan}`);
-      } else if (
-        tableType === "Movie Table" ||
-        tableType === "Showtime Table"
-      ) {
-        alert(`Thêm thành công phim: ${res.tenPhim}`);
-      }
-      break;
-
-    default:
-      alert("Action done!!");
-      break;
-  }
-};
-const transformString = (text = "") => {
-  return text.trim().toLowerCase().split("").join("-");
-};
-
 function MyTable(props) {
   const { tableType, getAPI, addAPI, updateAPI, deleteAPI } = props;
   const isMobile = useMedia("(max-width:768px)");
@@ -119,7 +62,7 @@ function MyTable(props) {
       callAPI(getAPI, null);
     }
     // eslint-disable-line react-hooks/exhaustive-deps
-  }, [isChanged]);
+  }, [isChanged, callAPI, getAPI]);
 
   return (
     <>

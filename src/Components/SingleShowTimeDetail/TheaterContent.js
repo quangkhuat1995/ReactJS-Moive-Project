@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 
 function TheaterContent(props) {
   const { detailMovie, maHeThongRap, selectDay } = props;
-  const { heThongRapChieu } = detailMovie;
+  const { heThongRapChieu } = detailMovie; //array<object>
+
   /** return first item found or undefined */
-  const findHeThongRapTheoMa = (maHTRap) => {
+  const findHeThongRapTheoMa = (maHTRap = "") => {
     if (heThongRapChieu && heThongRapChieu.length > 0) {
       return heThongRapChieu.find((item) => item.maHeThongRap === maHTRap);
     }
@@ -15,13 +16,15 @@ function TheaterContent(props) {
 
   const [foundHeThongRap, setFoundHeThongRap] = useState(
     findHeThongRapTheoMa(maHeThongRap)
-  );
+  ); //obj
   useEffect(() => {
     const foundHeThong = findHeThongRapTheoMa(maHeThongRap);
 
     if (foundHeThong) {
+      //Duyệt qua từng cụm rạp trong hệ thống rạp đó
       let newFoundCumRapChieu = foundHeThong.cumRapChieu.reduce(
         (acc, cumRap) => {
+          //Duyệt qua danh sách lịch chiếu của mỗi cụm rạp, tìm xem cụm rạp nào có lịch chiếu trùng với selectDay
           let lstLichChieuPhim = cumRap.lichChieuPhim.filter(
             (item) =>
               new Date(item.ngayChieuGioChieu).toLocaleDateString("it-IT") ===
@@ -36,6 +39,7 @@ function TheaterContent(props) {
 
       setFoundHeThongRap(newFound);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectDay]);
 
   /**Neu khong tim thay heThongRap co lich chieu thi render UI thông báo
@@ -60,7 +64,7 @@ function TheaterContent(props) {
 const mapStateToProps = (state) => {
   return {
     detailMovie: state.detailMovieReducer.detailMovie,
-    selectDay: state.detailMovieReducer.selectDay,
+    selectDay: state.detailMovieReducer.selectDay, //init is TODAY
   };
 };
 

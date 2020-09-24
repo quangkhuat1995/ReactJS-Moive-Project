@@ -21,7 +21,7 @@ function useFormValidation(
     const noErrors = Object.values(errors).every((val) => val === "");
     const noValues = Object.values(values).every((val) => val === "");
 
-    //TH đã nhập thông tin và chính xác
+    //TH đã nhập thông tin và chính xác (thì kiểm tra lại lần nữa)
     if (noErrors) {
       //TH chưa nhập gì hết đã bấm gửi
       if (noValues) {
@@ -30,12 +30,13 @@ function useFormValidation(
         setIsNotValid(true);
       } else {
         console.log("i allow");
-        setIsNotValid(false); // tuc la valid
+        setIsNotValid(false); // đã nhập thông tin chính xác và ko có lỗi
       }
     } else {
       console.log("còn lỗi");
       setIsNotValid(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors]);
 
   //ham nay chi check duoc input type='text'
@@ -45,14 +46,6 @@ function useFormValidation(
       ...values,
       [name]: value,
     });
-    // const errorMessages = validateFunc(name, value);
-    // if (errorMessages) {
-    //   setErrors({
-    //     ...errors,
-    //     [name]: errorMessages,
-    //   });
-    //   setIsNotValid(true);
-    // }
   };
   //check tat ca cac the loai input
   // credit to: https://github.com/jxnblk/rebass-recomposed/blob/master/src/withForm.js
@@ -96,6 +89,13 @@ function useFormValidation(
       setErrors({
         ...errors,
         [key]: errorMessages,
+      });
+    }
+
+    if (values.matKhau !== values.matKhau2) {
+      setErrors({
+        ...errors,
+        matKhau2: "Xác thực mật khẩu không chính xác",
       });
     }
 

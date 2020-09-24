@@ -64,6 +64,7 @@ const columns = [
       <a
         href={rowData.trailer}
         target="_blank"
+        rel="noopener noreferrer"
         style={{ color: "#01579b", textDecoration: "underline" }}
       >
         Watch Trailer
@@ -106,6 +107,7 @@ const columns = [
                 ? props.value
                 : window.URL.createObjectURL(props.value)
             }
+            alt="preview"
             id="img-upload"
             style={{ width: "50px" }}
           />

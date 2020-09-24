@@ -63,31 +63,34 @@ function useTable(tableType) {
   //data of table
   const [data, setData] = useState([]);
   const [isChanged, setIsChanged] = useState(true);
-  const callAPI = useCallback((api, body, ...option) => {
-    // console.log("api call");
-    //no api endpoint
-    if (!api) return alert("something wrong!! You can't do this action");
+  const callAPI = useCallback(
+    (api, body, ...option) => {
+      // console.log("api call");
+      //no api endpoint
+      if (!api) return alert("something wrong!! You can't do this action");
 
-    //post,put,delete
-    if (body !== null) {
-      return api(body, ...option);
-    }
-    //get (then set initial Data),
-    return (
-      api(...option)
-        // api(body,...option)
-        .then((res) => {
-          setData(res);
-          //chỉ gọi lại api get với table Movie
-          if (tableType === "Movie Table") {
-            setIsChanged(false);
-          }
-        })
-        .catch((error) => {
-          alert(error.response.data);
-        })
-    );
-  }, []);
+      //post,put,delete
+      if (body !== null) {
+        return api(body, ...option);
+      }
+      //get (then set initial Data),
+      return (
+        api(...option)
+          // api(body,...option)
+          .then((res) => {
+            setData(res);
+            //chỉ gọi lại api get với table Movie
+            if (tableType === "Movie Table") {
+              setIsChanged(false);
+            }
+          })
+          .catch((error) => {
+            alert(error.response.data);
+          })
+      );
+    },
+    [tableType]
+  );
 
   const handleRowUpdate = (newData, oldData, resolve, reject, updateAPI) => {
     // let newHinhAnh = newData.hinhAnh;
