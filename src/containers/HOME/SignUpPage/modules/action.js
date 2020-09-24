@@ -34,16 +34,12 @@ const actFetchSignUp = (user, history) => {
     try {
       const resData = await usersApi.postSignUp(user);
       dispatch(actSignUpSuccess(resData));
-      alert("Dang ky thanh cong");
-      //TODO SAU KHI DANG KY THANH CONG THI TU DONG DANG NHAP
-      // history.goBack();
-      // history.push("/login");
+      // alert("Dang ky thanh cong, bạn có thể đăng nhập");
+
+      history.push("/login");
     } catch (error) {
       dispatch(actSignUpFailed(error));
-      console.log(error.response.data);
-
-      // history.push("/login");
-      // history.goBack();
+      console.log(error.response?.data);
     }
   };
 };

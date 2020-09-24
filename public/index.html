@@ -17,47 +17,17 @@
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <title>React App</title>
+    <title>Moive App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <div class="modal-root"></div>
-    <!-- <script>
-      //khi bam vao logo thi se tu dong (wait 0.5s) bam vao link dau tien co .active
-      const imgs = document.querySelectorAll(".theater__logos .nav-link");
-      function setTimeClick() {
-        //xoa het class acctive cua link
-        document
-          .querySelectorAll(".theater__details .tab-pane .nav-link")
-          .forEach((link) => {
-            link.classList.remove("active");
-          });
-        // 0.5s sau click vao link (se tu them class active da xoa vao phan tu dau tien cua pane co class active (do lick vao tam hinh))
-        setTimeout(() => {
-          document
-            .querySelectorAll(".theater__details .tab-pane")
-            .forEach((tab) => {
-              if (tab.classList.contains("active")) {
-                console.log(tab.firstElementChild.firstElementChild);
+    <div id="modal-root"></div>
 
-                tab.firstElementChild.firstElementChild.click();
-              }
-            });
-        }, 250);
-      }
-
-      imgs.forEach((img) => {
-        img.addEventListener("click", () => {
-          setTimeClick();
-        });
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.scrollTo(0, 0);
       });
-
-      // $("theater__logos a").click(function () {
-      //   console.log($(".theater__details .active .nav-link"));
-
-      //   $(".theater__details .active .nav-link").click();
-      // });
-    </script> -->
+    </script>
   </body>
 </html>

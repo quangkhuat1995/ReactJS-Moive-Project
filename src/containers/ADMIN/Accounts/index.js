@@ -3,8 +3,11 @@ import AccountTable from "./AccountTable";
 import { Container, Grid, Paper } from "@material-ui/core";
 import PageTitle from "../PageTitle";
 import useAdminStyles from "../../../style/useAdminStyle";
+import useTitle from "../../../Hook/useTitle";
 
 export default function Accounts() {
+  useTitle("Quản lý người dùng", "admin");
+
   const classes = useAdminStyles();
   return (
     <Container maxWidth="lg" className={classes.container}>

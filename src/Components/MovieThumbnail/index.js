@@ -23,7 +23,7 @@ function MovieThumbnail(props) {
       {/* display none ben SAP chieu */}
       <div className="playBtn__overlay">
         <a
-          href={`play-trailer-${movie.maPhim}-${movie.biDanh}`}
+          href={`play-trailer-${movie.maPhim || "phim"}-${movie.biDanh}`}
           data-target="#movieTrailer"
           data-toggle="modal"
           className="play__link"

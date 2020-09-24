@@ -8,27 +8,32 @@ import UnLoggedUI from "./UnLoggedUI";
 import { connect } from "react-redux";
 import { actSetLogStatus } from "./modules/action";
 import { USER_KEY } from "../../constants/config";
+import { showToast } from "../../utils/showToast";
 // import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
   const { customClass, isOpen, handleClose } = props; //nhận từ cha
   const { setCurrentLogStatus, isLoggedIn } = props; //store
   // console.log(props);
+  const user = localStorage.getItem(USER_KEY);
+  const hoTen = JSON.parse(user)?.hoTen;
 
   useEffect(() => {
-    if (localStorage.getItem(USER_KEY)) {
+    if (JSON.parse(user)?.maLoaiNguoiDung === "KhachHang") {
       setCurrentLogStatus(true);
     } else {
       setCurrentLogStatus(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  }, []);
 
   const handleLogOut = (e) => {
     if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
-      localStorage.removeItem(USER_KEY);
-      setCurrentLogStatus(false);
-      setTimeout(() => alert("Đã đăng xuất thành công"), 1000);
+      if (user) {
+        localStorage.removeItem(USER_KEY);
+        setCurrentLogStatus(false);
+      }
+      setTimeout(() => showToast("Đã đăng xuất thành công", "success"), 1000);
     } else {
       // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
       e.preventDefault();
@@ -40,7 +45,11 @@ function MainNav(props) {
       onClick={handleClose ? handleClose : null}
       className={`${customClass} ${isOpen ? "active" : ""}`}
     >
-      {isLoggedIn ? <LoggedUI handleLogOut={handleLogOut} /> : <UnLoggedUI />}
+      {isLoggedIn ? (
+        <LoggedUI hoTen={hoTen} handleLogOut={handleLogOut} />
+      ) : (
+        <UnLoggedUI />
+      )}
       <li className="nav-item hideOnDesk">
         <Link className="nav-link" to="/">
           Trang chủ

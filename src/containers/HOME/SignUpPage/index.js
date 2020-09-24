@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link as NavigateLink } from "react-router-dom";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-// import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-// import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
@@ -18,9 +17,10 @@ import { actFetchSignUp } from "./modules/action";
 import useSetBackground from "./../../../Hook/useSetBackground";
 import ErrorUI from "../../../Components/ErrorUI";
 import Copyright from "../../../Components/Copyright";
-import useUserStyles from "../../../style/useUserStyle";
 import validateForm from "../../../Hook/validateForm";
 import useFormValidation from "../../../Hook/useFormValidation";
+import useUserStyles from "../../../style/useUserStyle";
+import useTitle from "../../../Hook/useTitle";
 
 const logo = "/images/logo.png";
 const INIT_SIGNUP_STATE = {
@@ -32,28 +32,46 @@ const INIT_SIGNUP_STATE = {
   matKhau2: "",
   email: "",
   soDt: "",
-  maNhom: "GP09",
-  maLoaiNguoiDung: "KhachHang",
+  // maNhom: "GP09", //gửi vào khi submit
+  // maLoaiNguoiDung: "KhachHang",
 };
+
 function SignUp(props) {
-  const { fetchSignUp, loading, errorSignUp } = props; // lay tu store redux
+  const { fetchSignUp, loadingSignUp, errorSignUp } = props; // lay tu store redux
   // console.log(props.history);
 
   const classes = useUserStyles();
   useSetBackground();
+  useTitle("Đăng Ký");
 
   const {
     handleChange,
     handleSubmit,
     handleBlur,
     values, // init = INIT_SIGNUP_STATE
-    errors, // init = {}
+    errors, // init = INIT_LOGIN_STATE
     isNotValid, //init = true
   } = useFormValidation(INIT_SIGNUP_STATE, validateForm, fetchSignUp, props);
 
-  const validEmpty = () => {
-    //moi phan tu deu khac ""
-    return Object.values(state).every((item) => item !== "");
+  // console.log("errors", errors);
+  // console.log("values", values);
+  // console.log("isNotValid", isNotValid);
+
+  const configBeforeSubmit = (e, values) => {
+    e.preventDefault();
+    const { ho, ten, taiKhoan, matKhau, email, soDt } = values;
+
+    const user = {
+      hoTen: `${ho} ${ten}`,
+      taiKhoan,
+      matKhau,
+      soDt,
+      email,
+      maNhom: "GP09",
+      maLoaiNguoiDung: "KhachHang",
+    };
+
+    handleSubmit(e, user);
   };
 
   return (
@@ -66,11 +84,14 @@ function SignUp(props) {
         <Typography component="h1" variant="h5">
           Đăng ký
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={(e) => configBeforeSubmit(e, values)}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                error={errors.ho ? true : false}
                 autoComplete="ho"
                 name="ho"
                 variant="outlined"
@@ -79,6 +100,7 @@ function SignUp(props) {
                 id="ho"
                 label="Họ"
                 autoFocus
+                error={errors.ho ? true : false}
                 defaultValue={values.ho}
                 helperText={errors.ho}
                 onChange={handleChange}
@@ -144,7 +166,6 @@ function SignUp(props) {
                 label="Xác nhận mật khẩu"
                 type="password"
                 id="matKhau2"
-                autoComplete="current-password"
                 defaultValue={values.matKhau2}
                 onChange={handleChange}
                 error={errors.matKhau2 ? true : false}
@@ -192,22 +213,24 @@ function SignUp(props) {
               />
             </Grid>
           </Grid>
-          {errorSignUp && <ErrorUI message={errorSignUp.response.data} />}
+          {errorSignUp && <ErrorUI message={errorSignUp.response?.data} />}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={isNotValid} //{loading}
+            disabled={isNotValid || loadingSignUp} //{loading}
           >
             Đăng ký
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              {/* <Link href="#" variant="body2"> */}
+              <NavigateLink to="/login">
                 {"Đã có tài khoản tại Tix? Đăng nhập ngay"}
-              </Link>
+              </NavigateLink>
+              {/* </Link> */}
             </Grid>
           </Grid>
         </form>
@@ -221,14 +244,14 @@ function SignUp(props) {
 
 const mapStateToProps = (state) => {
   return {
-    loading: state.userSignUpReducer.loading,
+    loadingSignUp: state.userSignUpReducer.loading,
     errorSignUp: state.userSignUpReducer.error,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSignUp: (user) => {
-      dispatch(actFetchSignUp(user));
+    fetchSignUp: (user, history) => {
+      dispatch(actFetchSignUp(user, history));
     },
   };
 };
