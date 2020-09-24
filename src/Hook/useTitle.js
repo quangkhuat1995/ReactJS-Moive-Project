@@ -7,7 +7,7 @@ function useTitle(title, admin = null) {
     } else {
       document.title = `Tix | ${title}`;
     }
-    window.scrollTo(0, 0);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title]);
 }

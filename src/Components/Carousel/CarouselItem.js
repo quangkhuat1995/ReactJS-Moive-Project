@@ -21,7 +21,9 @@ function CarouselItem(props) {
       {/* end extra content on detail page */}
       <div className="playBtn__overlay">
         <a
-          href={`play-trailer-${detailMovie.maPhim}-${detailMovie.biDanh}`}
+          href={`play-trailer-${detailMovie.maPhim || "phim"}-${
+            detailMovie.biDanh
+          }`}
           data-toggle="modal"
           data-target="#movieTrailer"
           className="play__link"

@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
+import ReactDOM from "react-dom";
 import $ from "jquery";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-function ModalPopup(props) {
+function ModalPopup() {
+  const detailMovie = useSelector(
+    (state) => state.listMovieReducer.detailMovie
+  );
+
   useEffect(() => {
     //stop video when close modal
     $("#movieTrailer").on("hidden.bs.modal", function (e) {
@@ -13,14 +18,9 @@ function ModalPopup(props) {
     });
   }, []);
 
-  const { loading, detailMovie, movie } = props;
-  const renderSrc = () => {
-    //props movie duoc truyen vao o trang detail
-    if (loading) return "";
-    return detailMovie?.trailer || movie?.trailer;
-  };
+  // const {  detailMovie } = props;
 
-  return (
+  return ReactDOM.createPortal(
     <div
       className="modal fade movieModal"
       tabIndex="-1"
@@ -36,7 +36,7 @@ function ModalPopup(props) {
               title="trailer"
               width="100%"
               height="85%"
-              src={renderSrc()}
+              src={detailMovie?.trailer}
               // src={src}
               frameBorder="0"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
@@ -46,18 +46,18 @@ function ModalPopup(props) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal-root")
   );
 }
 // $("#comingSoonTrailer").on('hidden.bs.modal', function (e) {
 //           $("#comingSoonTrailer iframe").attr("src", $("#comingSoonTrailer iframe").attr("src"));
 //       });
-const mapStateToProps = (state) => {
-  return {
-    detailMovie: state.listMovieReducer.detailMovie,
-    loading: state.listMovieReducer.loading,
-    // state.detailMovieReducer.detailMovie
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     detailMovie: state.listMovieReducer.detailMovie,
+//   };
+// };
 
-export default connect(mapStateToProps, null)(ModalPopup);
+// export default connect(mapStateToProps, null)(ModalPopup);
+export default memo(ModalPopup);
