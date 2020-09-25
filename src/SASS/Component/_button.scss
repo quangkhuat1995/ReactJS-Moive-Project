@@ -1,6 +1,12 @@
 .btnViewMore {
   @include styleText($color-light-0, $fs-14);
-  @include styleButton($color-trans, $color-light-0, $sp-half - 0.5, $sp-25, $border-radius);
+  @include styleButton(
+    $color-trans,
+    $color-light-0,
+    $sp-half - 0.5,
+    $sp-25,
+    $border-radius
+  );
   font-weight: 600;
   text-align: center;
 
@@ -15,7 +21,13 @@
 }
 .btnDownload {
   @include styleText($color-white-0, $fs-16);
-  @include styleButton($color-red-primary, $color-red-primary, $sp-10, $sp-20, $border-radius);
+  @include styleButton(
+    $color-red-primary,
+    $color-red-primary,
+    $sp-10,
+    $sp-20,
+    $border-radius
+  );
   font-weight: 700;
 }
 .btnBuyTicket {
@@ -24,12 +36,21 @@
   width: 100%;
   @include displayFlex(center, center);
 
-  @include styleButton(linear-gradient(to left, #fb4226, #ce3017 100%), $color-red-primary, 0, 0, $border-radius);
+  @include styleButton(
+    linear-gradient(to left, #fb4226, #ce3017 100%),
+    $color-red-primary,
+    0,
+    0,
+    $border-radius
+  );
   @include styleText($color-white-0, $fs-18);
 
-  &:hover {
+  &:not(:disabled):hover {
     background: $color-red-primary;
     @include styleText($color-white-0, $fs-18);
+  }
+  &:disabled {
+    opacity: 0.6;
   }
 }
 

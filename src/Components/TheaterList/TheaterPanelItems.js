@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { MOBILE_MEDIA } from "../../constants/config";
 import useMedia from "../../Hook/useMedia";
 import CinemaDetailItem from "../CinemaDetailItem";
 import TabPanel from "../TabPanel";
@@ -9,7 +10,7 @@ function TheaterPanelItems(props) {
   // console.log(singleHeThongRap.lstCumRap);
   const { heThongRap } = props;
   const listCumRap = heThongRap.lstCumRap;
-  const isMobile = useMedia("(max-width:768px)");
+  const isMobile = useMedia(MOBILE_MEDIA);
 
   // console.log(listCumRap);
   if (listCumRap && listCumRap.length > 0) {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DetailMovieItem from "./DetailMovieItem";
 import TabPanel from "../TabPanel";
 import useMedia from "../../Hook/useMedia";
-import { TODAY } from "./../../constants/config";
+import { MOBILE_MEDIA, TODAY } from "./../../constants/config";
 
 const getTodayListTime = (lstLichChieu = []) => {
   if (lstLichChieu && lstLichChieu.length > 0) {
@@ -66,7 +66,7 @@ const renderListMovie = (cumRap) => {
 function GroupMoviesInCinema(props) {
   const { cumRap, index, j } = props;
   const cinemaToday = findMovieHasShowToday(cumRap);
-  const isMobile = useMedia("(max-width: 768px)");
+  const isMobile = useMedia(MOBILE_MEDIA);
 
   const settings = isMobile
     ? {
