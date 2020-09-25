@@ -1,17 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { actBuyTicket } from "../Seat/modules/action";
-import { useParams, useLocation } from "react-router-dom";
+import { actBuyTicket, actRefreshBuyTicket } from "../Seat/modules/action";
+import { useParams, useHistory } from "react-router-dom";
 import Radio from "./../Radio";
 import { USER_KEY } from "../../constants/config";
+import Swal from "sweetalert2";
 
 function Pay(props) {
-  const { danhSachVe } = props;
+  const { danhSachVe, buyTicket, refreshSeatState } = props;
   const { thongTinPhim } = props.bookingMovie;
-  const param = useParams();
-  const location = useLocation();
-  console.log(location);
+  const history = useHistory();
+  const params = useParams();
+  // console.log(history);
+  // console.log(params);
 
   const layThongTinVe = (type) => {
     if (danhSachVe && danhSachVe.length > 0) {
@@ -58,21 +60,37 @@ function Pay(props) {
   };
 
   const handleBuyTicket = (e) => {
+    e.persist();
     e.preventDefault();
     const user = localStorage.getItem(USER_KEY);
-    if (user) {
-      const data = {
-        maLichChieu: parseInt(param.maLichChieu),
-        taiKhoanNguoiDung: JSON.parse(user).taiKhoan,
-        danhSachVe,
-      };
+    const data = {
+      maLichChieu: parseInt(params.maLichChieu),
+      taiKhoanNguoiDung: JSON.parse(user).taiKhoan,
+      danhSachVe,
+    };
 
-      console.log("pay", data);
-      props.buyTicket(data);
-    } else {
-      alert("Bạn cần đăng nhập trước");
-      // history.push("/login");
-    }
+    Swal.fire({
+      title: "Thông tin đặt vé sẽ được gửi qua email",
+      text: "Hãy kiểm tra thông tin trước khi xác nhận!",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "Đồng ý!",
+      cancelButtonText: "Hủy",
+    }).then((res) => {
+      if (res.value) {
+        buyTicket(data);
+        Swal.fire({
+          icon: "success",
+          text: "Đặt vé thành công",
+          width: "400px",
+          padding: "0 0 20px 0",
+        })
+          .then(() => refreshSeatState())
+          .then(() => history.push("/"));
+      } else {
+        e.preventDefault();
+      }
+    });
   };
 
   if (!thongTinPhim) return null;
@@ -177,6 +195,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     buyTicket: (data) => {
       dispatch(actBuyTicket(data));
+    },
+    refreshSeatState: () => {
+      dispatch(actRefreshBuyTicket());
     },
   };
 };

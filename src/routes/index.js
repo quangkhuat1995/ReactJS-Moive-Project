@@ -1,6 +1,6 @@
 import HomePage from "./../containers/HOME/HomePage";
 import DetailPage from "./../containers/HOME/DetailPage";
-import BookingPage from "./../containers/HOME/BookingPage";
+// import BookingPage from "./../containers/HOME/BookingPage";
 import Accounts from "../containers/ADMIN/Accounts";
 import ManageMovies from "../containers/ADMIN/ManageMovies";
 
@@ -15,11 +15,11 @@ const HomeRoutes = [
     path: "/phim/:slug", //slug: maPhim-biDanh . 1322-ted-part-2
     component: DetailPage,
   },
-  {
-    exact: true,
-    path: "/booking/:maLichChieu", //sua cho nay
-    component: BookingPage,
-  },
+  // {
+  //   exact: true,
+  //   path: "/booking/:maLichChieu", //sua cho nay
+  //   component: BookingPage,
+  // },
 ];
 
 const AdminRoutes = [

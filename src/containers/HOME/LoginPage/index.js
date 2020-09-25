@@ -1,5 +1,6 @@
 import React from "react";
 import { Link as NavigateLink } from "react-router-dom";
+//Material UI
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,12 +16,11 @@ import { connect } from "react-redux";
 import { actFetchUserLogin } from "./modules/action";
 //Components
 import ErrorUI from "../../../Components/ErrorUI";
-//Material UI
+import Copyright from "../../../Components/Copyright";
 //Custom Hooks
 import useSetBackground from "../../../Hook/useSetBackground";
 import useFormValidation from "../../../Hook/useFormValidation";
 import validateForm from "../../../Hook/validateForm";
-import Copyright from "../../../Components/Copyright";
 import useUserStyles from "../../../style/useUserStyle";
 import useTitle from "../../../Hook/useTitle";
 
@@ -30,6 +30,8 @@ const INIT_LOGIN_STATE = {
 };
 
 function LogInPage(props) {
+  // console.log(props);
+
   const { errorLogin, fetchUserLogin, loadingLogin } = props;
   const classes = useUserStyles();
   useSetBackground();
@@ -43,9 +45,15 @@ function LogInPage(props) {
     errors, // init = INIT_LOGIN_STATE
     isNotValid, //init = true
   } = useFormValidation(INIT_LOGIN_STATE, validateForm, fetchUserLogin, props);
-  console.log("errors", errors);
-  console.log("values", values);
-  console.log("isNotValid", isNotValid);
+  // console.log("errors", errors);
+  // console.log("values", values);
+  // console.log("isNotValid", isNotValid);
+
+  //đã loggin thì chuyển về trc đó hoạc trang chủ (đã xủ lý trong api call)
+  //TODO chặn người dùng vào lại trang này khi đã loggin ??
+  // if (isLoggedIn) {
+  //   return <Redirect to={from} />;
+  // }
 
   return (
     <Container component="main" maxWidth="xs" className={classes.wrapper}>

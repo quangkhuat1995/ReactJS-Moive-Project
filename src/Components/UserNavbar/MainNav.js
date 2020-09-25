@@ -1,55 +1,37 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect, memo, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 //Components
 import LoggedUI from "./LoggedUI";
 import UnLoggedUI from "./UnLoggedUI";
-//module
-import { connect } from "react-redux";
-import { actSetLogStatus } from "./modules/action";
 import { USER_KEY } from "../../constants/config";
-import { showToast } from "../../utils/showToast";
+import { useSelector } from "react-redux";
 // import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
-  const { customClass, isOpen, handleClose } = props; //nhận từ cha
-  const { setCurrentLogStatus, isLoggedIn } = props; //store
-  // console.log(props);
-  const user = localStorage.getItem(USER_KEY);
-  const hoTen = JSON.parse(user)?.hoTen;
+  const isLoggedIn = useSelector((state) => state.userLoginReducer.isLoggedIn);
 
+  // console.log(isLoggedIn);
+  const { customClass, isOpen, handleClose } = props; //nhận từ cha
+  // const { isLoggedIn } = props; //store
+  // console.log(props);
+  // const [isLoggedin, setIsLoggedin] = useState(false);
+  const [hoTen, setHoTen] = useState("");
   useEffect(() => {
-    if (JSON.parse(user)?.maLoaiNguoiDung === "KhachHang") {
-      setCurrentLogStatus(true);
-    } else {
-      setCurrentLogStatus(false);
+    if (isLoggedIn) {
+      const user = localStorage.getItem(USER_KEY);
+      const hoTen = JSON.parse(user).hoTen;
+      setHoTen(hoTen);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleLogOut = (e) => {
-    if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
-      if (user) {
-        localStorage.removeItem(USER_KEY);
-        setCurrentLogStatus(false);
-      }
-      setTimeout(() => showToast("Đã đăng xuất thành công", "success"), 1000);
-    } else {
-      // không đồng ý đăng xuất sẽ ngăn cản việc nhảy về trang home
-      e.preventDefault();
-    }
-  };
 
   return (
     <ul
       onClick={handleClose ? handleClose : null}
       className={`${customClass} ${isOpen ? "active" : ""}`}
     >
-      {isLoggedIn ? (
-        <LoggedUI hoTen={hoTen} handleLogOut={handleLogOut} />
-      ) : (
-        <UnLoggedUI />
-      )}
+      {isLoggedIn ? <LoggedUI hoTen={hoTen} /> : <UnLoggedUI />}
       <li className="nav-item hideOnDesk">
         <Link className="nav-link" to="/">
           Trang chủ
@@ -83,16 +65,4 @@ MainNav.propTypes = {
   handleClose: PropTypes.func,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.userStatusReducer.isLoggedIn,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCurrentLogStatus: (status) => {
-      dispatch(actSetLogStatus(status));
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(memo(MainNav));
+export default memo(MainNav);

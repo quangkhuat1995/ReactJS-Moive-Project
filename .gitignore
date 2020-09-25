@@ -24,7 +24,5 @@ yarn-error.log*
 
 # custom
 *.xmind
-bookingPage
-detailPage
-myindex.js
+bookingPage.html
 *.code-workspace

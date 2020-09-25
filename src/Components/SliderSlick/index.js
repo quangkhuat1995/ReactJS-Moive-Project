@@ -25,7 +25,7 @@ function PrevArrow(props) {
 export default function SliderSlick(props) {
   const settings = {
     infinite: true,
-    // autoplay: true,
+    autoplay: true,
     speed: 600, //speed transition animate
     autoplaySpeed: 5000, //speed per sence
     slidesToShow: 1,
@@ -39,8 +39,8 @@ export default function SliderSlick(props) {
         //less than
         breakpoint: 1065,
         settings: {
-          // arrows: false,
-          autoplay: false,
+          arrows: false,
+          // autoplay: false,
         },
       },
     ],
