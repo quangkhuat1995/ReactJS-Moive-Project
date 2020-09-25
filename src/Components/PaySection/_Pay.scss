@@ -2,18 +2,24 @@
   //@include childGrid(4, 5, 1, 3);
   background: $color-white-0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  position: relative;
-  // width:100%;
-  height: 115vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  // height: 115vh; **
   .pay-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    // @include positionAbsolute(0,0);
+    margin-bottom: 70px;
+    // position: relative;
+
+    // width: 100%;
     height: 100%;
-    padding: 0 $sp-10;
-    overflow-y: auto;
+    padding: 0 $sp-10 100px;
+    overflow-y: scroll;
     overflow-x: hidden;
+    // height: 100vh;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -138,6 +144,7 @@
   }
   .confirm__item {
     // margin: 0 -$sp-15;
+    background: $color-white-0;
     @include positionAbsolute(false, 0, 0);
     width: 100%;
     .btn-confirm {

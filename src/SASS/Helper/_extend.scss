@@ -3,19 +3,46 @@
   content: "";
   clear: both;
 }
-%slickArrow {
-  position: absolute;
-  top: 45%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 100px;
-  opacity: 0.5;
-  z-index: 2;
-  border: 0;
-  background-color: transparent;
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
+// %slickArrow {
+//   position: absolute;
+//   top: 45%;
+//   transform: translateY(-50%);
+
+//   width: 50px;
+//   height: 100px;
+
+//   @include displayFlex(center, center);
+//   color: $color-light-0;
+//   opacity: 0.5;
+//   z-index: 2;
+// }
+%modifySlick {
+  .slick-arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+
+    width: 50px;
+    height: 100px;
+
+    @include displayFlex(center, center);
+    color: #ccc;
+    opacity: 0.5;
+    z-index: 2;
+  }
+  .slick-next,
+  .slick-prev {
+    transition: all 0.3s ease-in-out;
+    &:hover,
+    &:active {
+      color: $color-red-primary;
+      opacity: 1;
+    }
+
+    &::before {
+      content: none;
+    }
+  }
 }
 
 %showAge {

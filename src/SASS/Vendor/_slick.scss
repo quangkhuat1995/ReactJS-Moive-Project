@@ -1,3 +1,4 @@
+//slick css for showtime list movie
 .showtime__panel {
   .slick-arrow {
     @extend %slickArrow;
@@ -11,9 +12,23 @@
     background-image: url("../../images/next-session.png");
   }
 }
+//slick css for carousel
 .carousel {
   .slick-arrow {
     @extend %slickArrow;
+  }
+  .slick-next,
+  .slick-prev {
+    &:hover {
+      color: $color-light-0;
+      opacity: 1;
+    }
+    &.active {
+      color: $color-red-primary;
+    }
+    &::before {
+      content: none;
+    }
   }
   .slick-prev {
     left: 3%;

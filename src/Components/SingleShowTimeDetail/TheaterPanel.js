@@ -3,10 +3,11 @@ import TheaterContent from "./TheaterContent";
 import TabPanel from "../TabPanel";
 import useMedia from "../../Hook/useMedia";
 import PropTypes from "prop-types";
+import { MOBILE_MEDIA } from "../../constants/config";
 
 function TheaterPanel(props) {
   const { heThongRap, index } = props;
-  const isMobile = useMedia("(max-width:768px)");
+  const isMobile = useMedia(MOBILE_MEDIA);
 
   const settings = isMobile
     ? {

@@ -4,10 +4,11 @@ import Theater from "./Theater";
 import useMedia from "../../Hook/useMedia";
 import TheaterPanel from "./TheaterPanel";
 import ListOfDay from "./ListOfDay";
+import { DESKTOP_MEDIA } from "../../constants/config";
 
 function SingleShowTimeDetail(props) {
   const { listHeThongRap } = props;
-  const isDesktop = useMedia("(min-width:768px)");
+  const isDesktop = useMedia(DESKTOP_MEDIA);
 
   return (
     <section className="detail">

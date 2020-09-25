@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import Slider from "../SliderSlick";
+import SliderSlick from "./../SliderSlick";
 import PanelContainer from "./PanelContainer";
 
 const chunkArray = (myArray = [], chunk_size) => {
@@ -21,7 +21,7 @@ function TabShowOrComing(props) {
   const chunkedArrs = useMemo(() => chunkArray(movies, 8), [movies]);
 
   return (
-    <Slider>
+    <SliderSlick customSlick={{ dots: false }}>
       {/* many panel containers */}
       {chunkedArrs.map((arr, index) => (
         <PanelContainer key={index} movies={arr} />
@@ -29,7 +29,7 @@ function TabShowOrComing(props) {
       {/* {this.renderPanelContainer(page_1)}
         {this.renderPanelContainer(page_3)}
         {this.renderPanelContainer(page_2)} */}
-    </Slider>
+    </SliderSlick>
   );
 }
 

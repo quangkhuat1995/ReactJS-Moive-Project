@@ -18,6 +18,7 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import useTable from "./useTable";
+import { MOBILE_MEDIA } from "../../../constants/config";
 // import Alert from "@material-ui/";
 
 const tableIcons = {
@@ -46,7 +47,7 @@ const tableIcons = {
 
 function MyTable(props) {
   const { tableType, getAPI, addAPI, updateAPI, deleteAPI } = props;
-  const isMobile = useMedia("(max-width:768px)");
+  const isMobile = useMedia(MOBILE_MEDIA);
 
   const {
     data,

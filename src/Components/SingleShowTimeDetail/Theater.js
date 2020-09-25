@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
+import { MOBILE_MEDIA } from "../../constants/config";
 import useMedia from "../../Hook/useMedia";
 import LogoHeThong from "../LogoHeThong";
 import NavTabLogo from "../NavTabLogo";
@@ -30,7 +31,7 @@ const renderLogoAsCollapse = (listHeThongRap) => {
 
 function Theater(props) {
   const { listHeThongRap } = props;
-  const isMobile = useMedia("(max-width:768px)");
+  const isMobile = useMedia(MOBILE_MEDIA);
 
   return (
     <>

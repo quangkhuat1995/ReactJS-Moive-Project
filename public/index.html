@@ -28,6 +28,10 @@
       document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo(0, 0);
       });
+
+      window.addEventListener("close", () => {
+        localStorage.removeItem("user");
+      });
     </script>
   </body>
 </html>

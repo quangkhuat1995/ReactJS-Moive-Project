@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import SliderSlick from "../SliderSlick";
+// import SliderSlick from "../SliderSlick";
+import SliderSlick from "./../SliderSlick";
 import homeCarouselData from "./../../constants/homeCarouselData";
 import CarouselItem from "./CarouselItem";
 

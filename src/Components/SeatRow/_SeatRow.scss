@@ -75,6 +75,11 @@
             }
             & ~ label .seatnum {
               visibility: visible;
+              display: none;
+
+              @include RESPONSIVE("768px") {
+                display: initial;
+              }
             }
           }
           &:disabled {

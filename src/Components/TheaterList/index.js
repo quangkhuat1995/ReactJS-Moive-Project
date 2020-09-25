@@ -10,6 +10,7 @@ import {
 } from "./modules/action";
 import TheaterPanelItems from "./TheaterPanelItems";
 import GroupMoviesInCinema from "./GroupMoviesInCinema";
+import { DESKTOP_MEDIA } from "../../constants/config";
 
 const setTimeClick = () => {
   //xoa het class acctive cua link
@@ -59,7 +60,7 @@ function TheaterList(props) {
     // console.log("did mount");
   });
 
-  const isDesktop = useMedia("(min-width:768px)");
+  const isDesktop = useMedia(DESKTOP_MEDIA);
   if (props.loading) return <Loading />;
   return (
     <section className="theaterList">

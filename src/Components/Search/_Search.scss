@@ -51,7 +51,8 @@
       content: "";
       @include positionAbsolute(50%, false, false, 10px);
       transform: translateY(-50%);
-      background: url("/images/dropdown-icon.png") center center/contain no-repeat;
+      background: url("/images/dropdown-icon.png") center center/contain
+        no-repeat;
       width: 15px;
       height: 15px;
       cursor: pointer;
@@ -69,8 +70,8 @@
       height: unset;
       padding: 10px;
       font-size: 14px;
-      &:hover {
-        font-size: 14px;
+      &:not(:disabled):hover {
+        font-size: 14px !important;
       }
     }
 

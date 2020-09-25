@@ -5,10 +5,12 @@ import Footer from "../Components/Footer";
 import UserNavbar from "../Components/UserNavbar";
 
 function HomeLayout(props) {
+  console.log(props);
   return (
     <>
       <UserNavbar />
       {props.children}
+
       <Footer />
     </>
   );

@@ -2,7 +2,7 @@ import React, { useMemo, useRef } from "react";
 import { connect } from "react-redux";
 import useMedia from "../../Hook/useMedia";
 import { actSelectDay } from "../../containers/HOME/DetailPage/modules/action";
-import { TODAY, END_DAY } from "./../../constants/config";
+import { TODAY, END_DAY, MOBILE_MEDIA } from "./../../constants/config";
 
 const generateDaysArray = (start, end) => {
   for (
@@ -37,7 +37,7 @@ const displayDayOfWeek = (dateString) => {
 };
 
 const ListOfDay = (props) => {
-  const isMobile = useMedia("(max-width:768px)");
+  const isMobile = useMedia(MOBILE_MEDIA);
   const ulRef = useRef(null);
   const dayList = useMemo(
     () => generateDaysArray(new Date(TODAY), new Date(END_DAY)),
