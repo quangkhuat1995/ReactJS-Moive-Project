@@ -1,4 +1,9 @@
-import { LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS } from "./constant";
+import {
+  LOGIN_FAILED,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOG_OUT,
+} from "./constant";
 import usersApi from "../../../../api/usersApi";
 import { USER_KEY } from "../../../../constants/config";
 
@@ -20,7 +25,18 @@ const actLoginFailed = (error) => {
     error,
   };
 };
-
+const actLogout = () => {
+  return {
+    type: LOG_OUT,
+  };
+};
+const findPrevPathname = (history = {}) => {
+  if (history.location?.state?.from) {
+    console.log(history.location.state.from.pathname);
+    return history.location.state.from.pathname;
+  }
+  return "/";
+};
 // resData = {
 //   "taiKhoan": "dpnguyen",
 //   "hoTen": "Nguyen",
@@ -32,8 +48,8 @@ const actLoginFailed = (error) => {
 // }
 const actFetchUserLogin = (user, history) => {
   return async (dispatch) => {
+    dispatch(actLoginRequest());
     try {
-      dispatch(actLoginRequest());
       const resData = await usersApi.postLogIn(user);
       // console.log(resData);
       dispatch(actLoginSuccess(resData));
@@ -41,9 +57,8 @@ const actFetchUserLogin = (user, history) => {
       if (resData.maLoaiNguoiDung === "KhachHang") {
         // alert("dang nhap thanh cong");
         localStorage.setItem(USER_KEY, JSON.stringify(resData));
-        //TODO: chuyển hướng về trang trước đó
-        history.push("/");
-        // history.goBack();
+
+        history.push(`${findPrevPathname(history)}`);
       } else {
         alert("Không thể đăng nhập bằng tài khoản này");
       }
@@ -54,4 +69,8 @@ const actFetchUserLogin = (user, history) => {
   };
 };
 
-export { actFetchUserLogin };
+// const actLogout = () => {
+//   ;
+// };
+
+export { actFetchUserLogin, actLogout };

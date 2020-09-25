@@ -1,15 +1,27 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import MainNav from "./MainNav";
-import { connect } from "react-redux";
-import { actToggleNav, actToggleNav_Force } from "./modules/action";
-
 const logo = "/images/logo.png";
 
-//Theory:  isNavOpen: true-> mở nav, false-> đóng nav
-function UserNavbar(props) {
-  // console.log(props);
-  const { isNavOpen, actToggleNav, actToggleNav_Force } = props;
+const navbarReducer = (state, action) => {
+  switch (action.type) {
+    case "open":
+      return { ...state, isNavOpen: true };
+    case "close":
+      return { ...state, isNavOpen: false };
+    case "toggle":
+      return { ...state, isNavOpen: !state.isNavOpen };
+    default:
+      return state;
+  }
+};
+const initialState = {
+  isNavOpen: false,
+};
+
+function UserNavbar() {
+  const [state, dispatch] = useReducer(navbarReducer, initialState);
+  const { isNavOpen } = state;
 
   //effect opacity khi scroll xuống
   useEffect(() => {
@@ -23,25 +35,26 @@ function UserNavbar(props) {
         header_wrapper.style.backgroundColor = "rgba(255, 255, 255)";
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //Effect tự động đóng nav khi resize window > 768px và khóa cuộn trang khi đang mở nav
   useEffect(() => {
     if (isNavOpen) {
-      window.addEventListener("resize", () => {
-        if (window.outerWidth >= 768) {
-          // document.body.style.overflowY = "initial";
-          // setIsOpen(false);
-          actToggleNav_Force(false);
-        }
-      });
+      // window.addEventListener("resize", () => {
+      //   if (window.outerWidth >= 768) {
+      //     // document.body.style.overflowY = "initial";
+      //     // setIsOpen(false);
+      //     dispatch({ type: "close" });
+      //   }
+      // });
+
       //Khi navbar đang mở thi khóa cuộn trang
       document.body.style.overflow = "hidden";
     } else {
       //   //set lai bth khi navbar đóng
       document.body.style.overflow = null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNavOpen]);
 
   return (
@@ -55,13 +68,13 @@ function UserNavbar(props) {
             <MainNav customClass="header__mid" />
             <nav className="nav-group">
               <div
-                onClick={actToggleNav}
+                onClick={() => dispatch({ type: "toggle" })}
                 className={`hamburger ${isNavOpen ? "active" : ""}`}
               >
                 <div className="bar" />
               </div>
               <MainNav
-                handleClose={() => actToggleNav_Force(false)}
+                handleClose={() => dispatch({ type: "close" })}
                 isOpen={isNavOpen}
               />
             </nav>
@@ -72,20 +85,5 @@ function UserNavbar(props) {
     </>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    isNavOpen: state.userStatusReducer.isNavOpen,
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actToggleNav: () => {
-      dispatch(actToggleNav());
-    },
-    actToggleNav_Force: (forceStatus) => {
-      dispatch(actToggleNav_Force(forceStatus));
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(UserNavbar);
+export default memo(UserNavbar);

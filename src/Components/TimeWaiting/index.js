@@ -1,19 +1,17 @@
-import React, { memo, useState } from "react";
-import { Redirect } from "react-router-dom";
+import React, { memo } from "react";
 import Countdown, { zeroPad } from "react-countdown";
-import { TIME_BOOKING } from "../../constants/config";
+import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+// import { TIME_BOOKING } from "../../constants/config";
 
+const TIME_BOOKING = 900000000;
 function TimeWaiting() {
-  const [isInTimeBooking, setIsInTimeBooking] = useState(true);
+  const history = useHistory();
 
   const renderer = ({ minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
-      setTimeout(() => {
-        // return <Redirect to="/" />;
-        alert("qua thoi gian");
-        setIsInTimeBooking(false);
-      }, 1000);
+      // setIsInTimeBooking(false);
 
       return <p id="timewaiting">00:00</p>;
     } else {
@@ -25,9 +23,25 @@ function TimeWaiting() {
       );
     }
   };
-  if (!isInTimeBooking) {
-    return <Redirect to="/" />;
-  }
+  const handleCompleted = () => {
+    // setTimeNowIndex(timeNowIndex + 1);
+    // setTimeNow(Date.now() + TIME_BOOKING);
+    Swal.fire({
+      title: "Hết giờ",
+      text: "bạn có muốn đặt vé lại!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đồng ý!",
+      cancelButtonText: "Hủy",
+    }).then((res) => {
+      if (res.value) {
+        window.location.reload();
+      } else {
+        history.push("/");
+      }
+    });
+  };
+
   return (
     <div className="top__right">
       <p>thời gian giữ ghế</p>
@@ -35,6 +49,7 @@ function TimeWaiting() {
         date={Date.now() + TIME_BOOKING} // set 10000 = 10s để test.
         renderer={renderer}
         autoStart={true}
+        onComplete={handleCompleted}
       />
       {/* <p id="timewaiting">00:00:00</p> */}
     </div>

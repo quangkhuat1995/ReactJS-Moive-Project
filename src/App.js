@@ -9,6 +9,8 @@ import AdminTemplate from "./templates/AdminTemplate";
 import Auth from "./containers/ADMIN/Auth";
 import SignUpPage from "./containers/HOME/SignUpPage";
 import LogInPage from "./containers/HOME/LoginPage";
+import PrivateRoute from "./Components/PrivateRoute";
+import BookingPage from "./containers/HOME/BookingPage";
 function App() {
   const renderRoutesHome = (routes) => {
     return routes.map((route, index) => {
@@ -42,8 +44,15 @@ function App() {
         {renderRoutesHome(HomeRoutes)}
         {renderRoutesAdmin(AdminRoutes)}
 
+        <PrivateRoute
+          exact={true}
+          path="/booking/:maLichChieu"
+          component={BookingPage}
+        />
+
         <Route path="/sign-up" component={SignUpPage} />
         <Route path="/login" component={LogInPage} />
+
         <Route path="/auth" component={Auth} />
         <Route path="" component={PageNotFound} />
       </Switch>

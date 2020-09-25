@@ -15,7 +15,7 @@ function useFormValidation(
   const [isNotValid, setIsNotValid] = useState(true);
 
   useEffect(() => {
-    console.log("i run");
+    // console.log("i run");
 
     const noErrors = Object.values(errors).every((val) => val === "");
     //vẫn có field chưa nhập
@@ -25,11 +25,11 @@ function useFormValidation(
     if (noErrors) {
       //TH chưa nhập gì hết đã bấm gửi
       if (someValues) {
-        console.log("Có cái chưa nhập");
+        // console.log("Có cái chưa nhập");
 
         setIsNotValid(true);
       } else {
-        console.log("i allow");
+        // console.log("i allow");
 
         // đã nhập thông tin đầy đủ và ko có lỗi
         setIsNotValid(false);

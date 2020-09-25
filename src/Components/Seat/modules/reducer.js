@@ -45,7 +45,7 @@ const buyTicketReducer = (state = initialState, action) => {
 
     case BUY_TICKET_FAILED:
       state.loading = false;
-      state.result = action.data;
+      state.result = null;
       state.error = action.error;
       return { ...state };
 

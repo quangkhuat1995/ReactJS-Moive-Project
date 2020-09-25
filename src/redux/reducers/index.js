@@ -6,21 +6,20 @@ import authAdminReducer from "./../../containers/ADMIN/Auth/modules/reducer";
 import bookingMoviePageReducer from "./../../containers/HOME/BookingPage/modules/reducer";
 import userSignUpReducer from "./../../containers/HOME/SignUpPage/modules/reducer";
 import userLoginReducer from "./../../containers/HOME/LoginPage/modules/reducer";
-import userStatusReducer from "./../../Components/UserNavbar/modules/reducer";
 
 import buyTicketReducer from "./../../Components/Seat/modules/reducer";
-import accountReducer from "./../../containers/ADMIN/Accounts/modules/reducer";
+
 const rootReducer = combineReducers({
   listMovieReducer, // hien thi danh sach phim trong page home/showtime
   listHeThongRapReducer, // hien thi danh sach cac rap trong page home/theaterlist
   detailMovieReducer, // chi tiet tung bo phim o trang detail
   authAdminReducer,
   bookingMoviePageReducer,
+
   userSignUpReducer,
   userLoginReducer,
-  userStatusReducer,
+
   buyTicketReducer,
-  accountReducer,
 });
 
 export { rootReducer };
