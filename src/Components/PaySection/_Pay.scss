@@ -2,16 +2,20 @@
   //@include childGrid(4, 5, 1, 3);
   background: $color-white-0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  position: fixed;
-  top: 0;
-  right: 0;
+  z-index: 98;
+  position: relative;
+
   padding: 0;
   width: 100%;
   height: 100vh;
-  // height: 115vh; **
+
+  @include RESPONSIVE("768px") {
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
   .pay-wrapper {
     // @include positionAbsolute(0,0);
-    margin-bottom: 70px;
     // position: relative;
 
     // width: 100%;
@@ -142,25 +146,11 @@
       }
     }
   }
-  .confirm__item {
-    // margin: 0 -$sp-15;
-    background: $color-white-0;
-    @include positionAbsolute(false, 0, 0);
+  .confirm__group {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     width: 100%;
-    .btn-confirm {
-      text-align: center;
-      @include styleText($color-white-0, $fs-18);
-      background: $color-choosing;
-      cursor: pointer;
-      border: none;
-      width: 100%;
-      height: 100%;
-      display: block;
-      padding: 20px 15px;
-      &:disabled {
-        cursor: not-allowed;
-        opacity: 0.65;
-      }
-    }
+    //.confirm__item
   }
 }

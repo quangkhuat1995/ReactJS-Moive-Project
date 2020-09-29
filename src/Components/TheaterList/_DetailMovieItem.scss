@@ -33,7 +33,8 @@
     }
     &:not(.collapsed) {
       &::after {
-        transform: translateY(-50%) rotateX(180deg);
+        // transform: translateY(-50%) rotateX(180deg);
+        content: "\f077";
       }
     }
   }

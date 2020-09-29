@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
-import React from "react";
-import NavigationTab from "../NavigationTab/";
+import React, { forwardRef } from "react";
+import { connect } from "react-redux";
+import NavigationTab from "../NavigationTab";
 import TabShowOrComing from "./TabShowOrComing";
 
 const chunkArray = (myArray, chunk_size) => {
@@ -24,7 +25,8 @@ function ShowTime(props) {
   // const items = useMemo(() => items, [])
   const movieArray = chunkArray(myList, 24); // [ [24 items] , [20 items] ]
   // console.log(movieArray);
-
+  console.log(props);
+  // console.log(targetRef);
   return (
     <section className="showtime" id="lichchieu">
       <div className="myContainer">
@@ -60,4 +62,11 @@ ShowTime.propTypes = {
 ShowTime.defaultProps = {
   listMovie: [],
 };
-export default ShowTime;
+
+const mapStateToProps = (state) => {
+  return {
+    listMovie: state.listMovieReducer.listMovie,
+  };
+};
+
+export default connect(mapStateToProps, null)(ShowTime);

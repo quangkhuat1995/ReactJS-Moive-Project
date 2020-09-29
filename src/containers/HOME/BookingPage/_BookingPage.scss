@@ -16,10 +16,10 @@
   min-width: 265px;
   height: calc(100vh - 60px);
 
-  //   &::-webkit-scrollbar {
-  //     display: none;
-  //   }
-  // }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &--top {
     width: 90%;
     margin: 0 auto;

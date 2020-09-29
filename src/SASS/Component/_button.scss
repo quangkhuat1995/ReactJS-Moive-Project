@@ -1,12 +1,6 @@
 .btnViewMore {
   @include styleText($color-light-0, $fs-14);
-  @include styleButton(
-    $color-trans,
-    $color-light-0,
-    $sp-half - 0.5,
-    $sp-25,
-    $border-radius
-  );
+  @include styleButton($color-trans, $color-light-0, $sp-half - 0.5, $sp-25, $border-radius);
   font-weight: 600;
   text-align: center;
 
@@ -21,13 +15,7 @@
 }
 .btnDownload {
   @include styleText($color-white-0, $fs-16);
-  @include styleButton(
-    $color-red-primary,
-    $color-red-primary,
-    $sp-10,
-    $sp-20,
-    $border-radius
-  );
+  @include styleButton($color-red-primary, $color-red-primary, $sp-10, $sp-20, $border-radius);
   font-weight: 700;
 }
 .btnBuyTicket {
@@ -36,13 +24,7 @@
   width: 100%;
   @include displayFlex(center, center);
 
-  @include styleButton(
-    linear-gradient(to left, #fb4226, #ce3017 100%),
-    $color-red-primary,
-    0,
-    0,
-    $border-radius
-  );
+  @include styleButton(linear-gradient(to left, #fb4226, #ce3017 100%), $color-red-primary, 0, 0, $border-radius);
   @include styleText($color-white-0, $fs-18);
 
   &:not(:disabled):hover {
@@ -54,27 +36,19 @@
   }
 }
 
-#btnLogo {
-  @include positionAbsolute(50%, 50%);
-  transform: translate(-50%, -50%);
-  width: 50px;
-  text-align: center;
-  cursor: pointer;
-  font-size: $fs-18;
+// #btnAction{
+//   @include positionAbsolute(50%, 50%);
+//   transform: translate(-50%, -50%);
+//   width: 50px;
+//   text-align: center;
+//   cursor: pointer;
+//   font-size: $fs-18;
 
-  @include RESPONSIVE("768px") {
-    @include positionAbsolute(50%, 10px);
-    transform: translateY(-50%);
-  }
-}
-
-#btnBack {
-  @extend #btnLogo;
-  width: 20px;
-  @include positionAbsolute(50%, 20px);
-  transform: translateY(-50%);
-  display: none;
-}
+//   @include RESPONSIVE("768px") {
+//     @include positionAbsolute(50%, 10px);
+//     transform: translateY(-50%);
+//   }
+// }
 
 .btn-time {
   display: block;

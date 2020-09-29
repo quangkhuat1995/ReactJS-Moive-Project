@@ -1,63 +1,30 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { actBuyTicket, actRefreshBuyTicket } from "../Seat/modules/action";
 import { useParams, useHistory } from "react-router-dom";
 import Radio from "./../Radio";
-import { USER_KEY } from "../../constants/config";
+import { MOBILE_MEDIA, USER_KEY } from "../../constants/config";
 import Swal from "sweetalert2";
+import useMedia from "../../Hook/useMedia";
+
+//utils
+import {
+  renderGheDangChon,
+  renderGiaTien,
+  renderTenCumRap,
+} from "../../utils/movies";
 
 function Pay(props) {
   const { danhSachVe, buyTicket, refreshSeatState } = props;
   const { thongTinPhim } = props.bookingMovie;
   const history = useHistory();
   const params = useParams();
-  // console.log(history);
-  // console.log(params);
+  const isMobile = useMedia(MOBILE_MEDIA);
 
-  const layThongTinVe = (type) => {
-    if (danhSachVe && danhSachVe.length > 0) {
-      switch (type) {
-        case "codeGhe":
-          return danhSachVe.map((item) => {
-            return item.codeGhe;
-          });
-        case "giaVe":
-          return danhSachVe.reduce((acc, item) => {
-            return acc + item.giaVe;
-          }, 0);
-
-        default:
-          break;
-      }
-    }
-  };
-  const renderGheDangChon = () => {
-    let dsVe = layThongTinVe("codeGhe");
-    if (dsVe && dsVe.length > 0) {
-      return dsVe.sort().join(", ");
-    } else {
-      return "Vui lòng chọn ghế";
-    }
-  };
-  // console.log(layThongTinVe("giaVe"));
-
-  const renderGiaTien = () => {
-    let giaTien = layThongTinVe("giaVe");
-    if (danhSachVe && danhSachVe.length > 0) {
-      return giaTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    } else {
-      return 0;
-    }
-  };
-
-  const renderTenCumRap = () => {
-    let ten = thongTinPhim.tenCumRap;
-    if (ten.includes("Cineplex")) {
-      return ten.split("Cineplex -");
-    }
-    return ten.split("-");
-  };
+  const tenCumRap = useMemo(() => renderTenCumRap(thongTinPhim), [
+    thongTinPhim,
+  ]);
 
   const handleBuyTicket = (e) => {
     e.persist();
@@ -97,9 +64,10 @@ function Pay(props) {
   return (
     <>
       <div className="pay-wrapper">
+        <div className="header--space" />
         <div className="pay__item--wrapper">
           <div className="total">
-            <span id="totalMoney">{renderGiaTien()} đ</span>
+            <span id="totalMoney">{renderGiaTien(danhSachVe)} đ</span>
           </div>
         </div>
         <div className="pay__item--wrapper">
@@ -120,8 +88,8 @@ function Pay(props) {
           <div className="theater row">
             <div className="col-4">Cụm rạp:</div>
             <div className="col-8 text-right font-weight-bold">
-              <span id="cumrap">{renderTenCumRap()[0]}</span> -
-              <span id="chinhanh">{renderTenCumRap()[1]}</span>
+              <span id="cumrap">{tenCumRap[0]}</span> -
+              <span id="chinhanh">{tenCumRap[1]}</span>
             </div>
           </div>
         </div>
@@ -137,10 +105,10 @@ function Pay(props) {
           <div className="seatchosen row">
             <div className="col-8 myseat">
               {danhSachVe && danhSachVe.length > 0 && <span>Ghế </span>}
-              <span id="myseat">{renderGheDangChon()}</span>
+              <span id="myseat">{renderGheDangChon(danhSachVe)}</span>
             </div>
             <div className="col-4 text-right font-weight-bold" id="demoMoney">
-              {renderGiaTien()} đ
+              {renderGiaTien(danhSachVe)} đ
             </div>
           </div>
         </div>
@@ -164,15 +132,20 @@ function Pay(props) {
           </div>
         </div>
       </div>
-      <div className="confirm__item btnPayMoney--desk">
-        <button
-          className="btn-confirm"
-          onClick={handleBuyTicket}
-          disabled={danhSachVe && danhSachVe.length === 0}
-        >
-          Thanh Toán
-        </button>
-      </div>
+
+      {!isMobile && (
+        <div className="confirm__group">
+          <div className="confirm__item">
+            <button
+              className="btn-confirm"
+              onClick={handleBuyTicket}
+              disabled={danhSachVe && danhSachVe.length === 0}
+            >
+              Thanh Toán
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

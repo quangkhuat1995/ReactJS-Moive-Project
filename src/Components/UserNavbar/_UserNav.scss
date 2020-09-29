@@ -71,6 +71,9 @@
       padding: $sp-20;
       display: block;
       transition: 0.3s ease all;
+      &.currentActive {
+        color: $color-red-primary;
+      }
     }
     .nav-item {
       line-height: 25px;
@@ -222,4 +225,7 @@
       transform: translate(-50%, -50%);
     }
   }
+}
+.currentActive {
+  color: $color-red-primary;
 }

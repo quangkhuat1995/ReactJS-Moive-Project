@@ -2,9 +2,9 @@ import React, { memo } from "react";
 import Countdown, { zeroPad } from "react-countdown";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-// import { TIME_BOOKING } from "../../constants/config";
+import { TIME_BOOKING } from "../../constants/config";
 
-const TIME_BOOKING = 900000000;
+// const TIME_BOOKING = 900000000;
 function TimeWaiting() {
   const history = useHistory();
 

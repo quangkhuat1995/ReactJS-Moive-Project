@@ -36,10 +36,11 @@ const checkPassStartTime = (startTime) => {
   return true;
 };
 
-const renderBtnTime = (listTimes) => {
+const renderBtnTime = (listTimes = []) => {
   if (listTimes && listTimes.length > 0) {
     return listTimes.map((item, index) => {
       const [startTime, endTime] = styleTime(item.ngayChieuGioChieu);
+
       return (
         <LinkButton
           key={item.maLichChieu}

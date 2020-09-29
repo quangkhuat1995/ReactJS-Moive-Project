@@ -34,12 +34,13 @@ const checkPassStartTime = (startTime) => {
   }
   return true;
 };
-const renderBtnTime = (listTimes) => {
+const renderBtnTime = (listTimes = []) => {
   if (listTimes && listTimes.length > 0) {
     // console.log(listTimes);
 
     return listTimes.map((item, index) => {
       const [startTime, endTime] = styleTime(item.ngayChieuGioChieu);
+
       return (
         <LinkButton
           key={item.maLichChieu}
@@ -80,7 +81,7 @@ function ShowList(props) {
 
         return (
           isCumRapShowOnDay && (
-            <div key={cumRap.maCumRap} className="wrapper__collapse">
+            <div key={cumRap.maCumRap} className="wrapper__collapse ">
               <div
                 className="main__collapse"
                 data-toggle="collapse"
@@ -98,7 +99,7 @@ function ShowList(props) {
                   <div className="col-12">2D Digital</div>
                   <div className="col-12">
                     {/* {renderTimeList(cumRap.lichChieuPhim, selectDay)} */}
-                    {renderBtnTime(cumRap.lichChieuPhim)}
+                    {renderBtnTime(cumRap.lichChieuPhim, cumRap)}
                   </div>
                 </div>
               </div>

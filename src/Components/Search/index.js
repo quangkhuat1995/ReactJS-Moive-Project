@@ -62,6 +62,7 @@ const initialState = {
   //router to:
   maLichChieu: "",
 };
+
 //export
 function Search(props) {
   const { listMovie, heThongRapChieu, getThongTinLichChieuPhim } = props;
@@ -75,7 +76,7 @@ function Search(props) {
       listCumRapChieu: getAllListCumRap(heThongRapChieu),
     });
     return () => {
-      //clean up sau khi tìm kiếm
+      //clean up sau khi navigate
       setState({ ...initialState });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
