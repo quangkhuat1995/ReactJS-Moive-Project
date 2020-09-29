@@ -15,3 +15,7 @@
 [0922/203232.367:ERROR:process_info.cc(359)] UncheckedAllocate
 [0922/203405.359:ERROR:process_info.cc(359)] UncheckedAllocate
 [0922/203405.406:ERROR:process_info.cc(359)] UncheckedAllocate
+[0926/024101.110:ERROR:process_info.cc(359)] UncheckedAllocate
+[0926/024113.203:ERROR:process_info.cc(359)] UncheckedAllocate
+[0928/020050.608:ERROR:process_info.cc(359)] UncheckedAllocate
+[0928/020050.611:ERROR:crashpad_client_win.cc(513)] CreateProcess: The paging file is too small for this operation to complete. (0x5AF)

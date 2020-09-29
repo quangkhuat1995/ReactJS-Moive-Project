@@ -63,7 +63,12 @@ function UserNavbar() {
         <div className="header-wrapper">
           <div className="nav-bar container-fluid">
             <Link to="/" className="navbar-brand">
-              <img className="logo-img" src={logo} alt="logo" />
+              <img
+                className="logo-img"
+                src={logo}
+                alt="logo"
+                onClick={() => window.scrollTo(0, 0)}
+              />
             </Link>
             <MainNav customClass="header__mid" />
             <nav className="nav-group">

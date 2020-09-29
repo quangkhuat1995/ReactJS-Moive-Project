@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import ModalPopup from "../../../Components/ModalPopup";
 import News from "../../../Components/News";
@@ -14,18 +14,31 @@ import PropTypes from "prop-types";
 import Ads from "../../../Components/Ads";
 import useMedia from "../../../Hook/useMedia";
 import useTitle from "../../../Hook/useTitle";
+import {
+  actFetchListHeThongRap,
+  actFetchThongTinLichChieu,
+} from "../../../Components/TheaterList/modules/action";
 
 function HomePage(props) {
-  const { loadingListMovie, fetchListMovie, listMovie } = props;
+  const {
+    loadingTheater,
+    loadingListMovie,
+
+    fetchListMovie,
+    fetchListHeThongRap,
+    fetchListHeThongLichChieu,
+  } = props;
   const isDesktop = useMedia("(min-width:992px)");
   useTitle("Trang chủ");
-  // // console.log(props);
+
   useEffect(() => {
     fetchListMovie();
+    fetchListHeThongRap();
+    fetchListHeThongLichChieu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loadingListMovie) return <Loading />;
+  if (loadingTheater || loadingListMovie) return <Loading />;
 
   return (
     <>
@@ -34,7 +47,7 @@ function HomePage(props) {
 
       {/* <Search /> */}
 
-      <ShowTime listMovie={listMovie} />
+      <ShowTime />
 
       <SeperateSection />
       <TheaterList />
@@ -56,9 +69,8 @@ HomePage.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    listMovie: state.listMovieReducer.listMovie,
     loadingListMovie: state.listMovieReducer.loading,
-    // loadingListTheater: state.listMovieReducer.loading,
+    loadingTheater: state.listHeThongRapReducer.loading,
   };
 };
 
@@ -66,6 +78,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchListMovie: () => {
       dispatch(actFetchListMoive());
+    },
+    fetchListHeThongRap: () => {
+      dispatch(actFetchListHeThongRap());
+    },
+    fetchListHeThongLichChieu: () => {
+      dispatch(actFetchThongTinLichChieu());
     },
   };
 };

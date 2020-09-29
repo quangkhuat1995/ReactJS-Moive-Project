@@ -1,50 +1,17 @@
 import React, { memo } from "react";
+import NavigationTab from "../NavigationTab";
 
+const items = {
+  news: "Điện ảnh 24h",
+  review: "Review",
+  km: "Khuyến mãi",
+};
 function News() {
   return (
     <section className="newsblock" id="tintuc">
       <div className="myContainer">
-        <ul className="nav nav-tabs navigation__tab" role="tablist">
-          <li className="nav-item" role="presentation">
-            <a
-              className="nav-link active"
-              id="news-tab"
-              data-toggle="tab"
-              href="#news"
-              role="tab"
-              aria-controls="news"
-              aria-selected="true"
-            >
-              Điện ảnh 24h
-            </a>
-          </li>
-          <li className="nav-item" role="presentation">
-            <a
-              className="nav-link"
-              id="review-tab"
-              data-toggle="tab"
-              href="#review"
-              role="tab"
-              aria-controls="review"
-              aria-selected="false"
-            >
-              Review
-            </a>
-          </li>
-          <li className="nav-item" role="presentation">
-            <a
-              className="nav-link"
-              id="km-tab"
-              data-toggle="tab"
-              href="#km"
-              role="tab"
-              aria-controls="km"
-              aria-selected="false"
-            >
-              Khuyến mãi
-            </a>
-          </li>
-        </ul>
+        <NavigationTab items={items} />
+
         <div className="tab-content newsblock__content">
           {/* NEWS PANEL */}
           <div

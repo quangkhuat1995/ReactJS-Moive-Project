@@ -6,6 +6,7 @@ import {
 } from "./constant";
 import usersApi from "../../../../api/usersApi";
 import { USER_KEY } from "../../../../constants/config";
+import Swal from "sweetalert2";
 
 const actLoginRequest = () => {
   return {
@@ -25,10 +26,27 @@ const actLoginFailed = (error) => {
     error,
   };
 };
-const actLogout = () => {
-  return {
-    type: LOG_OUT,
+const actLogout = (e) => {
+  return (dispatch) => {
+    e.persist();
+    Swal.fire({
+      title: "Bạn có chắc muốn đăng xuất?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Đăng xuất!",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire("Đã đăng xuất", "Cám ơn bạn đã sử dụng Tix.", "success");
+        dispatch({ type: LOG_OUT });
+      } else {
+        e.preventDefault();
+      }
+    });
   };
+  // return {
+  //   type: LOG_OUT,
+  // };
 };
 const findPrevPathname = (history = {}) => {
   if (history.location?.state?.from) {

@@ -1,12 +1,13 @@
 import React, { useEffect, memo, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 //Components
+import { HashLink as Link } from "react-router-hash-link";
+
 import LoggedUI from "./LoggedUI";
 import UnLoggedUI from "./UnLoggedUI";
 import { USER_KEY } from "../../constants/config";
 import { useSelector } from "react-redux";
-// import avatar from "./../../images/avatar.png";
 
 function MainNav(props) {
   const isLoggedIn = useSelector((state) => state.userLoginReducer.isLoggedIn);
@@ -26,6 +27,20 @@ function MainNav(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { hash } = useLocation();
+  const location = useLocation();
+  console.log(location);
+  const [isHashLink, setIsHashLink] = useState(false);
+  useEffect(() => {
+    if (hash.includes("#")) {
+      setIsHashLink(true);
+    } else {
+      setIsHashLink(false);
+    }
+  }, [hash]);
+
+  console.log(isHashLink);
+
   return (
     <ul
       onClick={handleClose ? handleClose : null}
@@ -33,22 +48,22 @@ function MainNav(props) {
     >
       {isLoggedIn ? <LoggedUI hoTen={hoTen} /> : <UnLoggedUI />}
       <li className="nav-item hideOnDesk">
-        <Link className="nav-link" to="/">
+        <Link className="nav-link" to="/#lichchieu" replace={isHashLink}>
           Trang chủ
         </Link>
       </li>
       <li className="nav-item hideOnDesk">
-        <Link className="nav-link" to="/">
+        <Link className="nav-link" to="/#theaterList" replace={isHashLink}>
           Lịch Chiếu
         </Link>
       </li>
       <li className="nav-item hideOnDesk">
-        <Link className="nav-link" to="/">
+        <Link className="nav-link" to="/#tintuc" replace={isHashLink}>
           Tin Tức
         </Link>
       </li>
       <li className="nav-item hideOnDesk">
-        <Link className="nav-link" to="/">
+        <Link className="nav-link" to="/#ungdung" replace={isHashLink}>
           Ứng dụng
         </Link>
       </li>

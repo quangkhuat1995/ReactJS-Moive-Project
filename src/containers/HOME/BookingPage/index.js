@@ -9,6 +9,8 @@ import SeatRow from "../../../Components/SeatRow";
 import TimeWaiting from "../../../Components/TimeWaiting";
 import useSetBackground from "../../../Hook/useSetBackground";
 import useTitle from "../../../Hook/useTitle";
+// import BookingProgress from "./BookingProgress";
+// import ConfirmStep from "./ConfirmStep";
 import { actFetchBookingMoviePage } from "./modules/actions";
 
 function BookingPage(props) {
@@ -25,6 +27,7 @@ function BookingPage(props) {
   if (loading) return <Loading />;
   return (
     <>
+      {/* <BookingProgress /> */}
       <section className="main-wrapper row">
         {/* BOOKING SEAT */}
         <main className=" seat__section col-12 col-md-9">
@@ -56,6 +59,7 @@ function BookingPage(props) {
           <Pay />
         </aside>
       </section>
+      {/* <ConfirmStep /> */}
     </>
   );
 }

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import useMedia from "../../Hook/useMedia";
 import NavTabLogo from "../NavTabLogo";
 import TabPanel from "../TabPanel";
-import Loading from "./../Loading";
-import {
-  actFetchListHeThongRap,
-  actFetchThongTinLichChieu,
-} from "./modules/action";
+
+// import {
+//   actFetchListHeThongRap,
+//   actFetchThongTinLichChieu,
+// } from "./modules/action";
 import TheaterPanelItems from "./TheaterPanelItems";
 import GroupMoviesInCinema from "./GroupMoviesInCinema";
 import { DESKTOP_MEDIA } from "../../constants/config";
@@ -34,16 +34,12 @@ const setTimeClick = () => {
 };
 
 function TheaterList(props) {
-  const {
-    fetchListHeThongRap,
-    fetchListHeThongLichChieu,
-    listHeThongLichChieu,
-  } = props;
-  useEffect(() => {
-    fetchListHeThongRap();
-    fetchListHeThongLichChieu();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { listHeThongLichChieu } = props;
+  // useEffect(() => {
+  //   fetchListHeThongRap();
+  //   fetchListHeThongLichChieu();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     // khi bam vao logo thi se tu dong (wait 0.25s) bam vao link dau tien co .active
@@ -61,9 +57,9 @@ function TheaterList(props) {
   });
 
   const isDesktop = useMedia(DESKTOP_MEDIA);
-  if (props.loading) return <Loading />;
+
   return (
-    <section className="theaterList">
+    <section className="theaterList" id="theaterList">
       <div className="myContainer">
         <div className="row flex-md-row flex-column">
           {/*  */}
@@ -136,18 +132,8 @@ function TheaterList(props) {
 }
 const mapStateToProps = (state) => {
   return {
-    loading: state.listHeThongRapReducer.loading,
     listHeThongLichChieu: state.listHeThongRapReducer.listHeThongLichChieu,
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchListHeThongRap: () => {
-      dispatch(actFetchListHeThongRap());
-    },
-    fetchListHeThongLichChieu: () => {
-      dispatch(actFetchThongTinLichChieu());
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(TheaterList);
+
+export default connect(mapStateToProps, null)(TheaterList);

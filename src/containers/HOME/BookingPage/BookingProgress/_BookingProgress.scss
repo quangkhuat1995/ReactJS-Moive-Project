@@ -1,0 +1,132 @@
+$header--height: 60px;
+#process-section {
+  //@include childGrid(1, 4, 1, 2);
+  @include displayFlex(center, center);
+  background-color: $color-white-0;
+  color: $color-black-1;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $header--height;
+
+  z-index: 100; //z-index của _pay phải nằm giữa (98)
+
+  @include RESPONSIVE("768px") {
+    // grid-area: process;
+    width: 75%;
+    // position: sticky;
+    position: fixed;
+    z-index: 98;
+  }
+  #btnAction {
+    @include positionAbsolute(50%, 20px);
+    transform: translateY(-50%);
+    width: 50px;
+    // height: 50px;
+    text-align: center;
+    cursor: pointer;
+    font-size: $fs-18;
+
+    // @include RESPONSIVE("768px") {
+    //   @include positionAbsolute(50%, 20px);
+    //   transform: translateY(-50%);
+    // }
+  }
+
+  // #btnBack {
+  //   @extend #btnAction;
+  //   width: 20px;
+  //   @include positionAbsolute(50%, 20px);
+  //   transform: translateY(-50%);
+  //   display: none;
+  // }
+
+  .process__list {
+    list-style: none;
+    margin: 0;
+    margin-right: 60px;
+    .process__item {
+      line-height: $header--height;
+      padding: 0;
+      text-transform: uppercase;
+      border-top: 1px solid transparent;
+      @include styleText($color-black-1, $fs-12);
+      font-weight: 700;
+      display: none;
+      &.active {
+        display: inline-block;
+      }
+
+      &.current-process {
+        color: $color-red-primary;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          background: $color-red-primary;
+          height: 2px;
+          width: 100%;
+        }
+      }
+
+      span {
+        font-size: $fs-18;
+        margin-right: $sp-5;
+      }
+
+      @include RESPONSIVE("768px") {
+        display: inline-block;
+        padding: 0 $sp-35;
+        &.current-process::before {
+          width: calc(100% - #{$sp-35} * 2);
+        }
+      }
+    }
+  }
+
+  .process__account {
+    @include positionAbsolute(50%, false, false, $sp-35);
+    transform: translateY(-50%);
+    cursor: pointer;
+    img {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: $sp-5;
+    }
+    .hoTen {
+      text-transform: capitalize;
+    }
+    &:hover > .process__account--logout {
+      display: block;
+    }
+    &--logout {
+      display: none;
+
+      @include positionAbsolute(false, 30px, 0);
+      transform: translateY(90%);
+      width: calc(100% - 30px);
+
+      @include styleText($color-white-0, $fs-14);
+      text-align: center;
+      background-color: $color-black-0;
+      border-radius: $border-radius;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-black-2;
+      }
+    }
+  }
+}
+
+.header--space {
+  height: $header--height;
+  @include RESPONSIVE("768px") {
+    display: none;
+  }
+}

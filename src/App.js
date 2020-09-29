@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { HomeRoutes, AdminRoutes } from "./routes";
@@ -10,7 +10,8 @@ import Auth from "./containers/ADMIN/Auth";
 import SignUpPage from "./containers/HOME/SignUpPage";
 import LogInPage from "./containers/HOME/LoginPage";
 import PrivateRoute from "./Components/PrivateRoute";
-import BookingPage from "./containers/HOME/BookingPage";
+import BookingPage from "./containers/HOME/BookingPage/testIndex";
+import ScrollToTop from "./Components/ScrollToTop";
 function App() {
   const renderRoutesHome = (routes) => {
     return routes.map((route, index) => {
@@ -40,6 +41,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Switch>
         {renderRoutesHome(HomeRoutes)}
         {renderRoutesAdmin(AdminRoutes)}
