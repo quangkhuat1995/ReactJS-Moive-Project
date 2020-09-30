@@ -1,7 +1,11 @@
 import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import useMedia from "../../../../Hook/useMedia";
-import { DESKTOP_MEDIA, USER_KEY } from "../../../../constants/config";
+import {
+  DESKTOP_MEDIA,
+  FAKE_IMG,
+  USER_KEY,
+} from "../../../../constants/config";
 import { Link } from "react-router-dom";
 import { BookingPageContext } from "./../testIndex";
 import { connect } from "react-redux";
@@ -103,7 +107,7 @@ function BookingProgress(props) {
       </ul>
 
       <div className="process__account">
-        <img src={`https://loremflickr.com/320/240`} alt="avatar" />
+        <img src={FAKE_IMG} alt="avatar" />
         <span className="hoTen">{hoTen}</span>
         <div className="process__account--logout" onClick={(e) => actLogout(e)}>
           Đăng xuất

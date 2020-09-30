@@ -39,3 +39,10 @@
 .stack > * + * {
   margin-top: $sp-10;
 }
+
+.avatar-img {
+  display: inline-block;
+  margin-right: 10px;
+  @include roundElement(30px, 30px, 50%);
+  // box-sizing: content-box;
+}

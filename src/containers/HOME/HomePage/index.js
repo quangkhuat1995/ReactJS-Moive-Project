@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import ModalPopup from "../../../Components/ModalPopup";
 import News from "../../../Components/News";
@@ -18,8 +18,15 @@ import {
   actFetchListHeThongRap,
   actFetchThongTinLichChieu,
 } from "../../../Components/TheaterList/modules/action";
+// import useFetchData from "../../../Hook/useFetchData";
+// import newsApi from "../../../api/newsApi";
 
 function HomePage(props) {
+  useTitle("Trang chủ");
+  const isDesktop = useMedia("(min-width:992px)");
+  // const news= useFetchData(newsApi.getNewsPost,'news')
+  // const reviews = useFetchData(newsApi.getReviewPost,'post') ;
+
   const {
     loadingTheater,
     loadingListMovie,
@@ -28,8 +35,6 @@ function HomePage(props) {
     fetchListHeThongRap,
     fetchListHeThongLichChieu,
   } = props;
-  const isDesktop = useMedia("(min-width:992px)");
-  useTitle("Trang chủ");
 
   useEffect(() => {
     fetchListMovie();

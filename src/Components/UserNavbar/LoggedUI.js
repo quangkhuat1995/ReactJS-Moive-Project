@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actLogout } from "../../containers/HOME/LoginPage/modules/action";
+import { FAKE_IMG } from "../../constants/config";
 
 function LoggedUI(props) {
   // const user = localStorage.getItem(USER_KEY);
@@ -12,11 +13,7 @@ function LoggedUI(props) {
     <>
       <li className="nav-item nav-item--login">
         <span className="nav-link">
-          <img
-            className="avatar-img"
-            src={"https://loremflickr.com/320/240"}
-            alt="avatar"
-          />
+          <img className="avatar-img" src={FAKE_IMG} alt="avatar" />
           {hoTen}
         </span>
       </li>
