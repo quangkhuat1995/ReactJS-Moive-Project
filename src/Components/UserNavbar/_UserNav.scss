@@ -20,13 +20,6 @@
     .logo-img {
       width: 50px;
     }
-    .avatar-img {
-      // @include round(....)
-      display: inline-block;
-      margin-right: 10px;
-      @include roundElement(30px, 30px, 50%);
-      // box-sizing: content-box;
-    }
   }
 }
 

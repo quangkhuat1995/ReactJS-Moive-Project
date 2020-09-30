@@ -9,3 +9,5 @@ export const USER_KEY = "user";
 
 export const MOBILE_MEDIA = "(max-width:767px)";
 export const DESKTOP_MEDIA = "(min-width:767px)";
+
+export const FAKE_IMG = "https://loremflickr.com/320/240";

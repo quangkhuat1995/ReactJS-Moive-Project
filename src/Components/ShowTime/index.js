@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { forwardRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import NavigationTab from "../NavigationTab";
 import TabShowOrComing from "./TabShowOrComing";
@@ -25,8 +25,7 @@ function ShowTime(props) {
   // const items = useMemo(() => items, [])
   const movieArray = chunkArray(myList, 24); // [ [24 items] , [20 items] ]
   // console.log(movieArray);
-  console.log(props);
-  // console.log(targetRef);
+  // console.log(props);
   return (
     <section className="showtime" id="lichchieu">
       <div className="myContainer">

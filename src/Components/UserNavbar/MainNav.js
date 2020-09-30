@@ -1,9 +1,9 @@
 import React, { useEffect, memo, useState } from "react";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
-//Components
 import { HashLink as Link } from "react-router-hash-link";
 
+//Components
 import LoggedUI from "./LoggedUI";
 import UnLoggedUI from "./UnLoggedUI";
 import { USER_KEY } from "../../constants/config";
@@ -14,9 +14,7 @@ function MainNav(props) {
 
   // console.log(isLoggedIn);
   const { customClass, isOpen, handleClose } = props; //nhận từ cha
-  // const { isLoggedIn } = props; //store
-  // console.log(props);
-  // const [isLoggedin, setIsLoggedin] = useState(false);
+
   const [hoTen, setHoTen] = useState("");
   useEffect(() => {
     if (isLoggedIn) {
@@ -28,8 +26,6 @@ function MainNav(props) {
   }, []);
 
   const { hash } = useLocation();
-  const location = useLocation();
-  console.log(location);
   const [isHashLink, setIsHashLink] = useState(false);
   useEffect(() => {
     if (hash.includes("#")) {
@@ -38,8 +34,6 @@ function MainNav(props) {
       setIsHashLink(false);
     }
   }, [hash]);
-
-  console.log(isHashLink);
 
   return (
     <ul
