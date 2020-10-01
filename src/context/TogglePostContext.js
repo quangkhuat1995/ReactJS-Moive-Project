@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import { chunkArray } from "../../utils/movies";
+import { chunkArray } from "../utils/movies";
 
 const TogglePostContext = createContext();
 // const ToggleDispatchContext = createContext();
@@ -29,6 +29,7 @@ export function TogglePostProvider(props) {
     if (indexShow < oriPosts.length - 1) {
       setIndexShow((idx) => idx + 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [indexShow]);
 
   const showLess = useCallback(() => {

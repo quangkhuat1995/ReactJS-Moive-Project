@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import { useTogglePost } from "./newsContext";
-// import { useToggleContext } from "../../Hook/useToggleShow";
+import { useTogglePost } from "../../context/TogglePostContext";
+
 import NewsItem from "./NewsItem";
 function NewsGroup() {
   // const context = useContext(Context);

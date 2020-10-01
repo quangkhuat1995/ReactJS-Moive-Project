@@ -1,7 +1,5 @@
 import React, { useMemo } from "react";
-import { useTogglePost } from "./newsContext";
-
-// import { useToggleContext } from "../../Hook/useToggleShow";
+import { useTogglePost } from "../../context/TogglePostContext";
 
 function BtnViewMore() {
   const { oriPosts, indexShow, showMore, showLess } = useTogglePost();
@@ -36,7 +34,7 @@ function BtnViewMore() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [indexShow]);
 
-  return <div className="button__container">{renderBtn}</div>;
+  return <div className="buttonViewMore__container">{renderBtn}</div>;
 }
 
 export default BtnViewMore;

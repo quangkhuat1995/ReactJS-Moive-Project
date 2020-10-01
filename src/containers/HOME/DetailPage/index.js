@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Carousel from "../../../Components/Carousel";
 import CarouselItem from "../../../Components/Carousel/CarouselItem";
 import CirclePoint from "../../../Components/CirclePoint";
+import DiscussSection from "../../../Components/DiscussSection";
 import Loading from "../../../Components/Loading";
 import ModalPopup from "../../../Components/ModalPopup";
 import MovieInfo from "../../../Components/MovieInfo";
@@ -127,7 +128,7 @@ function DetailPage(props) {
               role="tabpanel"
               aria-labelledby="danhGia-tab"
             >
-              {/* <ReviewSection /> */}...
+              <DiscussSection />
             </div>
           </div>
         </div>

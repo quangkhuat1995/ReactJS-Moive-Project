@@ -2,40 +2,64 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FAKE_IMG } from "../../constants/config";
+import Swal from "sweetalert2";
+import { useHistory, useLocation } from "react-router-dom";
 const avatar = "/images/avatar.png";
 
 function DiscussSection(props) {
+  const history = useHistory();
+  const location = useLocation();
   const { isLoggedIn } = props;
+  const handleClick = (e) => {
+    e.persist();
+    if (!isLoggedIn) {
+      Swal.fire({
+        title: "Bạn cần đăng nhập trước",
+        text:
+          "Hãy đăng nhập và cho mọi người biết ý kiến của bạn về bộ phim này!",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonText: "Đăng nhập!",
+        cancelButtonText: "Hủy",
+      }).then((res) => {
+        if (res.value) {
+          history.push("/login", { from: location });
+        } else {
+          e.preventDefault();
+        }
+      });
+    } else {
+      return;
+    }
+  };
   return (
-    <div class="review">
+    <section className="discuss myContainer">
       <div
-        class="review-click p-3 mb-3"
+        className="discuss__click p-3 mb-3"
         data-toggle="modal"
-        data-target="#evaluate"
+        data-target="#movieTrailer"
       >
-        <div class="row">
-          <div class="col-md-1">
-            <div class="avatar">
-              <img
-                class="avatar-img"
-                src={!isLoggedIn ? avatar : FAKE_IMG}
-                alt="avatar"
-              />
-            </div>
+        <div className="row discuss__click--container">
+          <div className="col-1 text-center">
+            <img
+              className="avatar-img"
+              src={isLoggedIn ? FAKE_IMG : avatar}
+              alt="avatar"
+            />
           </div>
-          <div class="col-md-8 pl-1">
-            <p class="thinking">Bạn nghĩ gì về phim này?</p>
+          <div className="col-7 pl-1">
+            <p className="thinking">Bạn nghĩ gì về phim này?</p>
           </div>
-          <div class="col-md-3 text-right">
-            <i class="fa fa-star icon-star"></i>
-            <i class="fa fa-star icon-star"></i>
-            <i class="fa fa-star icon-star"></i>
-            <i class="fa fa-star icon-star"></i>
-            <i class="fa fa-star icon-star"></i>
+          <div className="col-4 text-right">
+            <i className="fa fa-star icon-star" />
+            <i className="fa fa-star icon-star" />
+            <i className="fa fa-star icon-star" />
+            <i className="fa fa-star icon-star" />
+            <i className="fa fa-star icon-star" />
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

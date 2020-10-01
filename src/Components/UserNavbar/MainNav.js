@@ -43,12 +43,12 @@ function MainNav(props) {
       {isLoggedIn ? <LoggedUI hoTen={hoTen} /> : <UnLoggedUI />}
       <li className="nav-item hideOnDesk">
         <Link className="nav-link" to="/#lichchieu" replace={isHashLink}>
-          Trang chủ
+          Lịch Chiếu
         </Link>
       </li>
       <li className="nav-item hideOnDesk">
         <Link className="nav-link" to="/#theaterList" replace={isHashLink}>
-          Lịch Chiếu
+          Cụm Rạp
         </Link>
       </li>
       <li className="nav-item hideOnDesk">
