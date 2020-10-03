@@ -16,7 +16,7 @@ const initialState = {
   //avarate point;
   totalPoint: 0,
   //number of people comment
-  people: 0,
+  people: 1, //tránh chia 0
 };
 
 const reviewsReducer = (state = initialState, action) => {
