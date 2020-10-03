@@ -12,12 +12,13 @@ const LinkButton = (props) => {
     onClick,
     ...rest
   } = props;
+
   return (
     <button
-      {...rest} // `children` is just another prop!
+      {...rest} // `children`, disable, style, ...etc
       onClick={(event) => {
         onClick && onClick(event);
-        history.push(to);
+        history.push(to, { from: location });
       }}
     />
   );

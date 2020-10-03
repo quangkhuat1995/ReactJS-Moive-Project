@@ -22,7 +22,6 @@
     "react-router-hash-link": "^2.1.0",
     "react-scripts": "3.4.1",
     "react-slick": "^0.27.1",
-    "react-toastify": "^6.0.8",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",

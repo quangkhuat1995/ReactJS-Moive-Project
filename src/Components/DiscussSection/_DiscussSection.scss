@@ -1,0 +1,67 @@
+.discuss {
+  width: 70%;
+  margin-top: 30px;
+  background: $color-dark-2;
+  padding-bottom: 20px;
+  .discuss__click {
+    line-height: 42px;
+    cursor: pointer;
+  }
+  .discuss__item {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    background-color: $color-white-0;
+    padding: $sp-rem;
+    margin-bottom: $sp-rem;
+
+    &--header > * {
+      padding: 0;
+    }
+    .thinking {
+      @include styleText($color-black-1, clamp(13px, 2.5vw, 16px));
+      margin: 0;
+    }
+    .time__post {
+      margin: 0;
+      @include styleText($color-black-0, clamp(12px, 2.5vw, 14px));
+    }
+
+    .star__group {
+      &--comment {
+        width: max-content;
+        margin-left: auto;
+        text-align: center;
+        .danhGia {
+          @include styleText($color-choosing, clamp(13px, 2.5vw, 16px));
+        }
+        .star {
+          @include displayFlex(flex-end, center);
+          // margin-left: auto;
+          img {
+            width: 10px;
+          }
+        }
+      }
+
+      &--default {
+        .icon-star {
+          color: rgba(220, 53, 69, 0.75);
+          font-size: clamp(15px, 3vw, 21px);
+        }
+      }
+    }
+
+    &--body {
+      padding: $sp-rem 0;
+      margin-top: 10px;
+    }
+
+    .line {
+      height: 1px;
+      width: 100%;
+      background-color: gray;
+      border-radius: 15px;
+      margin: 10px 0;
+    }
+  }
+}

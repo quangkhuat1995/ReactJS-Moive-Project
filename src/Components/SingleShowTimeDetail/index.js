@@ -12,7 +12,7 @@ function SingleShowTimeDetail(props) {
 
   return (
     <section className="detail">
-      <div className="myContainer detail-wrapper">
+      <div className="detail-wrapper">
         {/* LIST OF DAY */}
 
         <ListOfDay />

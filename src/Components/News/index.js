@@ -1,11 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import newsApi from "../../api/newsApi";
+import { TogglePostProvider } from "../../context/TogglePostContext";
 import useFetchData from "../../Hook/useFetchData";
-// import ToggleShowContext from "../../Hook/useToggleShow";
 
 import NavigationTab from "../NavigationTab";
-import BtnViewMore from "./BtnViewMore";
-import { TogglePostProvider } from "./newsContext";
+import BtnViewMore from "./../BtnViewMore";
 import NewsGroup from "./NewsGroup";
 
 const items = {
@@ -15,12 +14,8 @@ const items = {
 };
 
 function News() {
-  // const reviews = useFetchData(newsApi.getReviewPost);
-  // const [news, reviews] = Promise.all([newscall(), reviewscall()]);
   const news = useFetchData(newsApi.getNewsPost, "posts");
   const reviews = useFetchData(newsApi.getReviewPost, "posts");
-  // console.log("news", news);
-  // console.log("review", reviews);
 
   return (
     <section className="newsblock" id="tintuc">
@@ -40,7 +35,6 @@ function News() {
             {news.posts && news.posts.length > 0 && (
               <TogglePostProvider initialPosts={news.posts}>
                 <NewsGroup />
-                {/* Button read more NEWS */}
 
                 <BtnViewMore />
               </TogglePostProvider>
@@ -73,77 +67,75 @@ function News() {
             {/* km item 1 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km1.png" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km1.png" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">CGV VÉ CHỈ 79.000Đ CẢ TUẦN!</a>
+                  <span>CGV VÉ CHỈ 79.000Đ CẢ TUẦN!</span>
                 </h3>
                 <p className="item__info--detail">
                   Tận hưởng Ưu Đãi lên đến 3 VÉ CGV mỗi tuần chỉ với GIÁ
                   79.000Đ/VÉ khi trên TĨ và thanh toán bằng ZaloPay.
                 </p>
               </div>
-              <div className="item__interact">
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/like.png" alt="tin tuc" />
+              <div className="interact__wrapper">
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/like.png" alt="khuyenmai" />
                     <span className="like__num">0</span>
-                  </a>
+                  </span>
                 </div>
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/comment.png" alt="tin tuc" />
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/comment.png" alt="khuyenmai" />
                     <span className="comment__num">0</span>
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
             {/* km item 2 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km2.png" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km2.png" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">BHD STẢ VÉ CHỈ 59.000Đ CẢ TUẦN!</a>
+                  <span>BHD STẢ VÉ CHỈ 59.000Đ CẢ TUẦN!</span>
                 </h3>
                 <p className="item__info--detail">
                   Tận hưởng Ưu Đãi lên đến 3 VÉ BHD Star mỗi tuần chỉ với giá
                   59k/vé khi mua vé trên TIX và thanh toán bằng ZaloPay.
                 </p>
               </div>
-              <div className="item__interact">
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/like.png" alt="tin tuc" />
+              <div className="interact__wrapper">
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/like.png" alt="khuyenmai" />
                     <span className="like__num">0</span>
-                  </a>
+                  </span>
                 </div>
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/comment.png" alt="tin tuc" />
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/comment.png" alt="khuyenmai" />
                     <span className="comment__num">0</span>
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
             {/* km item 3 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km3.png" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km3.png" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">
-                    Beta Cineplex trở lại với hàng loạt ưu đãi lớn
-                  </a>
+                  <span>Beta Cineplex trở lại với hàng loạt ưu đãi lớn</span>
                 </h3>
                 <p className="item__info--detail">
                   Từ thứ 7 tuần này (9/5), toàn bộ các rạp Beta Cinemas trên
@@ -152,115 +144,115 @@ function News() {
                   đây.
                 </p>
               </div>
-              <div className="item__interact">
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/like.png" alt="tin tuc" />
+              <div className="interact__wrapper">
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/like.png" alt="khuyenmai" />
                     <span className="like__num">0</span>
-                  </a>
+                  </span>
                 </div>
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/comment.png" alt="tin tuc" />
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/comment.png" alt="khuyenmai" />
                     <span className="comment__num">0</span>
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
             {/* km item 4 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km4.jpg" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km4.jpg" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">CỰC NÓNG!!! GIẢM 50% KHI MUA 2 VÉ</a>
+                  <span>CỰC NÓNG!!! GIẢM 50% KHI MUA 2 VÉ</span>
                 </h3>
                 <p className="item__info--detail">
                   ZaloPay mang đến ưu đãi khủng cho lần đầu thanh toán. Mở TIX
                   đặt vé ngay thôi!
                 </p>
               </div>
-              <div className="item__interact">
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/like.png" alt="tin tuc" />
+              <div className="interact__wrapper">
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/like.png" alt="khuyenmai" />
                     <span className="like__num">0</span>
-                  </a>
+                  </span>
                 </div>
-                <div className="item__interact--detail">
-                  <a href="#!">
-                    <img src="/images/comment.png" alt="tin tuc" />
+                <div className="interact__item">
+                  <span>
+                    <img src="/images/comment.png" alt="khuyenmai" />
                     <span className="comment__num">0</span>
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
             {/* km item 5 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km5.jpg" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km5.jpg" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">
+                  <span>
                     [123Phim] Thứ 6 Không Đen Tối - Ưu đãi huỷ diệt 11k/vé Anh
                     Trai Yêu Quái
-                  </a>
+                  </span>
                 </h3>
               </div>
             </div>
             {/* km item 6 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km6.jpg" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km6.jpg" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">
+                  <span>
                     [123Phim] NHẬP MÃ 'PSM30K' - Giảm ngay 30k khi đặt vé Pháp
                     Sư Mù: Ai Chết Giơ Tay
-                  </a>
+                  </span>
                 </h3>
               </div>
             </div>
             {/* km item 7 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km7.jpg" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km7.jpg" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">[Mega GS] Một đoá hoa thay ngàn lời yêu</a>
+                  <span>[Mega GS] Một đoá hoa thay ngàn lời yêu</span>
                 </h3>
               </div>
             </div>
             {/* km item 8 */}
             <div className="newsblock__item">
               <div className="item__img">
-                <a href="#!">
-                  <img src="/images/km8.jpg" alt="tin tuc" />
-                </a>
+                <span>
+                  <img src="/images/km8.jpg" alt="khuyenmai" />
+                </span>
               </div>
               <div className="item__info">
                 <h3 className="item__info--title">
-                  <a href="#!">
+                  <span>
                     [123Phim] NHẬP MÃ 'BKT' - Giảm ngay 20k khi đặt vé Bắc Kim
                     Thang
-                  </a>
+                  </span>
                 </h3>
               </div>
             </div>
             {/* Button read more KHUYEN MAI */}
-            <div className="button__container">
+            <div className="buttonViewMore__container">
               <button className="btnViewMore">XEM THÊM</button>
             </div>
           </div>
@@ -269,4 +261,4 @@ function News() {
     </section>
   );
 }
-export default News;
+export default memo(News);

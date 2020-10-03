@@ -42,6 +42,8 @@
 @import "./../Components/TheaterList/TheaterList";
 // @import "./Layout/newsblock";
 @import "./../Components/News/News";
+@import "./../Components/Interact/Interact";
+@import "./../Components/BtnViewMore/BtnViewMore";
 // @import "./Layout/ads";
 @import "./../Components/Ads/Ads";
 // @import "./Layout/footer";
@@ -54,6 +56,7 @@
 @import "./Layout/main-wrapper";
 // @import "./Layout/detailShowList";
 @import "./../Components/SingleShowTimeDetail/SingleShowTimeDetail";
+@import "./../Components/DiscussSection/DiscussSection";
 
 @import "./../containers/HOME/BookingPage/BookingPage";
 @import "./../containers/HOME/BookingPage/BookingProgress/BookingProgress";

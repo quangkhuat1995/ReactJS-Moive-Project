@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import WithDetailMovieStyle from "../../HOC/withDetailMovieStyle";
 
 const renderStyleBar = (danhGia) => {
@@ -43,20 +44,31 @@ const renderStyleBar = (danhGia) => {
   };
 };
 function CirclePoint(props) {
+  const people = useSelector((state) => state.reviewsReducer.people);
+  const totalPoint = useSelector((state) => state.reviewsReducer.totalPoint);
+
   const { movie } = props;
   const danhGia = movie.danhGia;
-  const { stylePoint, renderStar } = props;
+  const { renderStar } = props;
+
+  const avaratePts =
+    (parseInt(totalPoint) + parseInt(danhGia)) / parseInt(people);
+
   return (
     <>
       <div className="circlePercent">
         <div className="circleBorder"></div>
         <div className="point-group">
-          <div className="bar" id="bar" style={renderStyleBar(danhGia)}></div>
+          <div
+            className="bar"
+            id="bar"
+            style={renderStyleBar(avaratePts)}
+          ></div>
         </div>
-        <span className="point">{stylePoint(danhGia)}</span>
+        <span className="point">{avaratePts.toFixed(1)}</span>
       </div>
-      <div className="star">{renderStar}</div>
-      <p className="danhGia">188 người đánh giá</p>
+      <div className="star">{renderStar(avaratePts)}</div>
+      <p className="danhGia">{people} người đánh giá</p>
     </>
   );
 }

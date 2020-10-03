@@ -29,7 +29,7 @@ function SingleMovieItem(props) {
         </p> */}
       <div className="showing__point">
         <span>{stylePoint(movie.danhGia)}</span>
-        <div className="star">{renderStar}</div>
+        <div className="star">{renderStar(movie.danhGia)}</div>
       </div>
     </div>
   );

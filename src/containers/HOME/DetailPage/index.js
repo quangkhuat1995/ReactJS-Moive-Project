@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import Carousel from "../../../Components/Carousel";
 import CarouselItem from "../../../Components/Carousel/CarouselItem";
 import CirclePoint from "../../../Components/CirclePoint";
+import DiscussSection from "../../../Components/DiscussSection";
+import { actGetReviews } from "../../../Components/DiscussSection/modules/action";
 import Loading from "../../../Components/Loading";
 import ModalPopup from "../../../Components/ModalPopup";
 import MovieInfo from "../../../Components/MovieInfo";
 import MovieThumbnail from "../../../Components/MovieThumbnail";
 import NavigationTab from "../../../Components/NavigationTab";
+// import Portal from "../../../Components/Portal";
 import SingleShowTimeDetail from "../../../Components/SingleShowTimeDetail";
 import { actFetchListHeThongRap } from "../../../Components/TheaterList/modules/action";
 import { MOBILE_MEDIA } from "../../../constants/config";
@@ -42,6 +45,7 @@ function DetailPage(props) {
     detailMovie,
     loadingDetailMovie,
     fetchDetailMovie,
+    fetchReviewsPost,
     fetchListHeThongRap,
     listHeThongRap,
   } = props;
@@ -51,6 +55,7 @@ function DetailPage(props) {
     const maPhim = slug.slice(0, slug.indexOf("-"));
 
     fetchDetailMovie(maPhim);
+    fetchReviewsPost();
     //nếu chưa có trên store thì fetch về
     if (!listHeThongRap || listHeThongRap.length === 0) {
       fetchListHeThongRap();
@@ -127,17 +132,11 @@ function DetailPage(props) {
               role="tabpanel"
               aria-labelledby="danhGia-tab"
             >
-              {/* <ReviewSection /> */}...
+              <DiscussSection />
             </div>
           </div>
         </div>
       </section>
-
-      {/* MAIN DETAIL */}
-      {/* <MovieInfo movie={detailMovie} /> */}
-
-      {/* Show detail */}
-      {/* <SingleShowTimeDetail /> */}
 
       <ModalPopup />
     </>
@@ -160,6 +159,10 @@ const mapDispatchToProps = (dispatch) => {
     //lay danh sach heThongRap (maHeThongRap,logo,...)
     fetchListHeThongRap: () => {
       dispatch(actFetchListHeThongRap());
+    },
+    //lay danh sach reviews
+    fetchReviewsPost: () => {
+      dispatch(actGetReviews());
     },
   };
 };

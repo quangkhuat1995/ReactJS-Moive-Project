@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Interact from "../Interact";
 const isBigNews = (indexShow, index) => {
   // 1 2 3 4, 9 10 11 12,.. là big; 5 6 7 8, 13 14 15 16 là small
   // const smallIdx = [
@@ -59,22 +60,10 @@ function NewsItem(props) {
         )}
       </div>
       {isBigNews(indexShow, index) && (
-        <div className="item__interact">
-          <div className="item__interact--detail">
-            <a href={"#!"}>
-              <img src="/images/like.png" alt="like" />
-              <span className="like__num">{like}</span>
-            </a>
-          </div>
-          <div className="item__interact--detail">
-            <a href={"#!"}>
-              <img src="/images/comment.png" alt="comment" />
-              <span className="comment__num">{comment}</span>
-            </a>
-          </div>
-        </div>
+        <Interact like={like} comment={comment} />
       )}
     </div>
+    //button__container
   );
 }
 
