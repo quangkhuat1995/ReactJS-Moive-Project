@@ -6,17 +6,18 @@ function Interact(props) {
   return (
     <div className="interact__wrapper">
       <div className="interact__item">
-        <span>
+        <span className="interact__item--group">
           <img src="/images/like.png" alt="like" />
           <span className="like__num">{like}</span>
-          {hasLabel && <span className="like__num">Thích</span>}
+          {hasLabel && <span className="label">Thích</span>}
         </span>
       </div>
-      {comment && (
+      {comment !== "undefined" && (
         <div className="interact__item">
-          <span>
+          <span className="interact__item--group">
             <img src="/images/comment.png" alt="comment" />
-            <span className="comment__num">{comment}</span>
+            <span className="comment__num">{comment}</span>{" "}
+            {hasLabel && <span className="label">Bình luận</span>}
           </span>
         </div>
       )}

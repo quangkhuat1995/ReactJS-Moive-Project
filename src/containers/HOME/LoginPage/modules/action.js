@@ -39,6 +39,7 @@ const actLogout = (e) => {
       if (result.value) {
         Swal.fire("Đã đăng xuất", "Cám ơn bạn đã sử dụng Tix.", "success");
         dispatch({ type: LOG_OUT });
+        // history.push('/')
       } else {
         e.preventDefault();
       }

@@ -6,9 +6,12 @@ import { actLogout } from "../../containers/HOME/LoginPage/modules/action";
 import { FAKE_IMG } from "../../constants/config";
 
 function LoggedUI(props) {
-  // const user = localStorage.getItem(USER_KEY);
   const { actLogout, hoTen } = props;
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    actLogout(e);
+  };
   return (
     <>
       <li className="nav-item nav-item--login">
@@ -18,7 +21,7 @@ function LoggedUI(props) {
         </span>
       </li>
       <li className="nav-item nav-item--register">
-        <Link className="nav-link" to="/" onClick={(e) => actLogout(e)}>
+        <Link className="nav-link" to="/" onClick={handleLogout}>
           Đăng xuất
         </Link>
       </li>

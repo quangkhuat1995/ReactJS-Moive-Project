@@ -2,6 +2,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -12,10 +13,22 @@ const TogglePostContext = createContext();
 // const ToggleDispatchContext = createContext();
 
 export function TogglePostProvider(props) {
-  const { initialPosts, indexShow: initialIndexShow, children } = props;
-
-  const oriPosts = useMemo(() => chunkArray([...initialPosts].reverse(), 8), [
+  const {
+    postSize,
     initialPosts,
+    indexShow: initialIndexShow,
+    children,
+  } = props;
+
+  const [posts, setposts] = useState(initialPosts);
+  useEffect(() => {
+    setposts(initialPosts);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPosts.length]);
+
+  const oriPosts = useMemo(() => chunkArray([...posts].reverse(), postSize), [
+    posts,
+    postSize,
   ]);
   // return [[ ],[ ],...]
 
@@ -75,9 +88,11 @@ export function useTogglePost() {
 
 TogglePostProvider.propTypes = {
   initialIndexShow: PropTypes.number,
+  postSize: PropTypes.number,
   initialPosts: PropTypes.array,
 };
 TogglePostProvider.defaultProps = {
   indexShow: 0,
+  postSize: 8,
   initialPosts: [],
 };
