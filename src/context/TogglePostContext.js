@@ -20,16 +20,18 @@ export function TogglePostProvider(props) {
     children,
   } = props;
 
-  const [posts, setposts] = useState(initialPosts);
-  useEffect(() => {
-    setposts(initialPosts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialPosts.length]);
+  // const [posts, setposts] = useState(initialPosts);
+  // useEffect(() => {
+  //   setposts(initialPosts);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [initialPosts.length]);
 
-  const oriPosts = useMemo(() => chunkArray([...posts].reverse(), postSize), [
-    posts,
-    postSize,
-  ]);
+  const oriPosts = useMemo(
+    () => chunkArray([...initialPosts].reverse(), postSize),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [initialPosts.length]
+  );
+
   // return [[ ],[ ],...]
 
   //Lấy phần tử đầu tiên
@@ -43,7 +45,7 @@ export function TogglePostProvider(props) {
       setIndexShow((idx) => idx + 1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [indexShow]);
+  }, [indexShow, initialPosts.length]);
 
   const showLess = useCallback(() => {
     // lớn hơn index 0 mới less dc

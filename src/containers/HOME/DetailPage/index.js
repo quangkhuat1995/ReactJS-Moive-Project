@@ -48,6 +48,7 @@ function DetailPage(props) {
     fetchReviewsPost,
     fetchListHeThongRap,
     listHeThongRap,
+    loadingReview,
   } = props;
 
   useEffect(() => {
@@ -63,7 +64,7 @@ function DetailPage(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loadingDetailMovie) return <Loading />;
+  if (loadingDetailMovie || loadingReview) return <Loading />;
   return (
     <>
       <div style={{ marginTop: 60 }} />
@@ -146,6 +147,7 @@ const mapStateToProps = (state) => {
   return {
     detailMovie: state.detailMovieReducer.detailMovie,
     loadingDetailMovie: state.detailMovieReducer.loading,
+    loadingReview: state.reviewsReducer.loading,
     listHeThongRap: state.listHeThongRapReducer.listHeThongRap,
   };
 };
