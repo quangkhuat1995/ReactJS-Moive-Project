@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: theme.spacing(4),
-    marginTop: theme.spacing(5),
+    // marginTop: theme.spacing(3),
   },
   typo: {
     color: theme.palette.text.hint,
@@ -34,6 +34,7 @@ export default function PageTitle(props) {
       <Typography className={classes.typo} variant="h2" size="sm">
         {props.title}
       </Typography>
+
       {props.button && (
         <Button
           classes={{ root: classes.button }}
@@ -44,6 +45,8 @@ export default function PageTitle(props) {
           {props.button}
         </Button>
       )}
+
+      {props.select && <div></div>}
     </div>
   );
 }

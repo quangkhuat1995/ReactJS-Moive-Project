@@ -1,28 +1,27 @@
 import React, { useMemo } from "react";
 import { connect } from "react-redux";
 import PropsTypes from "prop-types";
-import { renderTenCumRap } from "../../utils/movies";
+import { prefixHttp, renderTenCumRap } from "../../utils/movies";
 
 function BookingTheater(props) {
   const { bookingMovie } = props;
   const { thongTinPhim } = bookingMovie;
 
-  // const renderTenCumRap = () => {
-  //   let ten = thongTinPhim.tenCumRap;
-  //   if (ten.includes("Cineplex")) {
-  //     return ten.split("Cineplex -");
-  //   }
-  //   return ten.split("-");
-  // };
   const tenCumRap = useMemo(() => renderTenCumRap(thongTinPhim), [
     thongTinPhim,
   ]);
+  // const urlHinhAnh = useMemo(() => prefixHttp(thongTinPhim.hinhAnh), [
+  //   thongTinPhim.hinhAnh,
+  // ]);
 
   if (!thongTinPhim) return null;
   return (
     <div className="top__left">
       <div className="cinema-logo">
-        <img src={thongTinPhim.hinhAnh} alt={thongTinPhim.tenPhim} />
+        <img
+          src={`${prefixHttp(thongTinPhim.hinhAnh)}`}
+          alt={thongTinPhim.tenPhim}
+        />
       </div>
       <div className="cinema-info">
         <p className="address">

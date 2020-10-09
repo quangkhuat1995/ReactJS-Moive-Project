@@ -16,11 +16,21 @@ function useMedia(mediaQuery) {
     let listener = () => setIsMatched(media.matches);
 
     // media.addListener(listener);
-    media.addEventListener("change", listener);
+    if (media.addEventListener) {
+      media.addEventListener("change", listener);
+    } else {
+      // for safari
+      media.addListener(listener);
+    }
     //clean up
     return () => {
       // media.removeListener(listener);
-      media.removeEventListener("change", listener);
+      // media.removeEventListener("change", listener);
+      if (media.removeEventListener) {
+        media.removeEventListener("change", listener);
+      } else {
+        media.removeListener(listener);
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mediaQuery]);

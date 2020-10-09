@@ -47,7 +47,7 @@ export default function AdminTemplate({ Component, ...props }) {
       {...props}
       render={(propsOfComponent) => {
         const user = localStorage.getItem(USER_KEY);
-        if (JSON.parse(user).maLoaiNguoiDung === "QuanTri") {
+        if (user && JSON.parse(user).maLoaiNguoiDung === "QuanTri") {
           return (
             <AdminLayout>
               <Component {...propsOfComponent} />

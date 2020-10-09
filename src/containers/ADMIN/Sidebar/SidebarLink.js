@@ -13,9 +13,7 @@ function SidebarLink(props) {
   const classes = useAdminStyles();
   const { link, icon, label, location, type } = props;
 
-  const isLinkActive =
-    link &&
-    (location.pathname === link || location.pathname.indexOf(link) !== -1);
+  const isLinkActive = link && location.pathname === link;
 
   if (type === "title") {
     return <ListSubheader inset>{label}</ListSubheader>;

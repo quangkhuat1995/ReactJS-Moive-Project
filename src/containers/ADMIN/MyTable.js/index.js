@@ -53,6 +53,7 @@ function MyTable(props) {
     data,
     isChanged,
     callAPI,
+    // handleFetchData,
     handleRowUpdate,
     handleRowAdd,
     handleRowDelete,
@@ -61,6 +62,7 @@ function MyTable(props) {
   useEffect(() => {
     if (isChanged) {
       callAPI(getAPI, null);
+      // handleFetchData(getAPI, query);
     }
     // eslint-disable-line react-hooks/exhaustive-deps
   }, [isChanged, callAPI, getAPI]);

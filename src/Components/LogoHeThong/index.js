@@ -1,13 +1,16 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import PropTypes from "prop-types";
+import { prefixHttp } from "../../utils/movies";
 
 function LogoHeTHong(props) {
   const { heThong, hasLabel } = props;
+  const urlHinhAnh = useMemo(() => prefixHttp(heThong.logo), [heThong.logo]);
+
   return (
     <div className="logo__detail">
       <img
         className="theaterList__image"
-        src={heThong.logo}
+        src={urlHinhAnh}
         alt={heThong.tenHeThongRap}
       />
       {hasLabel && (

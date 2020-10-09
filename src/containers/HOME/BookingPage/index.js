@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import BookingTheater from "../../../Components/BookingTheater";
 import Loading from "../../../Components/Loading";
 import NoteSeat from "../../../Components/NoteSeat";
@@ -16,14 +17,14 @@ import { actFetchBookingMoviePage } from "./modules/actions";
 function BookingPage(props) {
   useTitle("Đặt vé");
   useSetBackground();
-  const { fetchMovieDetailPage, loading } = props;
+  const { fetchMovieDetailPage, loading, isLoggedIn } = props;
 
   const maLichChieu = props.match.params.maLichChieu;
   useEffect(() => {
     fetchMovieDetailPage(maLichChieu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  if (!isLoggedIn) return <Redirect to="/" />;
   if (loading) return <Loading />;
   return (
     <>
@@ -77,7 +78,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     loading: state.bookingMoviePageReducer.loading,
-    // isLoggedIn: state.userStatusReducer.isLoggedIn,
+    isLoggedIn: state.userLoginReducer.isLoggedIn,
   };
 };
 

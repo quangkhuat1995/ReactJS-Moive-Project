@@ -51,7 +51,7 @@ const actLogout = (e) => {
 };
 const findPrevPathname = (history = {}) => {
   if (history.location?.state?.from) {
-    console.log(history.location.state.from.pathname);
+    // console.log(history.location.state.from.pathname);
     return history.location.state.from.pathname;
   }
   return "/";

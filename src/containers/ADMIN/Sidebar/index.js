@@ -1,25 +1,23 @@
-import {
-  AppBar,
-  Badge,
-  CssBaseline,
-  Drawer,
-  IconButton,
-  List,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
-import {
-  ArrowBack as ArrowBackIcon,
-  BorderAll as TableIcon,
-  FilterNone as UIElementsIcon,
-  FormatSize as TypographyIcon,
-  HelpOutline as FAQIcon,
-  Home as HomeIcon,
-  LibraryBooks as LibraryIcon,
-  Menu as MenuIcon,
-  Notifications as NotificationsIcon,
-  QuestionAnswer as SupportIcon,
-} from "@material-ui/icons";
+import AppBar from "@material-ui/core/AppBar";
+import Badge from "@material-ui/core/Badge";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import TableIcon from "@material-ui/icons/BorderAll";
+import UIElementsIcon from "@material-ui/icons/FilterNone";
+import TypographyIcon from "@material-ui/icons/FormatSize";
+import FAQIcon from "@material-ui/icons/HelpOutline";
+import HomeIcon from "@material-ui/icons/Home";
+import LibraryIcon from "@material-ui/icons/LibraryBooks";
+import MenuIcon from "@material-ui/icons/Menu";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import SupportIcon from "@material-ui/icons/QuestionAnswer";
+
 import clsx from "clsx";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
@@ -36,7 +34,12 @@ const structure = [
     link: "/user-management",
     icon: <TableIcon />,
   },
-  { id: 2, label: "Tables", link: "", icon: <TypographyIcon /> },
+  {
+    id: 2,
+    label: "Add Showtime",
+    link: "/showtime-management",
+    icon: <TypographyIcon />,
+  },
   {
     id: 3,
     label: "Notifications",
@@ -86,13 +89,7 @@ const getAdminInfo = () => {
 function SideBar(props) {
   const classes = useAdminStyles();
 
-  const [open, setOpen] = useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = useState(true);
   // console.log(props);
   // const { classes } = props;
 
@@ -108,7 +105,7 @@ function SideBar(props) {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => setOpen(true)}
             className={clsx(
               classes.menuButton,
               open && classes.menuButtonHidden
@@ -145,7 +142,7 @@ function SideBar(props) {
       >
         <div className={classes.toolbarIcon}>
           <Title className={classes.toolbarTitle}>DASHBOARD</Title>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => setOpen(false)}>
             <ArrowBackIcon />
           </IconButton>
         </div>
