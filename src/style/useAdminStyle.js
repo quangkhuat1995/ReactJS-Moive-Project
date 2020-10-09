@@ -48,6 +48,8 @@ const useAdminStyles = makeStyles((theme) => ({
   //   visibility: "hidden",
   // },
   drawerPaper: {
+    height: "100vh",
+    overflowY: "auto",
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -55,6 +57,17 @@ const useAdminStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    "&::-webkit-scrollbar": {
+      width: "0.4em",
+    },
+    "&::-webkit-scrollbar-track": {
+      boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+      webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "rgba(0,0,0,.1)",
+      outline: "1px solid slategrey",
+    },
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -80,8 +93,9 @@ const useAdminStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     display: "flex",
-    overflow: "auto",
+    // overflow: "auto",
     flexDirection: "column",
+    marginBottom: theme.spacing(4),
   },
   fixedHeight: {
     height: 240,

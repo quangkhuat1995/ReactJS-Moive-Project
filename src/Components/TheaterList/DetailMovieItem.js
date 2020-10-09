@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useMemo } from "react";
+import { prefixHttp } from "../../utils/movies";
 import LinkButton from "../LinkButton";
 // import "./DetailMovieItem.scss";
 
@@ -58,7 +59,7 @@ const renderBtnTime = (listTimes = []) => {
 //export
 function DetailMovieItem(props) {
   const { movie, maCumRap, todayListTime } = props;
-
+  const urlHinhAnh = useMemo(() => prefixHttp(movie.hinhAnh), [movie.hinhAnh]);
   // main return
   return (
     <div className="wrapper__collapse">
@@ -69,7 +70,7 @@ function DetailMovieItem(props) {
       >
         <img
           className="theaterList__image"
-          src={movie.hinhAnh}
+          src={urlHinhAnh}
           alt={movie.tenPhim}
         />
         <div className="wrapInfo">

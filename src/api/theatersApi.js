@@ -17,6 +17,12 @@ const theatersApi = {
     const uri = `/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`;
     return axiosClient.get(uri);
   },
+
+  //lấy thông tin các cum rap của 1 hệ thống
+  getListCumRapTheoHeThong: (maHeThongRap) => {
+    const uri = `/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`;
+    return axiosClient.get(uri);
+  },
 };
 
 export default theatersApi;

@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
 import React, { createContext, useEffect, useMemo, useReducer } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Loading from "../../../Components/Loading";
-import {
-  actBuyTicket,
-  actRefreshBuyTicket,
-} from "../../../Components/Seat/modules/action";
+
 import { MOBILE_MEDIA } from "../../../constants/config";
 import useMedia from "../../../Hook/useMedia";
 import useSetBackground from "../../../Hook/useSetBackground";
@@ -60,10 +58,9 @@ export const BookingPageContext = createContext(null);
 function BookingPage(props) {
   useTitle("Đặt vé");
   useSetBackground();
-  const { fetchMovieDetailPage, loading } = props;
+  const { fetchMovieDetailPage, loading, isLoggedIn } = props;
 
   const maLichChieu = props.match.params.maLichChieu;
-  console.log(maLichChieu);
 
   useEffect(() => {
     fetchMovieDetailPage(maLichChieu);
@@ -77,6 +74,7 @@ function BookingPage(props) {
 
   const isMobile = useMedia(MOBILE_MEDIA);
 
+  if (!isLoggedIn) return <Redirect to="/" />;
   if (loading) return <Loading />;
   return (
     <BookingPageContext.Provider value={contextValue}>
@@ -106,17 +104,12 @@ const mapDispatchToProps = (dispatch) => {
     fetchMovieDetailPage: (maLichChieu) => {
       dispatch(actFetchBookingMoviePage(maLichChieu));
     },
-    buyTicket: (data) => {
-      dispatch(actBuyTicket(data));
-    },
-    refreshSeatState: () => {
-      dispatch(actRefreshBuyTicket());
-    },
   };
 };
 const mapStateToProps = (state) => {
   return {
     loading: state.bookingMoviePageReducer.loading,
+    isLoggedIn: state.userLoginReducer.isLoggedIn,
   };
 };
 

@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { actFindMovieTrailer } from "../../containers/HOME/HomePage/modules/action";
 import { connect } from "react-redux";
+import { prefixHttp } from "../../utils/movies";
 const play = "/images/play.png";
 
 function CarouselItem(props) {
   const { detailMovie, isHero } = props;
+  const urlHinhAnh = useMemo(() => prefixHttp(detailMovie.hinhAnh), [
+    detailMovie.hinhAnh,
+  ]);
+
   if (!detailMovie) return null;
   return (
     <div className="carousel__item">
       <div className="carousel__img">
-        <img
-          className="img__bg"
-          src={detailMovie.hinhAnh}
-          alt={detailMovie.tenPhim}
-        />
+        <img className="img__bg" src={urlHinhAnh} alt={detailMovie.tenPhim} />
       </div>
       {/* extra content on detail page */}
       {isHero && <div className="blur__overlay" />}

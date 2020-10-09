@@ -1,21 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actFindMovieTrailer } from "../../containers/HOME/HomePage/modules/action";
 import PropTypes from "prop-types";
+import { prefixHttp } from "../../utils/movies";
 
 const play = "/images/play.png";
 
 function MovieThumbnail(props) {
   const { movie, renderDate, allowNavigate } = props; // render date nay duoc nhan tu Comp cha: singleMovieItem
-
+  const urlHinhAnh = useMemo(() => prefixHttp(movie.hinhAnh), [movie.hinhAnh]);
   return (
     <div className="movieThumbnail__img">
       <Link
         to={allowNavigate ? `/phim/${movie.maPhim}-${movie.biDanh}` : "#"}
         className="img__link"
         style={{
-          background: `url(${movie.hinhAnh}) center center/cover`,
+          background: `url(${urlHinhAnh}) no-repeat scroll center center/cover`,
         }}
       >
         {/* <img src={movie.hinhAnh} alt /> */}

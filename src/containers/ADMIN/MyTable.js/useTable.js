@@ -64,18 +64,18 @@ function useTable(tableType) {
   const [data, setData] = useState([]);
   const [isChanged, setIsChanged] = useState(true);
   const callAPI = useCallback(
-    (api, body, ...option) => {
+    (api, body) => {
       // console.log("api call");
       //no api endpoint
-      if (!api) return alert("something wrong!! You can't do this action");
+      if (api === undefined) return;
 
       //post,put,delete
       if (body !== null) {
-        return api(body, ...option);
+        return api(body);
       }
       //get (then set initial Data),
       return (
-        api(...option)
+        api()
           // api(body,...option)
           .then((res) => {
             setData(res);
@@ -112,9 +112,11 @@ function useTable(tableType) {
         ngayKhoiChieu: new Date(newData.ngayKhoiChieu).toLocaleDateString(
           "en-GB"
         ),
+        danhGia: parseInt(newData.danhGia),
         hinhAnh: typeof newData.hinhAnh === "string" ? null : newData.hinhAnh,
       };
     }
+    console.log(body);
 
     // usersApi
     //   .editAccount({ ...newData, maNhom: "GP09" }, getToken())
@@ -128,11 +130,7 @@ function useTable(tableType) {
         setData([...dataUpdate]);
 
         alertCase("update", tableType, res, newData, oldData);
-        // alert(
-        //   `Đã cập nhật ${findUpatedKey(newData, oldData)} người dùng: ${
-        //     res.taiKhoan
-        //   }`
-        // );
+
         setIsChanged(true);
         resolve();
       })
@@ -140,6 +138,8 @@ function useTable(tableType) {
         alert(
           "Lỗi sever, không thể cập nhật. Hãy chắc chắn bạn đã điền đầy đủ thông tin"
         );
+        console.log(error);
+
         setIsChanged(false);
         reject();
       });
@@ -210,10 +210,25 @@ function useTable(tableType) {
       });
   };
 
+  const handleFetchData = (getApi, ...query) => {
+    callAPI(getApi, ...query)
+      .then((res) => {
+        setData(res);
+        //chỉ gọi lại api get với table Movie
+        if (tableType === "Movie Table") {
+          setIsChanged(false);
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data);
+      });
+  };
+
   return {
     data,
     isChanged,
     callAPI,
+    handleFetchData,
     handleRowUpdate,
     handleRowAdd,
     handleRowDelete,

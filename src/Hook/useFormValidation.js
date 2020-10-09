@@ -98,9 +98,10 @@ function useFormValidation(
     }
 
     if (isNotValid) {
-      console.log("REJECT found:", errors.taiKhoan, errors.matKhau);
+      // console.log("REJECT found:", errors.taiKhoan, errors.matKhau);
+      alert("Có lỗi trong việc xác thực dữ liệu");
     } else {
-      console.log("SUBMIT authenticated!", values.taiKhoan, values.matKhau);
+      // console.log("SUBMIT authenticated!", values.taiKhoan, values.matKhau);
       // console.log(props.history);
 
       sendSubmit(data, props.history);
