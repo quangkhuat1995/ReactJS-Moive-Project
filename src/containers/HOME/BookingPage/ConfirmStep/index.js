@@ -12,11 +12,15 @@ import { USER_KEY } from "../../../../constants/config";
 import { renderGheDangChon } from "../../../../utils/movies";
 import { BookingPageContext } from "../testIndex";
 
+const styleGiaTien = (numPrice) => {
+  return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 function ConfirmStep(props) {
   const { buyTicket, refreshSeatState, danhSachVe } = props;
   const { state, dispatch } = useContext(BookingPageContext);
   // const {state,dispatch} = context
-  const { step } = state;
+  const { step, isOpen, totalComboCost } = state;
 
   const history = useHistory();
   const params = useParams();
@@ -24,6 +28,11 @@ function ConfirmStep(props) {
   const handleBuyTicket = (e) => {
     e.persist();
     e.preventDefault();
+    //nếu đang mở combo thì nút next hoạt động như nút tắt combo (và hiển thị lại step 2)
+    if (isOpen) {
+      dispatch({ type: "close-combo" });
+      return;
+    }
     const user = localStorage.getItem(USER_KEY);
     const data = {
       maLichChieu: parseInt(params.maLichChieu),
@@ -54,11 +63,16 @@ function ConfirmStep(props) {
       }
     });
   };
+
   return (
     <section id="confirm">
       <div className="confirm-wrapper row">
         <div className="col-6 confirm__item" id="showseat">
-          {renderGheDangChon(danhSachVe)}
+          {isOpen
+            ? totalComboCost
+              ? `${styleGiaTien(totalComboCost)} vnđ`
+              : ""
+            : renderGheDangChon(danhSachVe)}
         </div>
 
         <div className="col-6 confirm__item" id="btnGoNext">
@@ -71,13 +85,13 @@ function ConfirmStep(props) {
               Tiếp tục
             </button>
           ) : (
-            //step === 2
+            //step === 2 nếu ko mở combobox thì hiển thị thanh toán, ngược lại nút thanh toán sẽ là nút đóng combobox
             <button
               className="btn-confirm"
               onClick={handleBuyTicket}
               disabled={danhSachVe && danhSachVe.length === 0}
             >
-              Thanh Toán
+              {isOpen ? "Tiếp tục" : "Thanh Toán"}
             </button>
           )}
         </div>

@@ -1,0 +1,144 @@
+$header--height: 60px;
+$combo-width: 475px;
+#combo-section {
+  //@include childGrid(4, 5, 1, 3);
+  background: $color-white-0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  
+  padding-top: $header--height;
+  padding-bottom: 100px; //đẩy lên để ko bị confirm che
+
+  // width: ;
+  height: 100vh;
+
+  z-index: 97; //  dưới header và dưới pay, trên main
+
+  @include RESPONSIVE("768px") {    
+    padding-bottom: 0;
+
+    position: fixed;
+    top: 0;
+    right: calc(-25% - #{$combo-width});
+    max-width: $combo-width;
+
+    z-index: 97;
+    transition: .5s ease-in-out;
+    // transform: translateX();
+    &.open{
+      right: calc(25%);
+      .back-drop{
+        display: block
+      }
+    }
+  }
+  
+  .combo-wrapper {
+    // @include positionAbsolute(0,0);
+    // position: relative;
+    z-index: 95;
+    background: $color-white-0;
+
+    // width: 100%;
+    height: 100%;
+    // padding: 0 $sp-10;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    // height: 100vh;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .combo-list{
+    padding: 20px;
+  }
+  .combo-title{
+    text-transform: uppercase;
+    background-color: #f5f5f5;
+    font-weight: 500;
+    font-size: 18px;
+    padding:10px;
+    margin-bottom: $sp-15;
+  }
+  .combo__item--wrapper {
+    &:not(:last-of-type){
+      margin-bottom: $sp-35;
+    }
+    [class*="col-"] {
+      padding: 0;
+    }
+    .comboLogo{
+      padding-right: $sp-10;
+    }
+    .comboDetail{
+      padding-right: $sp-10;
+      font-weight: 600;
+      .item-name{
+        text-transform: capitalize;
+        @include styleText($color-black-1,$fs-16);
+        margin-bottom:3px;
+        line-height:1;
+        pointer-events: all;
+      }
+      .item-detail{
+        @include styleText($color-light-1,$fs-12);
+        font-weight: normal;
+        text-transform: capitalize;
+        padding-left: $sp-20;
+        line-height:1
+      }
+      .item-price{
+        @include styleText($color-choosing,$fs-16);
+        padding-left: $sp-20;
+
+      }
+
+    }
+    .comboOpt{
+      padding-left: $sp-10;
+      text-align: right;
+      @include displayFlex(flex-end,center);
+      .btn-amount{
+        border:none;
+        outline:none;
+        background: none;
+        padding:5px 10px;
+        text-align: center;
+        @include styleText($color-red-title,$fs-16);
+        font-weight: 600;
+        transform: scale(1.5);
+        &.minus{
+          transform: scaleX(3);
+        }
+        &:disabled{
+          color:$color-light-1;
+        }
+      }
+      .item-num{
+        display: inline-block;
+        width:30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border:1px solid #000;
+        border-radius: 4px;
+        margin: 0 5px;
+      }
+    }
+    
+  }
+  
+  .back-drop{
+    display:none;
+    position: fixed;
+    top:0;
+    left:0;
+    bottom: 0;
+    right:0;
+    background-color: transparentize($color: #000, $amount: 0.5);
+
+    z-index: -1; // trên main
+  }
+  
+  
+}

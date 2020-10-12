@@ -36,6 +36,9 @@
     .row [class*="col-"] {
       padding: 0;
     }
+    &.combo-click{
+      cursor: pointer;
+    }
   }
   .total {
     @include styleText($color-choosing, $fs-32);
@@ -52,7 +55,7 @@
       @include styleText($color-red-primary, $fs-14);
       word-break: break-all;
     }
-    #demoMoney {
+    .demoMoney {
       @include styleText($color-choosing, $fs-16);
     }
   }

@@ -12,7 +12,8 @@ $header--height: 60px;
   width: 100%;
   height: $header--height;
 
-  z-index: 100; //z-index của _pay phải nằm giữa (98)
+  //luôn ở top khi mobile view; z-index của _pay phải nằm giữa (98)
+  z-index: 100; 
 
   @include RESPONSIVE("768px") {
     // grid-area: process;

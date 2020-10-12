@@ -10,6 +10,7 @@ import userLoginReducer from "./../../containers/HOME/LoginPage/modules/reducer"
 import buyTicketReducer from "./../../Components/Seat/modules/reducer";
 
 import reviewsReducer from "./../../Components/DiscussSection/modules/reducer";
+import comboReducer from "./../../Components/ComboBox/modules/reducer";
 
 const rootReducer = combineReducers({
   listMovieReducer, // hien thi danh sach phim trong page home/showtime
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
 
   buyTicketReducer,
   reviewsReducer,
+  comboReducer,
 });
 
 export { rootReducer };

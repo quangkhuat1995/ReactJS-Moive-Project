@@ -42,18 +42,21 @@ function BookingProgress(props) {
   const isDesktop = useMedia(DESKTOP_MEDIA);
 
   // console.log(step);
-  const context = useContext(BookingPageContext);
-  // console.log(context);
-  const { state, dispatch } = context;
-  const { step } = state;
+  const { state, dispatch } = useContext(BookingPageContext);
+  const { step, isOpen } = state;
+
+  const handleGoBack = () => {
+    //nếu đang mở combo box thì nút quay lại sẽ thực hiện chức năng chuyển về giao diện thanh toán (step===2)
+    if (isOpen) {
+      dispatch({ type: "close-combo" });
+    } else {
+      //nếu ko mở combo box thì thực hiện chức năng lùi step bth
+      dispatch({ type: "back" });
+    }
+  };
 
   return (
     <section id="process-section">
-      {/* <div id="btnBack">
-          <div>
-            <img src="/images/back-session.png" alt="" />
-          </div>
-        </div> */}
       <div id="btnAction">
         {!isDesktop ? (
           //mobile view & step ===1 => hiện logo
@@ -63,12 +66,12 @@ function BookingProgress(props) {
             </Link>
           ) : (
             // mobileview but step=== 2,3 => hiện btn goback
-            <div onClick={() => dispatch({ type: "back" })}>
+            <div onClick={handleGoBack}>
               <img width="30px" src="/images/back-session.png" alt="go back" />
             </div>
           )
         ) : (
-          //desktop view => hiện logo
+          //desktop view => luôn hiện logo
           <Link to="/">
             <img src="/images/logo.png" alt="logo" />
           </Link>
@@ -90,20 +93,6 @@ function BookingProgress(props) {
         ) : (
           <>{renderList(step)}</>
         )}
-
-        {/* <li className="process__item current-process active">
-          <span>01</span>
-          {isDesktop ? "Chọn Ghế & Thanh Toán" : "Chọn Ghế"}
-        </li>
-        <li className="process__item">
-          <span>02</span> {isDesktop ? "Kết quả đặt vé" : "Thanh toán"}
-        </li>
-        
-        {!isDesktop && (
-          <li className="process__item">
-            <span>03</span>Kết quả đặt vé
-          </li>
-        )} */}
       </ul>
 
       <div className="process__account">

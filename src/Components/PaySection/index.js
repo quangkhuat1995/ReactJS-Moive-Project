@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { actBuyTicket, actRefreshBuyTicket } from "../Seat/modules/action";
@@ -14,6 +14,25 @@ import {
   renderGiaTien,
   renderTenCumRap,
 } from "../../utils/movies";
+import { BookingPageContext } from "../../containers/HOME/BookingPage/testIndex";
+
+const styleGiaTien = (numPrice) => {
+  return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+const totalPay = (ticketCost = 0, comboCost = 0) => {
+  let checkType = [ticketCost, comboCost];
+  const regex = /,/gi;
+  let convertedType = checkType.map((item) => {
+    if (isNaN(item)) {
+      return item.replace(regex, "");
+    }
+    return item;
+  });
+
+  let total = parseFloat(convertedType[0]) + parseFloat(convertedType[1]);
+  return styleGiaTien(total);
+};
 
 function Pay(props) {
   const { danhSachVe, buyTicket, refreshSeatState } = props;
@@ -22,8 +41,15 @@ function Pay(props) {
   const params = useParams();
   const isMobile = useMedia(MOBILE_MEDIA);
 
+  const { state, dispatch } = useContext(BookingPageContext);
+  const { totalComboCost } = state;
+
   const tenCumRap = useMemo(() => renderTenCumRap(thongTinPhim), [
     thongTinPhim,
+  ]);
+
+  const totalTicketCost = useMemo(() => renderGiaTien(danhSachVe), [
+    danhSachVe.length,
   ]);
 
   const handleBuyTicket = (e) => {
@@ -60,6 +86,16 @@ function Pay(props) {
     });
   };
 
+  const handleOpenCombo = () => {
+    //desktop view thì toggle mở đóng
+    if (!isMobile) {
+      dispatch({ type: "toggle" });
+    } else {
+      //mobile view thì toggle sang step 3
+      dispatch({ type: "open-combo" });
+    }
+  };
+
   if (!thongTinPhim) return null;
   return (
     <>
@@ -67,7 +103,9 @@ function Pay(props) {
         <div className="header--space" />
         <div className="pay__item--wrapper">
           <div className="total">
-            <span id="totalMoney">{renderGiaTien(danhSachVe)} đ</span>
+            <span id="totalMoney">
+              {totalPay(totalTicketCost, totalComboCost)} đ
+            </span>
           </div>
         </div>
         <div className="pay__item--wrapper">
@@ -107,8 +145,22 @@ function Pay(props) {
               {danhSachVe && danhSachVe.length > 0 && <span>Ghế </span>}
               <span id="myseat">{renderGheDangChon(danhSachVe)}</span>
             </div>
-            <div className="col-4 text-right font-weight-bold" id="demoMoney">
-              {renderGiaTien(danhSachVe)} đ
+            <div className="demoMoney col-4 text-right font-weight-bold">
+              {totalTicketCost} đ
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="pay__item--wrapper combo-click"
+          onClick={handleOpenCombo}
+        >
+          <div className="seatchosen row">
+            <div className="col-8 myseat">
+              <span>Chọn Combo</span>
+            </div>
+            <div className="demoMoney col-4 text-right font-weight-bold">
+              {styleGiaTien(totalComboCost)} đ
             </div>
           </div>
         </div>
