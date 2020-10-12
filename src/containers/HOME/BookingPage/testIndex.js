@@ -1,8 +1,20 @@
 import PropTypes from "prop-types";
-import React, { createContext, useEffect, useMemo, useReducer } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import BookingTheater from "../../../Components/BookingTheater";
+import ComboBox from "../../../Components/ComboBox";
 import Loading from "../../../Components/Loading";
+import NoteSeat from "../../../Components/NoteSeat";
+import PaySection from "../../../Components/PaySection";
+import SeatRow from "../../../Components/SeatRow";
+import TimeWaiting from "../../../Components/TimeWaiting";
 
 import { MOBILE_MEDIA } from "../../../constants/config";
 import useMedia from "../../../Hook/useMedia";
@@ -13,35 +25,54 @@ import DesktopView from "./BookingView/DesktopView";
 import MobileView from "./BookingView/MobileView";
 import ConfirmStep from "./ConfirmStep";
 import { actFetchBookingMoviePage } from "./modules/actions";
+import clsx from "clsx";
 
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "step1":
+  const { step, isOpen, amount, totalComboCost } = state;
+  const { price, type } = action;
+
+  switch (type) {
+    case "add":
       return {
         ...state,
-        step: 1,
+        amount: amount + 1,
+        totalComboCost: totalComboCost + price,
       };
 
-    case "step2":
+    case "remove":
       return {
         ...state,
-        step: 2,
+        amount: amount - 1,
+        totalComboCost: totalComboCost - price,
       };
 
-    case "step3":
-      return {
-        ...state,
-        step: 3,
-      };
     case "back":
       return {
         ...state,
-        step: state.step - 1,
+        step: step - 1,
+        isOpen: false,
       };
     case "next":
       return {
         ...state,
-        step: state.step + 1,
+        step: step + 1,
+        isOpen: false,
+      };
+
+    case "open-combo":
+      return {
+        ...state,
+        isOpen: true,
+      };
+    case "close-combo":
+      return {
+        ...state,
+        isOpen: false,
+      };
+    case "toggle":
+      return {
+        ...state,
+        isOpen: !isOpen,
       };
 
     default:
@@ -51,6 +82,10 @@ const reducer = (state, action) => {
 
 const initialState = {
   step: 1,
+  isOpen: false, //flag to check if user open combobox
+
+  amount: 0,
+  totalComboCost: 0,
 };
 
 export const BookingPageContext = createContext(null);
@@ -58,10 +93,11 @@ export const BookingPageContext = createContext(null);
 function BookingPage(props) {
   useTitle("Đặt vé");
   useSetBackground();
+  // const history = useHistory();
+
   const { fetchMovieDetailPage, loading, isLoggedIn } = props;
 
   const maLichChieu = props.match.params.maLichChieu;
-
   useEffect(() => {
     fetchMovieDetailPage(maLichChieu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,24 +108,88 @@ function BookingPage(props) {
     return { state, dispatch };
   }, [state, dispatch]);
 
+  //desktop luôn luôn hiện, còn mobile thì xét theo step
   const isMobile = useMedia(MOBILE_MEDIA);
 
   if (!isLoggedIn) return <Redirect to="/" />;
   if (loading) return <Loading />;
+
   return (
     <BookingPageContext.Provider value={contextValue}>
       {/* css width:75 height:80 */}
       <BookingProgress />
 
-      {isMobile ? (
+      <section className={clsx("row", !isMobile && "main-wrapper")}>
+        <main
+          className=" seat__section col-12 col-md-9"
+          style={{
+            display: `${
+              !isMobile ? "block" : state.step === 1 ? "block" : "none"
+            }`,
+          }}
+        >
+          <div className="header--space" />
+
+          <div className="seat__section--top">
+            <BookingTheater />
+
+            <TimeWaiting />
+          </div>
+          <div className="seat__section--map">
+            <div className="screen">
+              <img src="/images/screen.png" alt="screen" />
+            </div>
+            {/*  */}
+            <div className="listseat">
+              <SeatRow />
+            </div>
+
+            {/*  */}
+            <div className="noteseat">
+              <NoteSeat type="normal" info="Ghế thường" />
+              <NoteSeat type="vip" info="Ghế VIP" />
+              <NoteSeat type="current" info="Ghế đang chọn" />
+              <NoteSeat type="taken" info="Ghế đã có người chọn" />
+            </div>
+          </div>
+        </main>
+
+        <aside
+          id="pay-section"
+          className="col-12 col-md-3"
+          style={{
+            display: `${
+              !isMobile
+                ? "block"
+                : state.step === 2 && !state.isOpen
+                ? "block"
+                : "none"
+            }`,
+          }}
+        >
+          <PaySection />
+        </aside>
+
+        {isMobile && <ConfirmStep />}
+      </section>
+      {/* {isMobile ? (
         <>
           <MobileView />
-          {/* css display none dc */}
+          
           <ConfirmStep />
         </>
       ) : (
         <DesktopView />
-      )}
+      )} */}
+      <section
+        id="combo-section"
+        className={state.isOpen ? "open" : ""}
+        style={{
+          display: `${!isMobile ? "block" : state.isOpen ? "block" : "none"}`,
+        }}
+      >
+        <ComboBox />
+      </section>
     </BookingPageContext.Provider>
   );
 }

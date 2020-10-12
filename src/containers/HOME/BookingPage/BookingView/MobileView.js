@@ -57,10 +57,53 @@ function MobileView() {
     });
   }
 
-  switch (step) {
-    case 1:
-      return (
-        <main className=" seat__section col-12 col-md-9">
+  // switch (step) {
+  //   case 1:
+  //     return (
+  //       <main className=" seat__section col-12 col-md-9">
+  //         <div className="header--space" />
+
+  //         <div className="seat__section--top">
+  //           <BookingTheater />
+
+  //           <TimeWaiting />
+  //         </div>
+  //         <div className="seat__section--map">
+  //           <div className="screen">
+  //             <img src="/images/screen.png" alt="screen" />
+  //           </div>
+  //           {/*  */}
+  //           <div className="listseat">
+  //             <SeatRow />
+  //           </div>
+
+  //           {/*  */}
+  //           <div className="noteseat">
+  //             <NoteSeat type="normal" info="Ghế thường" />
+  //             <NoteSeat type="vip" info="Ghế VIP" />
+  //             <NoteSeat type="current" info="Ghế đang chọn" />
+  //             <NoteSeat type="taken" info="Ghế đã có người chọn" />
+  //           </div>
+  //         </div>
+  //       </main>
+  //     );
+
+  //   case 2:
+  //     return (
+  //       <aside id="pay-section" className="col-12 col-md-3">
+  //         <PaySection />
+  //       </aside>
+  //     );
+  //   default:
+  //     return null;
+  // }
+  return (
+    <>
+      <div className="row">
+        <main
+          className=" seat__section col-12 col-md-9"
+          style={{ display: `${step === 1 ? "block" : "none"}` }}
+        >
           <div className="header--space" />
 
           <div className="seat__section--top">
@@ -86,17 +129,17 @@ function MobileView() {
             </div>
           </div>
         </main>
-      );
 
-    case 2:
-      return (
-        <aside id="pay-section" className="col-12 col-md-3">
+        <aside
+          id="pay-section"
+          className="col-12 col-md-3"
+          style={{ display: `${step === 2 ? "block" : "none"}` }}
+        >
           <PaySection />
         </aside>
-      );
-    default:
-      return null;
-  }
+      </div>
+    </>
+  );
 }
 
 export default memo(MobileView);

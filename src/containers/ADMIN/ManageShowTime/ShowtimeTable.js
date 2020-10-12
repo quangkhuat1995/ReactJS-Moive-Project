@@ -63,7 +63,6 @@ function ShowtimeTable() {
   const conditionLength = useMemo(() => {
     return detailMovie?.heThongRapChieu?.length;
   }, [maPhim, loading]);
-  console.log(conditionLength);
 
   useEffect(() => {
     //Khi loading tức là chọn lại phim mới, thì reset lại state như ban đầu
@@ -96,11 +95,11 @@ function ShowtimeTable() {
       }
     }
 
-    console.log("effect", state);
+    // console.log("effect", state);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maPhim, loading, conditionLength]);
-  console.log(state);
+  // console.log(state);
 
   const handleChange = (e, lichChieuPhim = [], heThongIndex, cumRapIndex) => {
     e.persist();
@@ -119,9 +118,9 @@ function ShowtimeTable() {
     newGiaVe[heThongIndex][cumRapIndex] = selectedLichChieu.giaVe;
     newTenRap[heThongIndex][cumRapIndex] = selectedLichChieu.tenRap;
 
-    console.log("newMaLichChieu", newMaLichChieu);
-    console.log("newGiaVe", newGiaVe);
-    console.log("newTenRap", newTenRap);
+    // console.log("newMaLichChieu", newMaLichChieu);
+    // console.log("newGiaVe", newGiaVe);
+    // console.log("newTenRap", newTenRap);
 
     setState({
       ...state,
@@ -184,9 +183,8 @@ function ShowtimeTable() {
         </TableCell>
       </TableRow>
     ) : (
-      detailMovie?.heThongRapChieu?.map((heThong, idx, heThongArr) =>
-        heThong.cumRapChieu.map((cumRap, index, cumRapArr) => {
-          // return cumRap.lichChieuPhim.map((lichChieu,j)=>{
+      detailMovie?.heThongRapChieu?.map((heThong, idx) =>
+        heThong.cumRapChieu.map((cumRap, index) => {
           return (
             <StyledTableRow key={cumRap.maCumRap}>
               <TableCell>{index + 1}</TableCell>
@@ -224,7 +222,6 @@ function ShowtimeTable() {
               </TableCell>
             </StyledTableRow>
           );
-          // })
         })
       )
     );
@@ -240,8 +237,8 @@ function ShowtimeTable() {
         </TableCell>
       </TableRow>
     ) : (
-      detailMovie?.heThongRapChieu?.map((heThong, idx, heThongArr) =>
-        heThong.cumRapChieu.map((cumRap, index, cumRapArr) => {
+      detailMovie?.heThongRapChieu?.map((heThong) =>
+        heThong.cumRapChieu.map((cumRap) => {
           return cumRap.lichChieuPhim.map((lichChieu, j) => {
             return (
               <StyledTableRow key={lichChieu.maLichChieu}>

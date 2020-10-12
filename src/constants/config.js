@@ -1,7 +1,7 @@
 export const URL_API = "https://movie0706.cybersoft.edu.vn/api";
 
-// export const TIME_BOOKING = 5 * 60 * 1000; // = 5p
-export const TIME_BOOKING = 3 * 10000; // 30s
+export const TIME_BOOKING = 500 * 60 * 1000; // = 500p developing time
+// export const TIME_BOOKING = (60 + 30) * 1000; //  (1p + 30s)
 
 export const TODAY = "2019-01-01";
 export const END_DAY = "2019-01-14";
